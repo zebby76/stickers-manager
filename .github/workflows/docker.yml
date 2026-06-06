@@ -259,6 +259,7 @@ jobs:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
           format: sarif
           output: trivy.sarif
+          scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: true
 
@@ -273,6 +274,7 @@ jobs:
         with:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
           format: table
+          scanners: vuln
           severity: CRITICAL,HIGH
           ignore-unfixed: true
           exit-code: "0"

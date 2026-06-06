@@ -1,0 +1,46 @@
+---
+name: Cleanup workflow runs
+
+# Keeps the Actions history tidy: deletes workflow runs older than RETENTION_DAYS.
+on:
+  schedule:
+    - cron: "0 4 * * 1"   # every Monday 04:00 UTC
+  workflow_dispatch:
+    inputs:
+      retention_days:
+        description: "Delete runs older than N days"
+        required: false
+        default: "30"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: cleanup-runs
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Delete old workflow runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RETENTION_DAYS: ${{ github.event.inputs.retention_days || '30' }}
+        run: |
+          cutoff=$(date -u -d "${RETENTION_DAYS} days ago" +%s)
+          echo "Deleting runs created before $(date -u -d @"${cutoff}")"
+          deleted=0
+          # Never delete the currently-running cleanup itself.
+          gh run list -R "$REPO" --limit 500 \
+            --json databaseId,createdAt,workflowName,conclusion \
+            | jq -r --argjson cutoff "$cutoff" \
+                '.[] | select((.createdAt|fromdateiso8601) < $cutoff) | .databaseId' \
+            | while read -r id; do
+                gh run delete -R "$REPO" "$id" >/dev/null 2>&1 \
+                  && { echo "  deleted run $id"; deleted=$((deleted+1)); } \
+                  || echo "  skip $id"
+              done
+          echo "Done."

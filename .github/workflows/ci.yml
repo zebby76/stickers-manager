@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # The job runs in a container as root while the checkout is owned by the
       # runner user → tell git the workspace is safe (otherwise composer/git fail).

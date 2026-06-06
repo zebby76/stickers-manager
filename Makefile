@@ -24,7 +24,7 @@ help: ## Show this help
 
 ## —— Packaging ————————————————————————————————————————————————————————————————
 build-app: ## Build vendor + assets (Composer + AssetMapper) for the image
-	$(DEV) composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader
+	$(DEV) composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader --ignore-platform-req=ext-opentelemetry
 	APP_ENV=prod $(DEV) php bin/console importmap:install
 	APP_ENV=prod $(DEV) php bin/console asset-map:compile
 

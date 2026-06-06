@@ -48,8 +48,14 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      # The job runs in a container as root while the checkout is owned by the
+      # runner user → tell git the workspace is safe (otherwise composer/git fail).
+      - name: Trust workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Composer install
-        run: composer install --no-interaction --no-progress --prefer-dist
+        # ext-opentelemetry is enabled in the runtime image, not in the build tooling.
+        run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-req=ext-opentelemetry
 
       - name: Lint
         run: |

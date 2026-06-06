@@ -234,7 +234,7 @@ jobs:
           METADATA: ${{ needs.prepare.outputs.metadata }}
 
       - name: Install Cosign
-        uses: sigstore/cosign-installer@v4
+        uses: sigstore/cosign-installer@v4.1.2
 
       - name: Sign image (keyless, OIDC)
         run: cosign sign --yes "${{ steps.digest.outputs.ref }}"

@@ -254,7 +254,7 @@ jobs:
       security-events: write
     steps:
       - name: Run Trivy (SARIF)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
           format: sarif
@@ -269,7 +269,7 @@ jobs:
           category: trivy-image
 
       - name: Trivy summary (table, non-blocking)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
           format: table

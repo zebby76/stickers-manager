@@ -198,7 +198,7 @@ jobs:
         target: ["prd", "dev"]
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: metadata-${{ matrix.target }}-*
           path: /tmp/metadata

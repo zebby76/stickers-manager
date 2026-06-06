@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#
+# dev — run a command inside the smalswebtech/base-php cli-dev container, with the
+# Symfony app (the repo root) mounted at /app/src/stickers (the runtime path).
+# Used for composer, bin/console, importmap, asset-map:compile — no local PHP/Composer.
+#
+#   bin/dev composer install
+#   bin/dev php bin/console make:entity
+#   bin/dev bash
+#
+set -euo pipefail
+
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORKDIR="/app/src/stickers"
+IMAGE="${BUILDER_IMAGE:-smalswebtech/base-php:8.5-cli-dev}"
+
+CA_MOUNT=()
+[ -f /etc/ssl/certs/ca-certificates.crt ] && \
+  CA_MOUNT=(--volume /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro)
+
+TTY_FLAGS=(); [ -t 0 ] && TTY_FLAGS=(-it)
+
+DB_ENV=()
+[ -n "${DATABASE_URL:-}" ] && DB_ENV=(--env DATABASE_URL="${DATABASE_URL}")
+
+exec docker run --rm "${TTY_FLAGS[@]}" \
+  --user "$(id -u):$(id -g)" \
+  --env HOME="${HOME}" \
+  --env USER="$(id -u -n)" \
+  --env COMPOSER_HOME="${HOME}/.composer" \
+  --env COMPOSER_ALLOW_SUPERUSER=1 \
+  --env COMPOSER_PROCESS_TIMEOUT=900 \
+  --env COMPOSER_MEMORY_LIMIT=-1 \
+  --env PHP_BYPASS_INI_DEFAULT_VALUES=true \
+  --env APP_ENV="${APP_ENV:-dev}" \
+  --env TMPDIR=/tmp \
+  "${DB_ENV[@]}" \
+  "${CA_MOUNT[@]}" \
+  --volume "${HOME}:${HOME}:rw" \
+  --volume "${REPO_DIR}:${WORKDIR}:rw" \
+  --network host \
+  --workdir "${WORKDIR}" \
+  "${IMAGE}" \
+  "$@"

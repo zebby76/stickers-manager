@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord · Stickers Manager{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-4">Salut <span class="text-gradient">{{ app.user.displayName }}</span> 👋</h1>
+
+<div class="row g-3 mb-4">
+    {% set cards = [
+        {icon: 'collection', tint: 'primary', value: summary.albums, label: 'Albums suivis', grad: false},
+        {icon: 'graph-up-arrow', tint: 'primary', value: summary.percent ~ '%', label: 'Complétion globale', grad: true},
+        {icon: 'search', tint: 'danger', value: summary.missing, label: 'Vignettes manquantes', grad: false},
+        {icon: 'stack', tint: 'warning', value: summary.duplicates, label: 'Doublons', grad: false},
+    ] %}
+    {% for c in cards %}
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm h-100"><div class="card-body d-flex align-items-center gap-3">
+                <span class="d-inline-flex align-items-center justify-content-center rounded-3 text-bg-{{ c.tint }}"
+                      style="width:48px;height:48px;font-size:1.3rem;{{ c.grad ? 'background-image:var(--grad)!important;' : '' }}">
+                    <i class="bi bi-{{ c.icon }}"></i>
+                </span>
+                <div>
+                    <div class="display-6 lh-1 {{ c.grad ? 'text-gradient' : '' }}">{{ c.value }}</div>
+                    <div class="text-muted small">{{ c.label }}</div>
+                </div>
+            </div></div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h5 mb-0">Ma progression</h2>
+    <a href="{{ path('app_album_index') }}" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-plus-lg"></i> Suivre un album
+    </a>
+</div>
+
+{% if progresses is empty %}
+    <div class="alert alert-info">
+        Tu ne suis encore aucun album. <a href="{{ path('app_album_index') }}">Parcours le catalogue</a> pour commencer ta collection !
+    </div>
+{% else %}
+    <div class="row g-3">
+        {% for p in progresses %}
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100"><div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="h6 mb-1">
+                            <a href="{{ path('app_album_show', {slug: p.album.slug}) }}" class="text-decoration-none">{{ p.album.name }}</a>
+                        </h3>
+                        {% if p.isComplete %}<span class="badge text-bg-success">Complet ✓</span>{% endif %}
+                    </div>
+                    <div class="progress my-2" style="height: 20px;">
+                        <div class="progress-bar {{ p.isComplete ? 'bg-success' : '' }}" style="width: {{ p.completionPercent }}%">
+                            {{ p.completionPercent }}%
+                        </div>
+                    </div>
+                    <div class="small text-muted d-flex justify-content-between">
+                        <span>{{ p.owned }} / {{ p.total }} vignettes</span>
+                        {% if not p.isComplete %}
+                            <span>≈ {{ p.estimatedPacksToComplete }} pochettes restantes</span>
+                        {% endif %}
+                    </div>
+                </div></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

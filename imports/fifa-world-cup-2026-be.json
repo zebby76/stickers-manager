@@ -1,0 +1,4909 @@
+{
+  "name": "FIFA World Cup 2026 (édition belge)",
+  "publisher": "Stickers",
+  "year": 2026,
+  "stickersPerPack": 5,
+  "description": "Album officiel Stickers de la Coupe du Monde FIFA 2026 (édition belge) — 980 vignettes : section ouverture, palmarès et 48 équipes (logo, photo d'équipe et 18 vignettes joueurs chacune). Vignettes identifiées par leur code (ex. BEL19).",
+  "stickers": [
+    {
+      "number": "00",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC1",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC2",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC3",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC4",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC5",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC6",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC7",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC8",
+      "team": "Ouverture",
+      "rarity": "shiny"
+    },
+    {
+      "number": "FWC9",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC10",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC11",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC12",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC13",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC14",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC15",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC16",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC17",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC18",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "FWC19",
+      "team": "Palmarès",
+      "rarity": "legend"
+    },
+    {
+      "number": "ALG1",
+      "team": "Algérie",
+      "rarity": "badge"
+    },
+    {
+      "number": "ALG2",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG3",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG4",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG5",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG6",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG7",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG8",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG9",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG10",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG11",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG12",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG13",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG14",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG15",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG16",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG17",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG18",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG19",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ALG20",
+      "team": "Algérie",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG1",
+      "team": "Argentine",
+      "rarity": "badge"
+    },
+    {
+      "number": "ARG2",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG3",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG4",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG5",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG6",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG7",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG8",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG9",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG10",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG11",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG12",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG13",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG14",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG15",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG16",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG17",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG18",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG19",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "ARG20",
+      "team": "Argentine",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS1",
+      "team": "Australie",
+      "rarity": "badge"
+    },
+    {
+      "number": "AUS2",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS3",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS4",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS5",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS6",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS7",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS8",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS9",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS10",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS11",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS12",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS13",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS14",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS15",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS16",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS17",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS18",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS19",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUS20",
+      "team": "Australie",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT1",
+      "team": "Autriche",
+      "rarity": "badge"
+    },
+    {
+      "number": "AUT2",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT3",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT4",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT5",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT6",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT7",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT8",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT9",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT10",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT11",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT12",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT13",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT14",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT15",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT16",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT17",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT18",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT19",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "AUT20",
+      "team": "Autriche",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL1",
+      "team": "Belgique",
+      "rarity": "badge"
+    },
+    {
+      "number": "BEL2",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL3",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL4",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL5",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL6",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL7",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL8",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL9",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL10",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL11",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL12",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL13",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL14",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL15",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL16",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL17",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL18",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL19",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BEL20",
+      "team": "Belgique",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH1",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "badge"
+    },
+    {
+      "number": "BIH2",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH3",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH4",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH5",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH6",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH7",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH8",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH9",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH10",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH11",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH12",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH13",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH14",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH15",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH16",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH17",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH18",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH19",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BIH20",
+      "team": "Bosnie-Herzégovine",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA1",
+      "team": "Brésil",
+      "rarity": "badge"
+    },
+    {
+      "number": "BRA2",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA3",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA4",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA5",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA6",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA7",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA8",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA9",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA10",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA11",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA12",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA13",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA14",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA15",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA16",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA17",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA18",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA19",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "BRA20",
+      "team": "Brésil",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN1",
+      "team": "Canada",
+      "rarity": "badge"
+    },
+    {
+      "number": "CAN2",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN3",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN4",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN5",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN6",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN7",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN8",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN9",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN10",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN11",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN12",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN13",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN14",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN15",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN16",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN17",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN18",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN19",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CAN20",
+      "team": "Canada",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV1",
+      "team": "Cap-Vert",
+      "rarity": "badge"
+    },
+    {
+      "number": "CPV2",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV3",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV4",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV5",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV6",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV7",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV8",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV9",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV10",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV11",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV12",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV13",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV14",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV15",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV16",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV17",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV18",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV19",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "CPV20",
+      "team": "Cap-Vert",
+      "rarity": "common"
+    },
+    {
+      "number": "COL1",
+      "team": "Colombie",
+      "rarity": "badge"
+    },
+    {
+      "number": "COL2",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL3",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL4",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL5",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL6",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL7",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL8",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL9",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL10",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL11",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL12",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL13",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL14",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL15",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL16",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL17",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL18",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL19",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COL20",
+      "team": "Colombie",
+      "rarity": "common"
+    },
+    {
+      "number": "COD1",
+      "team": "RD Congo",
+      "rarity": "badge"
+    },
+    {
+      "number": "COD2",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD3",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD4",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD5",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD6",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD7",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD8",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD9",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD10",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD11",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD12",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD13",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD14",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD15",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD16",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD17",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD18",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD19",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "COD20",
+      "team": "RD Congo",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO1",
+      "team": "Croatie",
+      "rarity": "badge"
+    },
+    {
+      "number": "CRO2",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO3",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO4",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO5",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO6",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO7",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO8",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO9",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO10",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO11",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO12",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO13",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO14",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO15",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO16",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO17",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO18",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO19",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CRO20",
+      "team": "Croatie",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW1",
+      "team": "Curaçao",
+      "rarity": "badge"
+    },
+    {
+      "number": "CUW2",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW3",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW4",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW5",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW6",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW7",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW8",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW9",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW10",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW11",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW12",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW13",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW14",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW15",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW16",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW17",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW18",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW19",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CUW20",
+      "team": "Curaçao",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE1",
+      "team": "Tchéquie",
+      "rarity": "badge"
+    },
+    {
+      "number": "CZE2",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE3",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE4",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE5",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE6",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE7",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE8",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE9",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE10",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE11",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE12",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE13",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE14",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE15",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE16",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE17",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE18",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE19",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "CZE20",
+      "team": "Tchéquie",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU1",
+      "team": "Équateur",
+      "rarity": "badge"
+    },
+    {
+      "number": "ECU2",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU3",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU4",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU5",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU6",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU7",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU8",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU9",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU10",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU11",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU12",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU13",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU14",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU15",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU16",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU17",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU18",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU19",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "ECU20",
+      "team": "Équateur",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY1",
+      "team": "Égypte",
+      "rarity": "badge"
+    },
+    {
+      "number": "EGY2",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY3",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY4",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY5",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY6",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY7",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY8",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY9",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY10",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY11",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY12",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY13",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY14",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY15",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY16",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY17",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY18",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY19",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "EGY20",
+      "team": "Égypte",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG1",
+      "team": "Angleterre",
+      "rarity": "badge"
+    },
+    {
+      "number": "ENG2",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG3",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG4",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG5",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG6",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG7",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG8",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG9",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG10",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG11",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG12",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG13",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG14",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG15",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG16",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG17",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG18",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG19",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "ENG20",
+      "team": "Angleterre",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA1",
+      "team": "France",
+      "rarity": "badge"
+    },
+    {
+      "number": "FRA2",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA3",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA4",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA5",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA6",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA7",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA8",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA9",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA10",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA11",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA12",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA13",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA14",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA15",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA16",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA17",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA18",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA19",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "FRA20",
+      "team": "France",
+      "rarity": "common"
+    },
+    {
+      "number": "GER1",
+      "team": "Allemagne",
+      "rarity": "badge"
+    },
+    {
+      "number": "GER2",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER3",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER4",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER5",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER6",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER7",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER8",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER9",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER10",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER11",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER12",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER13",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER14",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER15",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER16",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER17",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER18",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER19",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GER20",
+      "team": "Allemagne",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA1",
+      "team": "Ghana",
+      "rarity": "badge"
+    },
+    {
+      "number": "GHA2",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA3",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA4",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA5",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA6",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA7",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA8",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA9",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA10",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA11",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA12",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA13",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA14",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA15",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA16",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA17",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA18",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA19",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "GHA20",
+      "team": "Ghana",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI1",
+      "team": "Haïti",
+      "rarity": "badge"
+    },
+    {
+      "number": "HAI2",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI3",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI4",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI5",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI6",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI7",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI8",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI9",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI10",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI11",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI12",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI13",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI14",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI15",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI16",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI17",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI18",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI19",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "HAI20",
+      "team": "Haïti",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN1",
+      "team": "Iran",
+      "rarity": "badge"
+    },
+    {
+      "number": "IRN2",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN3",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN4",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN5",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN6",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN7",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN8",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN9",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN10",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN11",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN12",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN13",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN14",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN15",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN16",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN17",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN18",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN19",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRN20",
+      "team": "Iran",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ1",
+      "team": "Irak",
+      "rarity": "badge"
+    },
+    {
+      "number": "IRQ2",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ3",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ4",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ5",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ6",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ7",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ8",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ9",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ10",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ11",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ12",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ13",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ14",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ15",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ16",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ17",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ18",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ19",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "IRQ20",
+      "team": "Irak",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV1",
+      "team": "Côte d'Ivoire",
+      "rarity": "badge"
+    },
+    {
+      "number": "CIV2",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV3",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV4",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV5",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV6",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV7",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV8",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV9",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV10",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV11",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV12",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV13",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV14",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV15",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV16",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV17",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV18",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV19",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "CIV20",
+      "team": "Côte d'Ivoire",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN1",
+      "team": "Japon",
+      "rarity": "badge"
+    },
+    {
+      "number": "JPN2",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN3",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN4",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN5",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN6",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN7",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN8",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN9",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN10",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN11",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN12",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN13",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN14",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN15",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN16",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN17",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN18",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN19",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JPN20",
+      "team": "Japon",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR1",
+      "team": "Jordanie",
+      "rarity": "badge"
+    },
+    {
+      "number": "JOR2",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR3",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR4",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR5",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR6",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR7",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR8",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR9",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR10",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR11",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR12",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR13",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR14",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR15",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR16",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR17",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR18",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR19",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "JOR20",
+      "team": "Jordanie",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX1",
+      "team": "Mexique",
+      "rarity": "badge"
+    },
+    {
+      "number": "MEX2",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX3",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX4",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX5",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX6",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX7",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX8",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX9",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX10",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX11",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX12",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX13",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX14",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX15",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX16",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX17",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX18",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX19",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MEX20",
+      "team": "Mexique",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR1",
+      "team": "Maroc",
+      "rarity": "badge"
+    },
+    {
+      "number": "MAR2",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR3",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR4",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR5",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR6",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR7",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR8",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR9",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR10",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR11",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR12",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR13",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR14",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR15",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR16",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR17",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR18",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR19",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "MAR20",
+      "team": "Maroc",
+      "rarity": "common"
+    },
+    {
+      "number": "NED1",
+      "team": "Pays-Bas",
+      "rarity": "badge"
+    },
+    {
+      "number": "NED2",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED3",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED4",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED5",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED6",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED7",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED8",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED9",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED10",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED11",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED12",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED13",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED14",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED15",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED16",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED17",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED18",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED19",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NED20",
+      "team": "Pays-Bas",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL1",
+      "team": "Nouvelle-Zélande",
+      "rarity": "badge"
+    },
+    {
+      "number": "NZL2",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL3",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL4",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL5",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL6",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL7",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL8",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL9",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL10",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL11",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL12",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL13",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL14",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL15",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL16",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL17",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL18",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL19",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NZL20",
+      "team": "Nouvelle-Zélande",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR1",
+      "team": "Norvège",
+      "rarity": "badge"
+    },
+    {
+      "number": "NOR2",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR3",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR4",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR5",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR6",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR7",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR8",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR9",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR10",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR11",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR12",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR13",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR14",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR15",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR16",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR17",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR18",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR19",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "NOR20",
+      "team": "Norvège",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN1",
+      "team": "Panama",
+      "rarity": "badge"
+    },
+    {
+      "number": "PAN2",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN3",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN4",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN5",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN6",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN7",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN8",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN9",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN10",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN11",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN12",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN13",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN14",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN15",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN16",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN17",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN18",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN19",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAN20",
+      "team": "Panama",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR1",
+      "team": "Paraguay",
+      "rarity": "badge"
+    },
+    {
+      "number": "PAR2",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR3",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR4",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR5",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR6",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR7",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR8",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR9",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR10",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR11",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR12",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR13",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR14",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR15",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR16",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR17",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR18",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR19",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "PAR20",
+      "team": "Paraguay",
+      "rarity": "common"
+    },
+    {
+      "number": "POR1",
+      "team": "Portugal",
+      "rarity": "badge"
+    },
+    {
+      "number": "POR2",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR3",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR4",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR5",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR6",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR7",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR8",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR9",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR10",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR11",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR12",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR13",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR14",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR15",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR16",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR17",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR18",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR19",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "POR20",
+      "team": "Portugal",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT1",
+      "team": "Qatar",
+      "rarity": "badge"
+    },
+    {
+      "number": "QAT2",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT3",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT4",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT5",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT6",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT7",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT8",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT9",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT10",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT11",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT12",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT13",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT14",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT15",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT16",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT17",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT18",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT19",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "QAT20",
+      "team": "Qatar",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA1",
+      "team": "Arabie saoudite",
+      "rarity": "badge"
+    },
+    {
+      "number": "KSA2",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA3",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA4",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA5",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA6",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA7",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA8",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA9",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA10",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA11",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA12",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA13",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA14",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA15",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA16",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA17",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA18",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA19",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "KSA20",
+      "team": "Arabie saoudite",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO1",
+      "team": "Écosse",
+      "rarity": "badge"
+    },
+    {
+      "number": "SCO2",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO3",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO4",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO5",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO6",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO7",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO8",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO9",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO10",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO11",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO12",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO13",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO14",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO15",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO16",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO17",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO18",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO19",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SCO20",
+      "team": "Écosse",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN1",
+      "team": "Sénégal",
+      "rarity": "badge"
+    },
+    {
+      "number": "SEN2",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN3",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN4",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN5",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN6",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN7",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN8",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN9",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN10",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN11",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN12",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN13",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN14",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN15",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN16",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN17",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN18",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN19",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "SEN20",
+      "team": "Sénégal",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA1",
+      "team": "Afrique du Sud",
+      "rarity": "badge"
+    },
+    {
+      "number": "RSA2",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA3",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA4",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA5",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA6",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA7",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA8",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA9",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA10",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA11",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA12",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA13",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA14",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA15",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA16",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA17",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA18",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA19",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "RSA20",
+      "team": "Afrique du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR1",
+      "team": "Corée du Sud",
+      "rarity": "badge"
+    },
+    {
+      "number": "KOR2",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR3",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR4",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR5",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR6",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR7",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR8",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR9",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR10",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR11",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR12",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR13",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR14",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR15",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR16",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR17",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR18",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR19",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "KOR20",
+      "team": "Corée du Sud",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP1",
+      "team": "Espagne",
+      "rarity": "badge"
+    },
+    {
+      "number": "ESP2",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP3",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP4",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP5",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP6",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP7",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP8",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP9",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP10",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP11",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP12",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP13",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP14",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP15",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP16",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP17",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP18",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP19",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "ESP20",
+      "team": "Espagne",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE1",
+      "team": "Suède",
+      "rarity": "badge"
+    },
+    {
+      "number": "SWE2",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE3",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE4",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE5",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE6",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE7",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE8",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE9",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE10",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE11",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE12",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE13",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE14",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE15",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE16",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE17",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE18",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE19",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SWE20",
+      "team": "Suède",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI1",
+      "team": "Suisse",
+      "rarity": "badge"
+    },
+    {
+      "number": "SUI2",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI3",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI4",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI5",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI6",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI7",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI8",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI9",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI10",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI11",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI12",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI13",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI14",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI15",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI16",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI17",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI18",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI19",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "SUI20",
+      "team": "Suisse",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN1",
+      "team": "Tunisie",
+      "rarity": "badge"
+    },
+    {
+      "number": "TUN2",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN3",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN4",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN5",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN6",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN7",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN8",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN9",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN10",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN11",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN12",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN13",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN14",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN15",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN16",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN17",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN18",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN19",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUN20",
+      "team": "Tunisie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR1",
+      "team": "Turquie",
+      "rarity": "badge"
+    },
+    {
+      "number": "TUR2",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR3",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR4",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR5",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR6",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR7",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR8",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR9",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR10",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR11",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR12",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR13",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR14",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR15",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR16",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR17",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR18",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR19",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "TUR20",
+      "team": "Turquie",
+      "rarity": "common"
+    },
+    {
+      "number": "URU1",
+      "team": "Uruguay",
+      "rarity": "badge"
+    },
+    {
+      "number": "URU2",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU3",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU4",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU5",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU6",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU7",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU8",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU9",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU10",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU11",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU12",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU13",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU14",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU15",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU16",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU17",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU18",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU19",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "URU20",
+      "team": "Uruguay",
+      "rarity": "common"
+    },
+    {
+      "number": "USA1",
+      "team": "États-Unis",
+      "rarity": "badge"
+    },
+    {
+      "number": "USA2",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA3",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA4",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA5",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA6",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA7",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA8",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA9",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA10",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA11",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA12",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA13",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA14",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA15",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA16",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA17",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA18",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA19",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "USA20",
+      "team": "États-Unis",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB1",
+      "team": "Ouzbékistan",
+      "rarity": "badge"
+    },
+    {
+      "number": "UZB2",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB3",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB4",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB5",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB6",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB7",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB8",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB9",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB10",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB11",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB12",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB13",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB14",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB15",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB16",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB17",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB18",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB19",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    },
+    {
+      "number": "UZB20",
+      "team": "Ouzbékistan",
+      "rarity": "common"
+    }
+  ]
+}

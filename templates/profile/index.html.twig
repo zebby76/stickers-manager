@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="d-flex align-items-center gap-3 mb-4">
+    <img src="{{ avatar_url(app.user.email) }}" alt="" width="72" height="72" class="avatar avatar-lg">
+    <h1 class="h3 mb-0">
+        {% if app.user.country %}<span class="fi fi-{{ app.user.country|lower }} me-2"></span>{% endif %}
+        {{ app.user.displayName }}
+    </h1>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="card text-center shadow-sm h-100"><div class="card-body">
+        <div class="display-6">{{ summary.albums }}</div><div class="text-muted small">Albums suivis</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card text-center shadow-sm h-100"><div class="card-body">
+        <div class="display-6">{{ summary.percent }}%</div><div class="text-muted small">Complétion</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card text-center shadow-sm h-100"><div class="card-body">
+        <div class="display-6 text-danger">{{ summary.missing }}</div><div class="text-muted small">Manquantes</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card text-center shadow-sm h-100"><div class="card-body">
+        <div class="display-6 text-warning">{{ summary.duplicates }}</div><div class="text-muted small">Doublons</div>
+    </div></div></div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm"><div class="card-body">
+            <h2 class="h5 mb-3">Informations</h2>
+            {{ form_start(profileForm) }}
+                <div class="mb-3">
+                    {{ form_label(profileForm.displayName) }}
+                    {{ form_widget(profileForm.displayName, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(profileForm.displayName) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(profileForm.country) }}
+                    {{ form_widget(profileForm.country, {'attr': {'class': 'form-select'}}) }}
+                </div>
+                <p class="text-muted small">Adresse e-mail : {{ app.user.email }}</p>
+                <button class="btn btn-primary"><i class="bi bi-device-floppy"></i> Enregistrer</button>
+            {{ form_end(profileForm) }}
+        </div></div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm"><div class="card-body">
+            <h2 class="h5 mb-3">Mot de passe</h2>
+            {% if passwordForm %}
+                {{ form_start(passwordForm) }}
+                    <div class="mb-3">
+                        {{ form_label(passwordForm.currentPassword) }}
+                        {{ form_widget(passwordForm.currentPassword, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(passwordForm.currentPassword) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(passwordForm.newPassword.first) }}
+                        {{ form_widget(passwordForm.newPassword.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(passwordForm.newPassword.first) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(passwordForm.newPassword.second) }}
+                        {{ form_widget(passwordForm.newPassword.second, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <button class="btn btn-outline-primary"><i class="bi bi-key"></i> Changer le mot de passe</button>
+                {{ form_end(passwordForm) }}
+            {% else %}
+                <p class="text-muted">Ton compte utilise une connexion externe (Google) : pas de mot de passe local à gérer.</p>
+            {% endif %}
+        </div></div>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-4"><div class="card-body">
+    <h2 class="h5 mb-1"><i class="bi bi-share"></i> Lien public de partage</h2>
+    <p class="text-muted small">Partage tes <strong>doublons</strong> et tes <strong>manquantes</strong> via un lien, sans que la personne ait besoin d'un compte.</p>
+
+    {% if app.user.shareToken %}
+        {% set share_url = url('app_public_collection', {token: app.user.shareToken}) %}
+        <div class="input-group mb-2">
+            <input type="text" class="form-control" readonly value="{{ share_url }}" id="share-url">
+            <button class="btn btn-outline-secondary" type="button"
+                    onclick="navigator.clipboard.writeText(document.getElementById('share-url').value); this.innerHTML='<i class=&quot;bi bi-check2&quot;></i> Copié';">
+                <i class="bi bi-clipboard"></i> Copier
+            </button>
+            <a class="btn btn-outline-primary" href="{{ share_url }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Ouvrir</a>
+        </div>
+        <form method="post" action="{{ path('app_profile_share') }}" class="d-inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('profile-share') }}">
+            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-repeat"></i> Régénérer</button>
+        </form>
+        <form method="post" action="{{ path('app_profile_share') }}" class="d-inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('profile-share') }}">
+            <input type="hidden" name="action" value="disable">
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-slash-circle"></i> Désactiver</button>
+        </form>
+    {% else %}
+        <form method="post" action="{{ path('app_profile_share') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('profile-share') }}">
+            <button class="btn btn-primary"><i class="bi bi-link-45deg"></i> Générer un lien public</button>
+        </form>
+    {% endif %}
+</div></div>
+{% endblock %}

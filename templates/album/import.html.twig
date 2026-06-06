@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Importer un album · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <h1 class="h3 mb-4">Importer un album</h1>
+
+        <div class="card shadow-sm mb-4"><div class="card-body">
+            <form method="post" action="{{ path('app_album_import') }}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token('album-import') }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Fichier (JSON ou CSV)</label>
+                    <input type="file" name="file" class="form-control" accept=".json,.csv" required>
+                    <div class="form-text">Le format est détecté automatiquement à partir de l'extension / du contenu.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nom de l'album <span class="text-muted">(requis pour un CSV, ignoré pour un JSON)</span></label>
+                    <input type="text" name="name" class="form-control" placeholder="Ex. Copa América 2024">
+                </div>
+
+                <button class="btn btn-primary"><i class="bi bi-upload"></i> Importer</button>
+                <a href="{{ path('app_album_index') }}" class="btn btn-link">Annuler</a>
+            </form>
+        </div></div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <h2 class="h6">Exemple JSON</h2>
+                <pre class="bg-dark text-light p-3 rounded small"><code>{
+  "name": "FIFA World Cup 2026",
+  "publisher": "Stickers",
+  "year": 2026,
+  "stickersPerPack": 5,
+  "stickers": [
+    {"number": "ARG1", "team": "Argentine", "rarity": "badge"},
+    {"number": "ARG2", "team": "Argentine"},
+    {"number": "ARG3", "team": "Argentine"}
+  ]
+}</code></pre>
+            </div>
+            <div class="col-md-6">
+                <h2 class="h6">Exemple CSV</h2>
+                <pre class="bg-dark text-light p-3 rounded small"><code>number,team,rarity
+ARG1,Argentine,badge
+ARG2,Argentine,
+ARG3,Argentine,shiny</code></pre>
+                <p class="small text-muted">Colonnes : <code>number, team, rarity</code>.
+                Types acceptés : <code>common</code>, <code>shiny</code>, <code>badge</code>, <code>legend</code>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

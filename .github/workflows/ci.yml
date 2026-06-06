@@ -1,0 +1,73 @@
+---
+name: CI
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Lint & tests
+    runs-on: ubuntu-24.04
+
+    # Run the job inside the same toolchain image used for local dev.
+    container:
+      image: smalswebtech/base-php:8.5-cli-dev
+      options: --user root
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: stickers
+          POSTGRES_USER: stickers
+          POSTGRES_PASSWORD: stickers
+        options: >-
+          --health-cmd "pg_isready -U stickers -d stickers"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      APP_ENV: test
+      APP_SECRET: ci-secret
+      # In test env Symfony appends "_test" to the db name → stickers_test
+      DATABASE_URL: "postgresql://stickers:stickers@postgres:5432/stickers?serverVersion=16&charset=utf8"
+      COMPOSER_ALLOW_SUPERUSER: "1"
+      PHP_BYPASS_INI_DEFAULT_VALUES: "true"
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # The job runs in a container as root while the checkout is owned by the
+      # runner user → tell git the workspace is safe (otherwise composer/git fail).
+      - name: Trust workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Composer install
+        # ext-opentelemetry is enabled in the runtime image, not in the build tooling.
+        run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-req=ext-opentelemetry
+
+      - name: Lint
+        run: |
+          php bin/console lint:twig templates
+          php bin/console lint:container
+          php bin/console lint:yaml config
+
+      - name: Prepare test database
+        run: |
+          php bin/console doctrine:database:create --if-not-exists
+          php bin/console doctrine:migrations:migrate --no-interaction
+          php bin/console doctrine:fixtures:load --no-interaction
+
+      - name: PHPUnit
+        run: php bin/phpunit

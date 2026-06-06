@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes doublons · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Mes doublons</h1>
+    <span class="badge text-bg-warning fs-6">{{ totalSpare }} vignette(s) à échanger</span>
+</div>
+
+{% if byAlbum is empty %}
+    <div class="alert alert-info">Tu n'as aucun doublon pour l'instant. Dès que tu auras une vignette en plusieurs exemplaires, elle apparaîtra ici.</div>
+{% else %}
+    <p class="text-muted">Trouve des collectionneurs intéressés depuis la page <a href="{{ path('app_trade_index') }}">Échanges</a>.</p>
+    {% for group in byAlbum %}
+        <h2 class="h5 mt-4">{{ group.album.name }}</h2>
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-2">
+            {% for holding in group.items %}
+                {% set s = holding.sticker %}
+                {% set cc = country_code(s.team) %}
+                <div class="col">
+                    <div class="card text-center h-100 duplicate {{ s.rarity.value == 'shiny' ? 'rarity-shiny' : '' }}">
+                        <div class="card-body p-2">
+                            <div class="fw-bold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ s.number }}</div>
+                            <span class="badge text-bg-warning mt-1">{{ holding.duplicates }} en trop</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs · Stickers Manager{% endblock %}
+
+{% macro action_form(route, user, action, label, cls, icon, confirm) %}
+    <form method="post" action="{{ path(route, {id: user.id}) }}" class="d-inline"
+          {% if confirm %}onsubmit="return confirm('{{ confirm }}');"{% endif %}>
+        <input type="hidden" name="_token" value="{{ csrf_token('user-' ~ action ~ '-' ~ user.id) }}">
+        <button class="btn btn-sm {{ cls }}" title="{{ label }}"><i class="bi {{ icon }}"></i> {{ label }}</button>
+    </form>
+{% endmacro %}
+
+{% block body %}
+{% import _self as ui %}
+<h1 class="h3 mb-4"><i class="bi bi-people"></i> Utilisateurs <span class="badge text-bg-secondary">{{ users|length }}</span></h1>
+
+<div class="card shadow-sm"><div class="card-body p-0">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+    <thead><tr>
+        <th class="ps-3">Utilisateur</th><th>Statut</th><th>Inscrit le</th><th class="text-end pe-3">Actions</th>
+    </tr></thead>
+    <tbody>
+    {% for u in users %}
+        {% set isSelf = u.id == app.user.id %}
+        <tr class="{{ not u.approved ? 'table-warning' : (not u.active ? 'table-secondary' : '') }}">
+            <td class="ps-3">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ avatar_url(u.email) }}" alt="" width="40" height="40" class="avatar">
+                    <div>
+                        <strong>{% if u.country %}<span class="fi fi-{{ u.country|lower }} me-1"></span>{% endif %}{{ u.displayName }}</strong>{% if isSelf %} <span class="badge text-bg-light">toi</span>{% endif %}
+                        <div class="small text-muted">{{ u.email }}{% if u.googleId %} · <i class="bi bi-google"></i> Google{% endif %}</div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                {% if not u.approved %}<span class="badge text-bg-warning">En attente</span>
+                {% elseif not u.active %}<span class="badge text-bg-dark">Désactivé</span>
+                {% else %}<span class="badge text-bg-success">Actif</span>{% endif %}
+                {% if 'ROLE_ADMIN' in u.roles %}
+                    <span class="badge text-bg-primary"><i class="bi bi-shield-check"></i> Admin</span>
+                {% else %}
+                    <span class="badge text-bg-light text-dark border"><i class="bi bi-person"></i> Membre</span>
+                {% endif %}
+            </td>
+            <td class="small text-muted">{{ u.createdAt|date('d/m/Y') }}</td>
+            <td class="text-end pe-3">
+                <div class="d-inline-flex gap-1 flex-wrap justify-content-end">
+                    {% if not u.approved %}
+                        {{ ui.action_form('app_admin_user_approve', u, 'approve', 'Approuver', 'btn-success', 'bi-check-lg', null) }}
+                    {% endif %}
+                    {% if not isSelf %}
+                        {% if u.active %}
+                            {{ ui.action_form('app_admin_user_ban', u, 'ban', 'Désactiver', 'btn-outline-dark', 'bi-slash-circle', 'Désactiver ce compte ?') }}
+                        {% else %}
+                            {{ ui.action_form('app_admin_user_ban', u, 'ban', 'Réactiver', 'btn-outline-success', 'bi-arrow-counterclockwise', null) }}
+                        {% endif %}
+                        {% if 'ROLE_ADMIN' in u.roles %}
+                            {{ ui.action_form('app_admin_user_role', u, 'role', 'Retirer admin', 'btn-outline-secondary', 'bi-shield-minus', null) }}
+                        {% elseif u.approved and u.active %}
+                            {{ ui.action_form('app_admin_user_role', u, 'role', 'Rendre admin', 'btn-outline-primary', 'bi-shield-plus', null) }}
+                        {% endif %}
+                        {{ ui.action_form('app_admin_user_delete', u, 'delete', 'Supprimer', 'btn-outline-danger', 'bi-trash', 'Supprimer définitivement ' ~ u.displayName ~ ' et toutes ses données ?') }}
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div></div>
+{% endblock %}

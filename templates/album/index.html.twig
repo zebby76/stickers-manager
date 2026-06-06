@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue d'albums · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Catalogue d'albums</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="d-flex gap-2">
+            <a href="{{ path('app_album_import') }}" class="btn btn-outline-primary"><i class="bi bi-upload"></i> Importer</a>
+            <a href="{{ path('app_album_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Nouvel album</a>
+        </div>
+    {% endif %}
+</div>
+
+{% if rows is empty %}
+    <div class="alert alert-info">
+        Aucun album dans le catalogue.
+        {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('app_album_new') }}">Crée le premier !</a>{% endif %}
+    </div>
+{% else %}
+    <div class="row g-3">
+        {% for row in rows %}
+            {% set album = row.album %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="h5">{{ album.name }}</h2>
+                        <p class="text-muted small mb-2">
+                            {{ album.publisher }}{% if album.year %} · {{ album.year }}{% endif %} · {{ album.totalStickers }} vignettes
+                        </p>
+                        {% if row.collected and row.progress %}
+                            <div class="progress mb-2" style="height: 16px;">
+                                <div class="progress-bar {{ row.progress.isComplete ? 'bg-success' : '' }}" style="width: {{ row.progress.completionPercent }}%">{{ row.progress.completionPercent }}%</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white d-flex gap-2">
+                        <a href="{{ path('app_album_show', {slug: album.slug}) }}" class="btn btn-sm btn-outline-primary flex-grow-1">Ouvrir</a>
+                        {% if row.collected %}
+                            <span class="btn btn-sm btn-success disabled"><i class="bi bi-check-lg"></i> Suivi</span>
+                        {% else %}
+                            <form method="post" action="{{ path('app_album_collect', {slug: album.slug}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('collect-' ~ album.id) }}">
+                                <button class="btn btn-sm btn-outline-success"><i class="bi bi-plus-lg"></i> Suivre</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

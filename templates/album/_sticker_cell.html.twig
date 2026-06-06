@@ -1,0 +1,31 @@
+{#- One checklist cell. Click to adjust: left = +1, right = -1 (Stimulus + Turbo).
+    Wrapper id lets Turbo replace it in place. -#}
+{% set owned = qty >= 1 %}
+{% set dup = qty > 1 %}
+<div class="col" id="sticker-{{ sticker.id }}"
+     data-checklist-filter-target="cell"
+     data-number="{{ sticker.number|lower }}"
+     data-owned="{{ owned ? 1 : 0 }}"
+     data-dup="{{ dup ? 1 : 0 }}"
+     data-rarity="{{ sticker.rarity.value }}">
+    <div class="card sticker-cell sticker-clickable position-relative text-center h-100 {{ owned ? 'owned' : 'missing' }} {{ dup ? 'duplicate' : '' }} {{ sticker.rarity.value == 'shiny' ? 'rarity-shiny' : '' }}"
+         data-controller="sticker"
+         data-action="click->sticker#inc contextmenu->sticker#dec"
+         title="#{{ sticker.number }}{{ sticker.team ? ' — ' ~ sticker.team : '' }} · clic gauche +1 · clic droit −1">
+        {% if owned %}
+            <span class="sticker-counter badge rounded-pill {{ dup ? 'text-bg-warning' : 'text-bg-success' }}">{{ qty }}</span>
+        {% endif %}
+        <div class="card-body p-2 d-flex flex-column justify-content-center">
+            <div class="fw-bold">{{ sticker.number }}</div>
+        </div>
+
+        <form class="d-none" data-sticker-target="inc" method="post" action="{{ path('app_collection_adjust', {id: sticker.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('adjust-' ~ sticker.id) }}">
+            <input type="hidden" name="delta" value="1">
+        </form>
+        <form class="d-none" data-sticker-target="dec" method="post" action="{{ path('app_collection_adjust', {id: sticker.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('adjust-' ~ sticker.id) }}">
+            <input type="hidden" name="delta" value="-1">
+        </form>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Échange avec {{ match.other.displayName }} · Stickers Manager{% endblock %}
+
+{% macro sticker_check(name, sticker) %}
+    <label class="list-group-item d-flex gap-2 align-items-center">
+        <input class="form-check-input flex-shrink-0" type="checkbox" name="{{ name }}[]" value="{{ sticker.id }}" checked>
+        {% set cc = country_code(sticker.team) %}
+        <span>
+            {% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}<strong>#{{ sticker.number }}</strong>
+            <small class="text-muted">— {{ sticker.album.name }}{{ sticker.team ? ' · ' ~ sticker.team : '' }}</small>
+        </span>
+    </label>
+{% endmacro %}
+
+{% block body %}
+{% import _self as ui %}
+<a href="{{ path('app_trade_index') }}" class="btn btn-link px-0 mb-2"><i class="bi bi-arrow-left"></i> Retour aux échanges</a>
+<h1 class="h3 mb-4">Proposer un échange à {{ match.other.displayName }}</h1>
+
+<form method="post" action="{{ path('app_trade_create', {id: match.other.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('trade-create-' ~ match.other.id) }}">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h2 class="h6 text-success"><i class="bi bi-arrow-up-right"></i> Je donne ({{ match.giveCount }})</h2>
+            <p class="small text-muted">Tes doublons qui manquent à {{ match.other.displayName }}.</p>
+            {% if match.canGive is empty %}
+                <p class="text-muted">Aucun doublon utile pour ce collectionneur.</p>
+            {% else %}
+                <div class="list-group" style="max-height: 360px; overflow:auto;">
+                    {% for sticker in match.canGive %}{{ ui.sticker_check('give', sticker) }}{% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2 class="h6 text-primary"><i class="bi bi-arrow-down-left"></i> Je reçois ({{ match.receiveCount }})</h2>
+            <p class="small text-muted">Les doublons de {{ match.other.displayName }} qu'il te manque.</p>
+            {% if match.canReceive is empty %}
+                <p class="text-muted">Ce collectionneur n'a aucun doublon qu'il te manque.</p>
+            {% else %}
+                <div class="list-group" style="max-height: 360px; overflow:auto;">
+                    {% for sticker in match.canReceive %}{{ ui.sticker_check('receive', sticker) }}{% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Message (optionnel)</label>
+        <textarea name="message" class="form-control" rows="2" placeholder="Salut ! Ça te dit un échange ?"></textarea>
+    </div>
+
+    <button class="btn btn-primary mt-3"><i class="bi bi-send"></i> Envoyer la proposition</button>
+</form>
+{% endblock %}

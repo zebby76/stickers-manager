@@ -1,0 +1,278 @@
+---
+name: Docker Build & Push
+
+run-name: Docker ${{ github.ref_name }} by @${{ github.actor }}
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+*"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Image version/tag (e.g. 1.2.3). Empty → snapshot."
+        required: false
+        type: string
+
+env:
+  DOCKER_IMAGE_NAME: zebby76/stickers-manager
+
+jobs:
+  # ── Compute build params + the platforms matrix (from the bake file) ──────────
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      push: ${{ steps.vars.outputs.push }}
+      sbom: ${{ github.event_name != 'pull_request' }}
+      provenance: ${{ github.event_name != 'pull_request' }}
+      tag: ${{ steps.vars.outputs.tag }}
+      latest: ${{ steps.vars.outputs.latest }}
+      platforms: ${{ steps.matrix.outputs.platforms }}
+      metadata: ${{ steps.matrix.outputs.metadata }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Compute build parameters
+        id: vars
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "tag=${{ github.ref_name }}" >> "${GITHUB_OUTPUT}"
+          elif [ -n "${{ inputs.version }}" ]; then
+            echo "tag=${{ inputs.version }}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "tag=snapshot" >> "${GITHUB_OUTPUT}"
+          fi
+          # Push on tags, on main, or on manual dispatch — never on pull requests.
+          [ "${{ github.event_name }}" = "pull_request" ] \
+            && echo "push=false" >> "${GITHUB_OUTPUT}" \
+            || echo "push=true"  >> "${GITHUB_OUTPUT}"
+          # latest only on main or a release tag
+          { [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref_type }}" = "tag" ]; } \
+            && echo "latest=true"  >> "${GITHUB_OUTPUT}" \
+            || echo "latest=false" >> "${GITHUB_OUTPUT}"
+
+      - name: Build the platforms matrix
+        id: matrix
+        run: |
+          set -e
+          METADATA="$(docker buildx bake --print | jq -c)"
+          {
+            echo "metadata=${METADATA}"
+            echo "platforms=$(jq -c 'first(.target[]) | .platforms' <<< "${METADATA}")"
+          } >> "${GITHUB_OUTPUT}"
+        env:
+          DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+          DOCKER_IMAGE_LATEST: ${{ steps.vars.outputs.latest }}
+          GIT_HASH: ${{ github.sha }}
+
+  # ── Build each platform on its native runner (no QEMU), push by digest ────────
+  build:
+    needs: prepare
+    runs-on: ${{ startsWith(matrix.platform, 'linux/arm') && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ${{ fromJson(needs.prepare.outputs.platforms) }}
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Prepare platform slug
+        id: prepare
+        run: |
+          platform="${{ matrix.platform }}"
+          echo "slug=${platform//\//-}" >> "${GITHUB_OUTPUT}"
+
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: ${{ matrix.platform }}
+
+      - name: Login to Docker Hub
+        if: fromJson(needs.prepare.outputs.push)
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Configure Composer cache + public keys
+        run: |
+          mkdir -p "${HOME}/.composer/cache"
+          curl -sSL https://composer.github.io/snapshots.pub -o "${HOME}/.composer/keys.dev.pub"
+          curl -sSL https://composer.github.io/releases.pub -o "${HOME}/.composer/keys.tags.pub"
+
+      - name: Build application (Composer + assets)
+        run: make build-app
+
+      - name: Bake (push by digest)
+        id: build
+        uses: docker/bake-action@v6
+        with:
+          source: .
+          files: docker-bake.hcl
+          targets: |
+            prd
+            dev
+          pull: true
+          load: ${{ !fromJson(needs.prepare.outputs.push) }}
+          sbom: ${{ fromJson(needs.prepare.outputs.sbom) }}
+          provenance: ${{ fromJson(needs.prepare.outputs.provenance) }}
+          # Drop tags (digests are merged later) and pin to this one platform.
+          set: |
+            *.tags=
+            *.platform=${{ matrix.platform }}
+            prd.cache-from=type=gha,scope=prd-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }}
+            prd.cache-to=type=gha,scope=prd-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
+            dev.cache-from=type=gha,scope=dev-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }}
+            dev.cache-to=type=gha,scope=dev-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
+            ${{ fromJson(needs.prepare.outputs.push) && format('*.output=type=image,name={0},push-by-digest=true,name-canonical=true,push=true', env.DOCKER_IMAGE_NAME) || '' }}
+        env:
+          DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE_TAG: ${{ needs.prepare.outputs.tag }}
+          DOCKER_IMAGE_LATEST: ${{ needs.prepare.outputs.latest }}
+          GIT_HASH: ${{ github.sha }}
+
+      - name: Export digests
+        if: fromJson(needs.prepare.outputs.push)
+        run: |
+          mkdir -p /tmp/metadata/prd /tmp/metadata/dev
+          prdDigest=$(jq -r '."prd"."containerimage.digest"' <<< "${METADATA}")
+          touch "/tmp/metadata/prd/${prdDigest#sha256:}"
+          devDigest=$(jq -r '."dev"."containerimage.digest"' <<< "${METADATA}")
+          touch "/tmp/metadata/dev/${devDigest#sha256:}"
+        env:
+          METADATA: ${{ steps.build.outputs.metadata }}
+
+      - name: Upload prd digest
+        if: fromJson(needs.prepare.outputs.push)
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata-prd-${{ steps.prepare.outputs.slug }}-${{ github.sha }}
+          path: /tmp/metadata/prd/*
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload dev digest
+        if: fromJson(needs.prepare.outputs.push)
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata-dev-${{ steps.prepare.outputs.slug }}-${{ github.sha }}
+          path: /tmp/metadata/dev/*
+          if-no-files-found: error
+          retention-days: 1
+
+  # ── Merge per-arch digests into one tagged multi-arch manifest ───────────────
+  push:
+    needs:
+      - prepare
+      - build
+    if: fromJson(needs.prepare.outputs.push)
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ["prd", "dev"]
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          pattern: metadata-${{ matrix.target }}-*
+          path: /tmp/metadata
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Create & push manifest list
+        working-directory: /tmp/metadata
+        run: |
+          set -x
+          # shellcheck disable=SC2046,SC2086
+          docker buildx imagetools create \
+            $(jq -cr '.target."${{ matrix.target }}".tags | map("-t " + .) | join(" ")' <<< "${METADATA}") \
+            $(printf "${DOCKER_IMAGE_NAME}@sha256:%s " *)
+        env:
+          METADATA: ${{ needs.prepare.outputs.metadata }}
+
+      - name: Resolve pushed digest
+        id: digest
+        run: |
+          tag="$(jq -cr '.target."${{ matrix.target }}".tags | first' <<< "${METADATA}")"
+          digest="$(docker buildx imagetools inspect "${tag}" --format '{{ json .Manifest.Digest }}' | tr -d '"')"
+          echo "ref=${DOCKER_IMAGE_NAME}@${digest}" >> "${GITHUB_OUTPUT}"
+        env:
+          METADATA: ${{ needs.prepare.outputs.metadata }}
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign image (keyless, OIDC)
+        run: cosign sign --yes "${{ steps.digest.outputs.ref }}"
+
+      - name: Inspect image
+        run: docker buildx imagetools inspect "${{ steps.digest.outputs.ref }}"
+
+  # ── Vulnerability scan of the published prod image (Trivy → Security tab) ─────
+  scan:
+    needs:
+      - prepare
+      - push
+    if: fromJson(needs.prepare.outputs.push)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Run Trivy (SARIF)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
+          format: sarif
+          output: trivy.sarif
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy.sarif
+          category: trivy-image
+
+      - name: Trivy summary (table, non-blocking)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.prepare.outputs.tag }}
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "0"

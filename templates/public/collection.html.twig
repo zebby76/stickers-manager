@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collection de {{ owner.displayName }} · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="text-center mb-4">
+    <img src="{{ avatar_url(owner.email) }}" alt="" width="72" height="72" class="avatar avatar-lg mb-2">
+    <h1 class="h3">
+        {% if owner.country %}<span class="fi fi-{{ owner.country|lower }} me-2"></span>{% endif %}
+        Collection de {{ owner.displayName }}
+    </h1>
+    <p class="text-muted">Vignettes <strong>à échanger</strong> (doublons) et <strong>manquantes</strong> — liste publique.</p>
+</div>
+
+{% if albums is empty %}
+    <div class="alert alert-info text-center">Aucun album suivi pour l'instant.</div>
+{% endif %}
+
+{% for a in albums %}
+    <div class="card shadow-sm mb-4"><div class="card-body">
+        <h2 class="h5 mb-3">{{ a.album.name }}{% if a.album.year %} <span class="text-muted fw-normal">({{ a.album.year }})</span>{% endif %}</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h3 class="h6 text-warning"><i class="bi bi-stack"></i> Doublons à échanger
+                    <span class="badge text-bg-warning">{{ a.duplicatesCount }}</span></h3>
+                {% if a.duplicates is empty %}
+                    <p class="text-muted small mb-0">Aucun doublon.</p>
+                {% else %}
+                    {% for team, items in a.duplicates %}
+                        {% set cc = country_code(team) %}
+                        <div class="mb-2">
+                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }}</div>
+                            {% for it in items %}<span class="badge text-bg-light border me-1 mb-1">{{ it.sticker.number }}{% if it.spare > 1 %} ×{{ it.spare }}{% endif %}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h3 class="h6 text-danger"><i class="bi bi-search"></i> Manquantes
+                    <span class="badge text-bg-danger">{{ a.missingCount }}</span></h3>
+                {% if a.missing is empty %}
+                    <p class="text-success small mb-0">Album complet ! 🎉</p>
+                {% else %}
+                    {% for team, stickers in a.missing %}
+                        {% set cc = country_code(team) %}
+                        <div class="mb-2">
+                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }}</div>
+                            {% for s in stickers %}<span class="badge text-bg-light border me-1 mb-1">{{ s.number }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div></div>
+{% endfor %}
+
+<p class="text-center text-muted small mt-4">⚽ Propulsé par Stickers Manager</p>
+{% endblock %}

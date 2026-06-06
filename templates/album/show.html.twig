@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ album.name }} · Stickers Manager{% endblock %}
+
+{% block body %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-start mb-3 gap-2">
+    <div>
+        <h1 class="h3 mb-1">{{ album.name }}</h1>
+        <p class="text-muted mb-0">{{ album.publisher }}{% if album.year %} · {{ album.year }}{% endif %} · {{ album.totalStickers }} vignettes</p>
+    </div>
+    <div class="d-flex gap-2">
+        {% if collected %}
+            <form method="post" action="{{ path('app_album_collect', {slug: album.slug}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('collect-' ~ album.id) }}">
+                <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-bookmark-dash"></i> Ne plus suivre</button>
+            </form>
+        {% else %}
+            <form method="post" action="{{ path('app_album_collect', {slug: album.slug}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('collect-' ~ album.id) }}">
+                <button class="btn btn-success btn-sm"><i class="bi bi-bookmark-plus"></i> Suivre cet album</button>
+            </form>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_album_edit', {slug: album.slug}) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i></a>
+        {% endif %}
+    </div>
+</div>
+
+{{ include('album/_progress.html.twig', {progress: progress, album: album}) }}
+
+{% if album.totalStickers == 0 %}
+    <div class="alert alert-warning">
+        Cet album n'a pas encore de vignettes.
+        {% if is_granted('ROLE_ADMIN') %}Ajoute-les via le panneau « Gérer les vignettes » ci-dessous.{% endif %}
+    </div>
+{% endif %}
+
+{% if groups is not empty %}
+<div data-controller="checklist-filter">
+    <div class="card shadow-sm mb-4"><div class="card-body py-2">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-5">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="search" class="form-control" placeholder="Rechercher un identifiant…"
+                           data-checklist-filter-target="search" data-action="input->checklist-filter#apply">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="btn-group btn-group-sm flex-wrap filter-toolbar" role="group">
+                    {% for value, label in {'all': 'Toutes', 'missing': 'Manquantes', 'owned': 'Possédées', 'duplicates': 'Doublons', 'shiny': 'Brillantes'} %}
+                        <input type="radio" class="btn-check" name="cl-filter" id="cl-{{ value }}" value="{{ value }}"
+                               {{ value == 'all' ? 'checked' : '' }}
+                               data-action="change->checklist-filter#setMode" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="cl-{{ value }}">{{ label }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-2 text-md-end small text-muted" data-checklist-filter-target="count"></div>
+        </div>
+    </div></div>
+
+    <div class="row row-cols-1 row-cols-lg-2 g-4">
+        {% for team, stickers in groups %}
+            {% set cc = country_code(team) %}
+            <div class="col" data-checklist-filter-target="section">
+                <h2 class="h5 mb-2">
+                    {% if cc %}<span class="fi fi-{{ cc }} flag-lg me-2"></span>{% endif %}{{ team }}
+                    <span class="badge text-bg-light">{{ stickers|length }}</span>
+                </h2>
+                <div class="row row-cols-3 row-cols-md-5 row-cols-lg-4 g-2">
+                    {% for sticker in stickers %}
+                        {{ include('album/_sticker_cell.html.twig', {sticker: sticker, qty: quantities[sticker.id]|default(0)}) }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if is_granted('ROLE_ADMIN') %}
+<hr class="my-4">
+
+<div class="accordion" id="manage">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#manageBody">
+                <i class="bi bi-gear me-2"></i> Gérer les vignettes du catalogue
+            </button>
+        </h2>
+        <div id="manageBody" class="accordion-collapse collapse" data-bs-parent="#manage">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h3 class="h6">Ajouter une vignette</h3>
+                        <form method="post" action="{{ path('app_sticker_add', {slug: album.slug}) }}" class="row g-2">
+                            <input type="hidden" name="_token" value="{{ csrf_token('sticker-add-' ~ album.id) }}">
+                            <div class="col-6"><input name="number" class="form-control" placeholder="Identifiant (ex. BEL19)" required></div>
+                            <div class="col-6"><input name="team" class="form-control" placeholder="Équipe / groupe"></div>
+                            <div class="col-8">
+                                <select name="rarity" class="form-select">
+                                    <option value="common">Commun</option>
+                                    <option value="shiny">Brillant</option>
+                                    <option value="badge">Écusson</option>
+                                    <option value="legend">Légende</option>
+                                </select>
+                            </div>
+                            <div class="col-4"><button class="btn btn-primary btn-sm w-100">Ajouter</button></div>
+                        </form>
+                    </div>
+                    <div class="col-lg-7">
+                        <h3 class="h6">Import en masse</h3>
+                        <p class="small text-muted mb-1">Une vignette par ligne : <code>identifiant ; équipe ; type</code> (équipe et type optionnels).</p>
+                        <form method="post" action="{{ path('app_sticker_import', {slug: album.slug}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('sticker-import-' ~ album.id) }}">
+                            <textarea name="bulk" class="form-control font-monospace" rows="6" placeholder="BEL1 ; Belgique ; badge&#10;BEL2 ; Belgique&#10;BEL3 ; Belgique"></textarea>
+                            <button class="btn btn-primary btn-sm mt-2">Importer</button>
+                        </form>
+                    </div>
+                </div>
+
+                {% if album.totalStickers > 0 %}
+                    <h3 class="h6 mt-4">Vignettes existantes <span class="badge text-bg-light">{{ album.totalStickers }}</span></h3>
+                    <div class="row row-cols-2 row-cols-lg-3 g-1" style="max-height: 360px; overflow:auto;">
+                        {% for sticker in album.stickers %}
+                            {% set cc = country_code(sticker.team) %}
+                            <div class="col">
+                                <div class="d-flex align-items-center justify-content-between border rounded px-2 py-1">
+                                    <span class="text-truncate">
+                                        {% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}
+                                        <strong>{{ sticker.number }}</strong>
+                                        {% if sticker.team %}<small class="text-muted">· {{ sticker.team }}</small>{% endif %}
+                                        {% if sticker.rarity.value != 'common' %}<span class="badge text-bg-light border ms-1">{{ sticker.rarity.label }}</span>{% endif %}
+                                    </span>
+                                    <form method="post" action="{{ path('app_sticker_delete', {id: sticker.id}) }}" class="ms-2 flex-shrink-0"
+                                          onsubmit="return confirm('Supprimer cette vignette ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('sticker-delete-' ~ sticker.id) }}">
+                                        <button class="btn btn-outline-danger btn-sm py-0"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

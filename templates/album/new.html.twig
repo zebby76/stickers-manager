@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel album · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="h3 mb-4">Nouvel album</h1>
+        <div class="card shadow-sm"><div class="card-body">
+            {{ include('album/_form.html.twig') }}
+        </div></div>
+    </div>
+</div>
+{% endblock %}

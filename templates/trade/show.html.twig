@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proposition d'échange · Stickers Manager{% endblock %}
+
+{% macro item_list(items, emptyText) %}
+    {% if items is empty %}
+        <p class="text-muted small">{{ emptyText }}</p>
+    {% else %}
+        <ul class="list-group list-group-flush">
+            {% for item in items %}
+                {% set cc = country_code(item.sticker.team) %}
+                <li class="list-group-item px-0">
+                    {% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}<strong>#{{ item.sticker.number }}</strong>
+                    <small class="text-muted">— {{ item.sticker.album.name }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% block body %}
+{% import _self as ui %}
+{% set status = proposal.status %}
+{% set map = {'pending': 'secondary', 'accepted': 'info', 'declined': 'danger', 'cancelled': 'dark', 'completed': 'success'} %}
+
+<a href="{{ path('app_trade_index') }}" class="btn btn-link px-0 mb-2"><i class="bi bi-arrow-left"></i> Retour aux échanges</a>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">
+        Échange : {{ proposal.fromUser.displayName }} ⇄ {{ proposal.toUser.displayName }}
+    </h1>
+    <span class="badge text-bg-{{ map[status.value] }} fs-6">{{ status.label }}</span>
+</div>
+
+{% if proposal.message %}
+    <div class="alert alert-light border"><i class="bi bi-chat-quote"></i> {{ proposal.message }}</div>
+{% endif %}
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100"><div class="card-body">
+            <h2 class="h6 text-success">{{ proposal.fromUser.displayName }} donne</h2>
+            {{ ui.item_list(proposal.givenItems, 'Rien à donner.') }}
+        </div></div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100"><div class="card-body">
+            <h2 class="h6 text-primary">{{ proposal.fromUser.displayName }} reçoit</h2>
+            {{ ui.item_list(proposal.receivedItems, 'Rien à recevoir.') }}
+        </div></div>
+    </div>
+</div>
+
+{% set canAct = status.value == 'pending' or status.value == 'accepted' %}
+{% if canAct %}
+    <div class="mt-4 d-flex flex-wrap gap-2">
+        {% if isRecipient and status.value == 'pending' %}
+            <form method="post" action="{{ path('app_trade_respond', {id: proposal.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('trade-respond-' ~ proposal.id) }}">
+                <input type="hidden" name="action" value="accept">
+                <button class="btn btn-success"><i class="bi bi-check-lg"></i> Accepter</button>
+            </form>
+            <form method="post" action="{{ path('app_trade_respond', {id: proposal.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('trade-respond-' ~ proposal.id) }}">
+                <input type="hidden" name="action" value="decline">
+                <button class="btn btn-outline-danger"><i class="bi bi-x-lg"></i> Refuser</button>
+            </form>
+        {% endif %}
+
+        {% if not isRecipient and status.value in ['pending', 'accepted'] %}
+            <form method="post" action="{{ path('app_trade_respond', {id: proposal.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('trade-respond-' ~ proposal.id) }}">
+                <input type="hidden" name="action" value="cancel">
+                <button class="btn btn-outline-dark"><i class="bi bi-slash-circle"></i> Annuler</button>
+            </form>
+        {% endif %}
+
+        {% if status.value == 'accepted' %}
+            <form method="post" action="{{ path('app_trade_respond', {id: proposal.id}) }}"
+                  onsubmit="return confirm('Finaliser l\\'échange ? Les vignettes seront transférées entre les deux collections.');">
+                <input type="hidden" name="_token" value="{{ csrf_token('trade-respond-' ~ proposal.id) }}">
+                <input type="hidden" name="action" value="complete">
+                <button class="btn btn-primary"><i class="bi bi-arrow-left-right"></i> Finaliser l'échange</button>
+            </form>
+        {% endif %}
+    </div>
+{% endif %}
+
+<p class="text-muted small mt-4">Créée le {{ proposal.createdAt|date('d/m/Y H:i') }} · Mise à jour le {{ proposal.updatedAt|date('d/m/Y H:i') }}</p>
+{% endblock %}

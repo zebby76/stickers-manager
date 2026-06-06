@@ -1,0 +1,63 @@
+# Stickers Manager vhost — rendered at startup by base-php (gomplate).
+# Doc root → Symfony public/, PHP via the base image's default php-fpm pool.
+# Optional base-php features are wired here and toggled by env vars:
+#   NGINX_FASTCGI_CACHE_ENABLED, NGINX_SOFT_THROTTLE_ENABLED, NGINX_X_*_*.
+server {
+    listen       9000 default_server;
+    server_name  _;
+
+    root  /app/src/stickers/public;
+    index index.php;
+
+    client_max_body_size {{ getenv "NGINX_CLIENT_MAX_BODY_SIZE" "8m" }};
+
+{{ if ne (getenv "NGINX_SOFT_THROTTLE_ENABLED" "false") "false" -}}
+    # —— Rate limiting (zones defined by base throttling.conf) ——
+    limit_req zone=global_limit burst={{ getenv "NGINX_SOFT_THROTTLE_GLOBAL_ZONE_BURST" "30" }} nodelay;
+    limit_req zone=bot_limit    burst={{ getenv "NGINX_SOFT_THROTTLE_BOTS_ZONE_BURST" "5" }} nodelay;
+    limit_req_dry_run {{ getenv "NGINX_SOFT_THROTTLE_DRY_RUN_ENABLED" "on" }};
+{{- end }}
+
+    # —— Security headers (server level) ——
+    add_header X-Frame-Options        "{{ getenv "NGINX_X_FRAME_OPTIONS" "SAMEORIGIN" }}" always;
+    add_header X-Content-Type-Options "{{ getenv "NGINX_X_CONTENT_TYPE_OPTIONS" "nosniff" }}" always;
+    add_header Referrer-Policy        "{{ getenv "NGINX_REFERRER_POLICY" "strict-origin-when-cross-origin" }}" always;
+    add_header Permissions-Policy     "{{ getenv "NGINX_PERMISSIONS_POLICY" "geolocation=(), microphone=(), camera=()" }}" always;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index\.php(/|$) {
+        fastcgi_pass unix:/app/var/run/php-fpm/php-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        # add_header in a location stops inheritance → re-declare security headers
+        add_header X-Frame-Options        "{{ getenv "NGINX_X_FRAME_OPTIONS" "SAMEORIGIN" }}" always;
+        add_header X-Content-Type-Options "{{ getenv "NGINX_X_CONTENT_TYPE_OPTIONS" "nosniff" }}" always;
+        add_header Referrer-Policy        "{{ getenv "NGINX_REFERRER_POLICY" "strict-origin-when-cross-origin" }}" always;
+        add_header Permissions-Policy     "{{ getenv "NGINX_PERMISSIONS_POLICY" "geolocation=(), microphone=(), camera=()" }}" always;
+
+{{ if ne (getenv "NGINX_FASTCGI_CACHE_ENABLED" "false") "false" -}}
+        # —— FastCGI micro-cache (anonymous responses only) ——
+        # base defines the zone + the $default_no_cache_* bypass maps (cookies
+        # ~*PHPSESSID ~*symfony and mutating methods are never cached).
+        fastcgi_cache       {{ getenv "NGINX_FASTCGI_CACHE_NAME" "microcache" }};
+        fastcgi_cache_key   "$scheme$request_method$host$request_uri";
+        fastcgi_cache_valid 200 301 302 {{ getenv "NGINX_FASTCGI_CACHE_VALID_OK_DURATION" "1m" }};
+        fastcgi_cache_valid 404 {{ getenv "NGINX_FASTCGI_CACHE_VALID_NOK_DURATION" "10s" }};
+        fastcgi_cache_bypass $default_no_cache_method $default_no_cache_cookie;
+        fastcgi_no_cache     $default_no_cache_method $default_no_cache_cookie;
+        add_header X-Cache $upstream_cache_status always;
+{{- end }}
+
+        internal;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+}

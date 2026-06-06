@@ -1,0 +1,12 @@
+{#- Album progress summary. Wrapper id lets Turbo refresh the counters. -#}
+<div class="card shadow-sm mb-4" id="album-progress"><div class="card-body">
+    <div class="row text-center">
+        <div class="col"><div class="h4 mb-0">{{ progress.owned }}/{{ progress.total }}</div><small class="text-muted">Possédées</small></div>
+        <div class="col"><div class="h4 mb-0 text-danger">{{ progress.missing }}</div><small class="text-muted">Manquantes</small></div>
+        <div class="col"><div class="h4 mb-0 text-warning">{{ progress.duplicates }}</div><small class="text-muted">Doublons</small></div>
+        <div class="col"><div class="h4 mb-0">≈ {{ progress.estimatedPacksToComplete }}</div><small class="text-muted">Pochettes restantes</small></div>
+    </div>
+    <div class="progress mt-3" style="height: 22px;">
+        <div class="progress-bar {{ progress.isComplete ? 'bg-success' : '' }}" style="width: {{ progress.completionPercent }}%">{{ progress.completionPercent }}%</div>
+    </div>
+</div></div>

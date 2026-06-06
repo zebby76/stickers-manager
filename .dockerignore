@@ -1,0 +1,24 @@
+# VCS / CI / editor
+.git/
+.github/
+.claude/
+.editorconfig
+
+# Packaging files (not needed inside the image; .docker IS needed and kept)
+Dockerfile
+docker-bake.hcl
+Makefile
+compose.yaml
+.dockerignore
+README.md
+
+# Local env overrides & runtime
+.env.local
+.env.*.local
+/var/
+/.phpunit.cache/
+
+# Tests & sample data (not shipped in the runtime image)
+/tests/
+phpunit.dist.xml
+/imports/

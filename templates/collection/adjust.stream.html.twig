@@ -1,0 +1,6 @@
+<turbo-stream action="replace" target="sticker-{{ sticker.id }}">
+    <template>{{ include('album/_sticker_cell.html.twig', {sticker: sticker, qty: qty}) }}</template>
+</turbo-stream>
+<turbo-stream action="replace" target="album-progress">
+    <template>{{ include('album/_progress.html.twig', {progress: progress, album: album}) }}</template>
+</turbo-stream>

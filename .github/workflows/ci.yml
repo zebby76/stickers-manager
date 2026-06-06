@@ -43,6 +43,10 @@ jobs:
       DATABASE_URL: "postgresql://stickers:stickers@postgres:5432/stickers?serverVersion=16&charset=utf8"
       COMPOSER_ALLOW_SUPERUSER: "1"
       PHP_BYPASS_INI_DEFAULT_VALUES: "true"
+      # GitHub overrides the base-php entrypoint for `container:` jobs, so the PHP
+      # extensions are never enabled. Point PHP at the standard conf.d to load them
+      # (pdo_pgsql, intl, …) — otherwise Doctrine fails with "could not find driver".
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d"
 
     steps:
       - name: Checkout source

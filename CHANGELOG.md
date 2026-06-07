@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.4] - 2026-06-07
+
+### Fixed
+- **PWA service worker failed to register** (the page-side `workbox-window` 404'd
+  because Workbox was loaded from the CDN but the helper resolved it locally), so the
+  app wasn't actually installable. Host Workbox + workbox-window + idb locally
+  (`use_cdn: false`), compiled by `pwa:compile`.
+
 ## [1.3.3] - 2026-06-07
 
 ### Fixed
@@ -108,7 +116,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.3...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.4...HEAD
+[1.3.4]: https://github.com/zebby76/stickers-manager/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/zebby76/stickers-manager/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/zebby76/stickers-manager/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/zebby76/stickers-manager/compare/1.3.0...1.3.1

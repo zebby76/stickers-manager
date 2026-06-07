@@ -19,10 +19,13 @@ pwa:
         # Activate a new service worker immediately (and drop its now-stale caches),
         # so fixes ship without users having to close every tab.
         skip_waiting: true
-        # Load Workbox from its CDN (no need to host it ourselves).
+        # Host Workbox (+ workbox-window + idb) locally under /workbox and /idb, compiled
+        # by pwa:compile. Self-contained (no external CDN) and, crucially, the page-side
+        # workbox-window helper resolves locally — with use_cdn:true it 404'd, which broke
+        # service-worker registration entirely.
         workbox:
             config:
-                use_cdn: true
+                use_cdn: false
             # Cache HTML navigations with NetworkFirst (NOT the default StaleWhileRevalidate):
             # this is a login-gated app, so pages must be fetched fresh when online and only
             # fall back to cache when offline. StaleWhileRevalidate served the stale (pre-login)

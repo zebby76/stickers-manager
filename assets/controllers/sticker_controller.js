@@ -1,11 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
 
 /*
- * Click a sticker cell to adjust its quantity:
- *   left click  → +1
- *   right click → -1
- * Submits the matching hidden form via Turbo (the server returns a Turbo Stream
- * that replaces the cell and the progress counters). A short pulse gives feedback.
+ * Adjust a sticker cell's quantity:
+ *   tap / left click       → +1   (whole cell)
+ *   the − button / right click → -1
+ * The − button makes decrement work on touch (no right-click on mobile). Submits the
+ * matching hidden form via Turbo (the server returns a Turbo Stream that replaces the
+ * cell and the progress counters). A short pulse gives feedback.
  */
 export default class extends Controller {
     static targets = ['inc', 'dec'];
@@ -18,6 +19,9 @@ export default class extends Controller {
 
     dec(event) {
         event.preventDefault();
+        // When fired by the − button (a click inside the cell), don't let it bubble
+        // up to the cell's own click handler and add +1 at the same time.
+        event.stopPropagation();
         this.pulse('pulse-remove');
         this.decTarget.requestSubmit();
     }

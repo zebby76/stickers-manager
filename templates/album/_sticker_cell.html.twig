@@ -1,5 +1,6 @@
-{#- One checklist cell. Click to adjust: left = +1, right = -1 (Stimulus + Turbo).
-    Wrapper id lets Turbo replace it in place. -#}
+{#- One checklist cell. Adjust quantity: tap/left-click = +1, the − button (or
+    right-click on desktop) = -1 (Stimulus + Turbo). Wrapper id lets Turbo replace
+    it in place. -#}
 {% set owned = qty >= 1 %}
 {% set dup = qty > 1 %}
 <div class="col" id="sticker-{{ sticker.id }}"
@@ -11,8 +12,10 @@
     <div class="card sticker-cell sticker-clickable position-relative text-center h-100 {{ owned ? 'owned' : 'missing' }} {{ dup ? 'duplicate' : '' }} {{ sticker.rarity.value == 'shiny' ? 'rarity-shiny' : '' }}"
          data-controller="sticker"
          data-action="click->sticker#inc contextmenu->sticker#dec"
-         title="#{{ sticker.number }}{{ sticker.team ? ' — ' ~ sticker.team : '' }} · clic gauche +1 · clic droit −1">
+         title="#{{ sticker.number }}{{ sticker.team ? ' — ' ~ sticker.team : '' }} · appuie pour +1 · bouton − pour retirer">
         {% if owned %}
+            <button type="button" class="sticker-dec" data-action="click->sticker#dec"
+                    aria-label="Retirer un exemplaire de la vignette {{ sticker.number }}">−</button>
             <span class="sticker-counter badge rounded-pill {{ dup ? 'text-bg-warning' : 'text-bg-success' }}">{{ qty }}</span>
         {% endif %}
         <div class="card-body p-2 d-flex flex-column justify-content-center">

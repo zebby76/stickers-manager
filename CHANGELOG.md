@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-06-07
+
+### Added
+- **Installable PWA**: web app manifest, a Workbox-based service worker (offline
+  shell + asset/image caching), app icons (8 sizes + maskable) and Apple touch
+  icons. The app can be added to the home screen on Android/iOS and stays usable
+  offline for already-visited pages.
+
+### Changed
+- **Touch-friendly checklist**: owned stickers now show a − button to remove a
+  copy, so decrement works on phones/tablets (there is no right-click on touch).
+  Tap still adds +1; on desktop left-click +1 / right-click −1 are unchanged.
+
 ## [1.2.0] - 2026-06-07
 
 ### Changed
@@ -67,7 +80,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/zebby76/stickers-manager/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/zebby76/stickers-manager/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/zebby76/stickers-manager/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/zebby76/stickers-manager/releases/tag/1.0.0

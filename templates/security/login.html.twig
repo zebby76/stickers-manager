@@ -57,6 +57,10 @@
                     </button>
                 </form>
 
+                <p class="text-center mt-3 mb-0">
+                    <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié&nbsp;?</a>
+                </p>
+
                 {% if google_sso_enabled %}
                     <div class="text-center text-muted my-3">— ou —</div>
                     <a href="{{ path('connect_google_start') }}" class="btn btn-outline-secondary w-100">

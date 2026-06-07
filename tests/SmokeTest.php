@@ -8,11 +8,14 @@ use App\Repository\AlbumRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class SmokeTest extends WebTestCase
 {
+    use MailerAssertionsTrait;
+
     private KernelBrowser $client;
 
     protected function setUp(): void
@@ -40,6 +43,47 @@ class SmokeTest extends WebTestCase
         $this->client->request('GET', '/login');
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Stickers Manager');
+        self::assertSelectorExists('a[href="/reset-password"]', 'Login page should link to password reset');
+    }
+
+    public function testFooterShowsVersion(): void
+    {
+        // APP_VERSION is injected as a Twig global and rendered in the footer.
+        $this->client->request('GET', '/login');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('footer.app-footer');
+    }
+
+    public function testForgotPasswordPageRenders(): void
+    {
+        $this->client->request('GET', '/reset-password');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'Mot de passe oublié');
+    }
+
+    public function testPasswordResetSendsEmailForKnownUser(): void
+    {
+        $crawler = $this->client->request('GET', '/reset-password');
+        self::assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Envoyer le lien')->form();
+        $form['reset_password_request_form[email]'] = 'alice@example.com';
+        $this->client->submit($form);
+
+        self::assertResponseRedirects('/reset-password/check-email');
+        self::assertEmailCount(1);
+    }
+
+    public function testPasswordResetDoesNotLeakUnknownEmail(): void
+    {
+        $crawler = $this->client->request('GET', '/reset-password');
+        $form = $crawler->selectButton('Envoyer le lien')->form();
+        $form['reset_password_request_form[email]'] = 'nobody@example.com';
+        $this->client->submit($form);
+
+        // Same outcome as a known address (no account enumeration), but no e-mail sent.
+        self::assertResponseRedirects('/reset-password/check-email');
+        self::assertEmailCount(0);
     }
 
     public function testAuthenticatedPagesRender(): void

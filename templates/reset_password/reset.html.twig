@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser le mot de passe · Stickers Manager{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm overflow-hidden">
+            <div class="sticker-hero text-center">
+                <h1 class="h4 mb-0"><i class="bi bi-shield-lock"></i> Nouveau mot de passe</h1>
+            </div>
+            <div class="card-body p-4">
+                {% form_theme resetForm 'bootstrap_5_layout.html.twig' %}
+                {{ form_start(resetForm) }}
+                    {{ form_row(resetForm.plainPassword.first) }}
+                    {{ form_row(resetForm.plainPassword.second) }}
+                    <button class="btn btn-primary w-100" type="submit">
+                        <i class="bi bi-check2-circle"></i> Réinitialiser
+                    </button>
+                {{ form_end(resetForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

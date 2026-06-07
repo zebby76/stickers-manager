@@ -195,6 +195,19 @@
         /* —— Collector avatars (DiceBear pixel-art) ——————————————————— */
         .avatar { border-radius: 0; background: #fff; border: 2px solid var(--ink); box-shadow: 2px 2px 0 rgba(20, 24, 43, .4); vertical-align: middle; image-rendering: pixelated; }
         .avatar-lg { width: 72px; height: 72px; border-width: 2px; box-shadow: 3px 3px 0 rgba(20, 24, 43, .35); }
+
+        /* —— Footer (version scoreboard) ————————————————————————————— */
+        .app-footer {
+            margin-top: auto; padding: 1rem; color: var(--muted);
+            font-family: var(--font-body); font-size: 1rem;
+            border-top: 2px dashed rgba(20, 24, 43, .18);
+        }
+        .app-footer .app-version {
+            font-family: var(--font-pixel); font-size: .58rem; color: var(--brand-700);
+            border: 2px solid var(--ink); background: #fff; padding: .12rem .4rem;
+            box-shadow: 2px 2px 0 rgba(20, 24, 43, .18); margin-left: .35rem;
+        }
+        body { display: flex; flex-direction: column; min-height: 100vh; }
     </style>
     {% block stylesheets %}{% endblock %}
     {% block javascripts %}{{ importmap('app') }}{% endblock %}
@@ -267,6 +280,10 @@
 
     {% block body %}{% endblock %}
 </main>
+
+<footer class="app-footer text-center">
+    <span class="brand-badge">Stickers</span> Manager{% if app_version %} <span class="app-version">v{{ app_version }}</span>{% endif %}
+</footer>
 
 </body>
 </html>

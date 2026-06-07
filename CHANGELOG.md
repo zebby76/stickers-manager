@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-06-07
+
+### Added
+- **Password reset** — self-service "forgot password" flow with an e-mailed,
+  single-use, expiring link (`symfonycasts/reset-password-bundle`). Account
+  existence is never revealed.
+- **Version footer** — the running version is shown on every page (sourced from
+  the deployed image tag in production).
+
+### Changed
+- **HTTP sessions are now stored in PostgreSQL** (`PdoSessionHandler`) so they
+  survive container restarts — important on the read-only, tmpfs-backed runtime
+  and behind scale-to-zero.
+
 ## [1.0.0] - 2026-06-06
 
 First public release.
@@ -41,5 +55,6 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/zebby76/stickers-manager/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/zebby76/stickers-manager/releases/tag/1.0.0

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<body style="font-family: Arial, Helvetica, sans-serif; color: #14182b;">
+    <h1 style="color: #2f9e44;">Stickers Manager</h1>
+    <p>Bonjour,</p>
+    <p>Tu as demandé la réinitialisation de ton mot de passe. Clique sur le bouton ci-dessous pour en choisir un nouveau :</p>
+    <p>
+        <a href="{{ url('app_reset_password', {token: resetToken.token}) }}"
+           style="display: inline-block; padding: 12px 20px; background: #2f9e44; color: #fff; text-decoration: none; font-weight: bold;">
+            Réinitialiser mon mot de passe
+        </a>
+    </p>
+    <p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+    <p style="color: #5d6480; font-size: 13px;">Si tu n’es pas à l’origine de cette demande, ignore simplement cet e-mail — ton mot de passe restera inchangé.</p>
+</body>
+</html>

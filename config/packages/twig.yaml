@@ -2,6 +2,7 @@ twig:
     file_name_pattern: '*.twig'
     globals:
         google_sso_enabled: '%env(bool:GOOGLE_CLIENT_ID)%'
+        app_version: '%env(APP_VERSION)%'
 
 when@test:
     twig:

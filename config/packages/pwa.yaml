@@ -16,10 +16,22 @@ pwa:
     serviceworker:
         enabled: true
         src: 'sw.js'
+        # Activate a new service worker immediately (and drop its now-stale caches),
+        # so fixes ship without users having to close every tab.
+        skip_waiting: true
         # Load Workbox from its CDN (no need to host it ourselves).
         workbox:
             config:
                 use_cdn: true
+            # Cache HTML navigations with NetworkFirst (NOT the default StaleWhileRevalidate):
+            # this is a login-gated app, so pages must be fetched fresh when online and only
+            # fall back to cache when offline. StaleWhileRevalidate served the stale (pre-login)
+            # page, forcing an F5 after login / after a wrong password.
+            resource_caches:
+                - match_callback: 'navigate'
+                  cache_name: 'pages'
+                  strategy: 'NetworkFirst'
+                  network_timeout: 3
 
     manifest:
         name: 'Stickers Manager'

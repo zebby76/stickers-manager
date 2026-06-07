@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-06-07
+
+### Fixed
+- **PWA service worker served stale HTML**, so a login (or a wrong-password error)
+  only appeared after a manual refresh. Navigations now use **NetworkFirst** instead
+  of StaleWhileRevalidate — pages are fetched fresh when online and only fall back to
+  cache when offline. The worker also activates immediately (`skip_waiting`) and drops
+  its old caches.
+
 ## [1.3.0] - 2026-06-07
 
 ### Added
@@ -80,7 +89,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.1...HEAD
+[1.3.1]: https://github.com/zebby76/stickers-manager/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/zebby76/stickers-manager/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/zebby76/stickers-manager/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/zebby76/stickers-manager/compare/1.0.0...1.1.0

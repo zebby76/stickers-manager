@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.3] - 2026-06-07
+
+### Fixed
+- **Login (and form submissions) appeared to require a manual refresh.** Behind the
+  Cloudflare Tunnel the app saw the request as HTTP and generated `http://` redirects;
+  Turbo's `fetch` to that URL was blocked as mixed content on the HTTPS page, so the
+  page never updated. The app now trusts the reverse proxy and the forwarded scheme
+  (`trusted_proxies` + `trusted_headers`), and Traefik forwards `X-Forwarded-Proto:
+  https` for the public host — so redirects are https and Turbo works. (This was the
+  real cause; the 1.3.1/1.3.2 service-worker fixes were unrelated red herrings.)
+
 ## [1.3.2] - 2026-06-07
 
 ### Fixed
@@ -97,7 +108,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.2...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.3...HEAD
+[1.3.3]: https://github.com/zebby76/stickers-manager/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/zebby76/stickers-manager/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/zebby76/stickers-manager/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/zebby76/stickers-manager/compare/1.2.0...1.3.0

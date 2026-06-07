@@ -13,6 +13,12 @@ framework:
 
 when@prod:
     framework:
+        # Behind Cloudflare Tunnel → Traefik, which forces X-Forwarded-Proto=https for
+        # the public host. Trust the proxy so the app knows it's served over HTTPS and
+        # generates https:// URLs; otherwise redirects are http:// and Turbo's fetch is
+        # blocked as mixed content (login then appears to need a manual refresh).
+        trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+        trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
         session:
             # A redis:// DSN — Symfony's SessionHandlerFactory builds a RedisSessionHandler.
             handler_id: '%env(REDIS_URL)%'

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-06-07
+
+### Fixed
+- Serve the PWA **service worker and manifest with `Cache-Control: no-cache`** so a
+  CDN/browser can't pin an outdated service worker (Cloudflare was edge-caching
+  `/sw.js` for hours, which kept the 1.3.1 fix from reaching clients). The manifest
+  is now also served with the correct `application/manifest+json` MIME type.
+
 ## [1.3.1] - 2026-06-07
 
 ### Fixed
@@ -89,7 +97,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.1...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.2...HEAD
+[1.3.2]: https://github.com/zebby76/stickers-manager/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/zebby76/stickers-manager/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/zebby76/stickers-manager/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/zebby76/stickers-manager/compare/1.1.0...1.2.0

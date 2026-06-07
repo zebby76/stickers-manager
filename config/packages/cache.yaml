@@ -17,3 +17,12 @@ framework:
         # Namespaced pools use the above "app" backend by default
         #pools:
             #my.dedicated.cache: null
+
+when@prod:
+    framework:
+        cache:
+            # Back the "app" pool (and thus the Doctrine result cache, see
+            # doctrine.yaml) with Valkey/Redis: shared and kept warm across container
+            # restarts / scale-to-zero, instead of an in-container filesystem cache.
+            app: cache.adapter.redis
+            default_redis_provider: '%env(REDIS_URL)%'

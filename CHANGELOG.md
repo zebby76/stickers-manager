@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-07
+
+### Changed
+- **HTTP sessions and the application cache (Doctrine result cache) now live in
+  Valkey** (Redis-compatible, BSD-licensed) in production, instead of PostgreSQL
+  and the in-container filesystem. Sessions survive restarts and the cache stays
+  **warm across scale-to-zero cold starts**, while offloading session churn from
+  the database. Dev/test keep file-based sessions and a filesystem cache.
+
+### Removed
+- The `sessions` PostgreSQL table (superseded by Valkey) — dropped via migration.
+
 ## [1.1.0] - 2026-06-07
 
 ### Added
@@ -55,6 +67,7 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/zebby76/stickers-manager/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/zebby76/stickers-manager/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/zebby76/stickers-manager/releases/tag/1.0.0

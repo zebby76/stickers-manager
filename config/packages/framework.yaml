@@ -3,14 +3,19 @@ framework:
     secret: '%env(APP_SECRET)%'
 
     # Note that the session will be started ONLY if you read or write from it.
-    # Sessions are stored in PostgreSQL (PdoSessionHandler, see services.yaml) so they
-    # survive container restarts: in production the container is read-only with a tmpfs
-    # var/, and Sablier scale-to-zero stops/starts it — a file handler would drop them.
-    session:
-        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+    # File-based by default (dev / CLI). In production sessions live in Valkey/Redis
+    # (see the when@prod override) so they survive container restarts and scale-to-zero
+    # — important on the read-only, tmpfs-backed runtime.
+    session: true
 
     #esi: true
     #fragments: true
+
+when@prod:
+    framework:
+        session:
+            # A redis:// DSN — Symfony's SessionHandlerFactory builds a RedisSessionHandler.
+            handler_id: '%env(REDIS_URL)%'
 
 when@test:
     framework:

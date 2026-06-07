@@ -24,10 +24,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-    # Database-backed HTTP sessions (see config/packages/framework.yaml).
-    # Uses a dedicated connection built from DATABASE_URL (recommended over sharing
-    # the Doctrine ORM connection). The `sessions` table is created by a migration.
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
-        arguments:
-            - '%env(DATABASE_URL)%'

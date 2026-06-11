@@ -61,10 +61,10 @@
                     <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié&nbsp;?</a>
                 </p>
 
-                {% if google_sso_enabled %}
+                {% if authelia_sso_enabled %}
                     <div class="text-center text-muted my-3">— ou —</div>
-                    <a href="{{ path('connect_google_start') }}" class="btn btn-outline-secondary w-100">
-                        <i class="bi bi-google"></i> Se connecter avec Google
+                    <a href="{{ path('connect_authelia_start') }}" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-shield-lock"></i> Se connecter avec zebbox SSO
                     </a>
                 {% endif %}
 

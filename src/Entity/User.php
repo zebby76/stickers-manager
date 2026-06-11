@@ -50,9 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $active = true;
 
-    /** Google subject id, set when the account is linked to Google SSO. */
+    /** Authelia OIDC subject id, set when the account is linked to the zebbox SSO. */
     #[ORM\Column(length: 100, nullable: true, unique: true)]
-    private ?string $googleId = null;
+    private ?string $autheliaId = null;
 
     /** Random token enabling a public read-only "missing & duplicates" page. */
     #[ORM\Column(length: 32, nullable: true, unique: true)]
@@ -182,14 +182,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGoogleId(): ?string
+    public function getAutheliaId(): ?string
     {
-        return $this->googleId;
+        return $this->autheliaId;
     }
 
-    public function setGoogleId(?string $googleId): static
+    public function setAutheliaId(?string $autheliaId): static
     {
-        $this->googleId = $googleId;
+        $this->autheliaId = $autheliaId;
 
         return $this;
     }

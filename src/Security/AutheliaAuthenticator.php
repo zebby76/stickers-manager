@@ -6,7 +6,6 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
-use League\OAuth2\Client\Provider\GoogleUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,13 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
-class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticatorInterface, AuthenticationEntryPointInterface
+/**
+ * Logs users in via the self-hosted Authelia SSO (OIDC, auth.zebbox.net).
+ * Mirrors the old GoogleAuthenticator, but accounts coming from Authelia are
+ * auto-approved: identities are already curated in Authelia, so no second
+ * admin validation in the app.
+ */
+class AutheliaAuthenticator extends OAuth2Authenticator implements AuthenticatorInterface, AuthenticationEntryPointInterface
 {
     public function __construct(
         private readonly ClientRegistry $clientRegistry,
@@ -30,42 +35,46 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticatorIn
 
     public function supports(Request $request): ?bool
     {
-        return $request->attributes->get('_route') === 'connect_google_check';
+        return $request->attributes->get('_route') === 'connect_authelia_check';
     }
 
     public function authenticate(Request $request): Passport
     {
-        $client = $this->clientRegistry->getClient('google');
+        $client = $this->clientRegistry->getClient('authelia');
         $accessToken = $this->fetchAccessToken($client);
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client): User {
-                /** @var GoogleUser $googleUser */
-                $googleUser = $client->fetchUserFromToken($accessToken);
+                $owner = $client->fetchUserFromToken($accessToken);
+                $claims = $owner->toArray();
+                $sub = (string) $owner->getId();
                 $repo = $this->em->getRepository(User::class);
 
-                // 1) Already linked to this Google account.
-                if ($existing = $repo->findOneBy(['googleId' => $googleUser->getId()])) {
+                // 1) Already linked to this Authelia subject.
+                if ($existing = $repo->findOneBy(['autheliaId' => $sub])) {
                     return $existing;
                 }
 
-                $email = (string) $googleUser->getEmail();
+                $email = (string) ($claims['email'] ?? '');
 
-                // 2) Local account with the same e-mail → link it to Google.
-                if ($byEmail = $repo->findOneBy(['email' => $email])) {
-                    $byEmail->setGoogleId($googleUser->getId());
+                // 2) Local account with the same e-mail → link it to Authelia.
+                if ($email !== '' && $byEmail = $repo->findOneBy(['email' => $email])) {
+                    $byEmail->setAutheliaId($sub);
                     $this->em->flush();
 
                     return $byEmail;
                 }
 
-                // 3) Brand-new account → created pending admin approval.
-                $name = $googleUser->getName() ?: explode('@', $email)[0];
+                // 3) Brand-new account → auto-approved (curated in Authelia).
+                $name = $claims['name'] ?? $claims['preferred_username'] ?? null;
+                if (!$name) {
+                    $name = $email !== '' ? explode('@', $email)[0] : $sub;
+                }
                 $user = (new User())
-                    ->setEmail($email)
-                    ->setGoogleId($googleUser->getId())
-                    ->setDisplayName(mb_substr($name, 0, 60))
-                    ->setApproved(false)
+                    ->setEmail($email !== '' ? $email : $sub.'@authelia.local')
+                    ->setAutheliaId($sub)
+                    ->setDisplayName(mb_substr((string) $name, 0, 60))
+                    ->setApproved(true)
                     ->setActive(true);
                 $this->em->persist($user);
                 $this->em->flush();

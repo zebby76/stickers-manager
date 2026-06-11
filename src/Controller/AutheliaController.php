@@ -8,19 +8,19 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class GoogleController extends AbstractController
+class AutheliaController extends AbstractController
 {
-    #[Route('/connect/google', name: 'connect_google_start', methods: ['GET'])]
+    #[Route('/connect/authelia', name: 'connect_authelia_start', methods: ['GET'])]
     public function connect(ClientRegistry $clientRegistry): RedirectResponse
     {
-        return $clientRegistry->getClient('google')->redirect(['email', 'profile'], []);
+        return $clientRegistry->getClient('authelia')->redirect(['openid', 'profile', 'email', 'groups'], []);
     }
 
     /**
-     * Google redirects here after consent. The authentication itself is handled
-     * by App\Security\GoogleAuthenticator on this route.
+     * Authelia redirects here after consent. The authentication itself is handled
+     * by App\Security\AutheliaAuthenticator on this route.
      */
-    #[Route('/connect/google/check', name: 'connect_google_check', methods: ['GET'])]
+    #[Route('/connect/authelia/check', name: 'connect_authelia_check', methods: ['GET'])]
     public function check(): Response
     {
         return new Response('', Response::HTTP_NO_CONTENT);

@@ -1,9 +1,24 @@
 knpu_oauth2_client:
     clients:
-        google:
-            type: google
-            client_id: '%env(GOOGLE_CLIENT_ID)%'
-            client_secret: '%env(GOOGLE_CLIENT_SECRET)%'
-            # route name that Google redirects back to (see GoogleController)
-            redirect_route: connect_google_check
+        # Self-hosted Authelia SSO (OIDC). The app is a confidential OIDC client;
+        # register it in Authelia's identity_providers.oidc.clients (see README).
+        # Back-channel calls (token/userinfo) use the *public* issuer URL so the
+        # token issuer matches — keep userinfo unsigned (none) on the Authelia side.
+        authelia:
+            type: generic
+            provider_class: League\OAuth2\Client\Provider\GenericProvider
+            # Authelia enforces PKCE — this client subclass adds the S256
+            # code_challenge on redirect and the code_verifier on token exchange
+            # (stored in the session between the two requests).
+            client_class: KnpU\OAuth2ClientBundle\Client\OAuth2PKCEClient
+            client_id: '%env(OIDC_CLIENT_ID)%'
+            client_secret: '%env(OIDC_CLIENT_SECRET)%'
+            # route name that Authelia redirects back to (see AutheliaController)
+            redirect_route: connect_authelia_check
             redirect_params: {}
+            provider_options:
+                urlAuthorize: '%env(OIDC_ISSUER)%/api/oidc/authorization'
+                urlAccessToken: '%env(OIDC_ISSUER)%/api/oidc/token'
+                urlResourceOwnerDetails: '%env(OIDC_ISSUER)%/api/oidc/userinfo'
+                responseResourceOwnerId: sub
+                scopeSeparator: ' '

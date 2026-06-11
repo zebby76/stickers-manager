@@ -1,7 +1,9 @@
 twig:
     file_name_pattern: '*.twig'
     globals:
-        google_sso_enabled: '%env(bool:GOOGLE_CLIENT_ID)%'
+        # truthy when OIDC_CLIENT_ID is non-empty — NOT env(bool:) which only
+        # accepts true/1/yes/on or a number (a textual client id would be false)
+        authelia_sso_enabled: '%env(OIDC_CLIENT_ID)%'
         app_version: '%env(APP_VERSION)%'
 
 when@test:

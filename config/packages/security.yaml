@@ -20,7 +20,7 @@ security:
             user_checker: App\Security\UserChecker
             entry_point: form_login
             custom_authenticators:
-                - App\Security\GoogleAuthenticator
+                - App\Security\AutheliaAuthenticator
             form_login:
                 login_path: app_login
                 check_path: app_login

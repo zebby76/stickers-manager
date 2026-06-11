@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-06-11
+
+### Changed
+- **Replaced Google SSO with the self-hosted Authelia SSO** (OIDC, `auth.zebbox.net`).
+  The login page now offers a "zebbox SSO" button instead of Google; accounts created
+  through Authelia are **auto-approved** (identities are already curated in Authelia).
+  `form_login` (e-mail + password) and the moderated `/register` flow are unchanged.
+  - App config: generic OIDC client (`OIDC_ISSUER`/`OIDC_CLIENT_ID`/`OIDC_CLIENT_SECRET`),
+    `App\Security\AutheliaAuthenticator`, `/connect/authelia[/check]`.
+  - DB: `user.google_id` → `user.authelia_id` (migration `Version20260611120000`).
+  - Requires registering a confidential OIDC client in Authelia (redirect
+    `https://<host>/connect/authelia/check`, scopes `openid profile email groups`,
+    `userinfo_signed_response_alg: none`).
+
 ## [1.3.4] - 2026-06-07
 
 ### Fixed

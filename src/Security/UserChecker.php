@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Blocks authentication for accounts that are not yet approved by an admin or
  * that have been disabled (banned). Runs for every firewall authenticator
- * (form login and Google SSO).
+ * (form login and Authelia SSO).
  */
 class UserChecker implements UserCheckerInterface
 {

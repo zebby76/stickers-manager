@@ -29,7 +29,7 @@
                     <img src="{{ avatar_url(u.email) }}" alt="" width="40" height="40" class="avatar">
                     <div>
                         <strong>{% if u.country %}<span class="fi fi-{{ u.country|lower }} me-1"></span>{% endif %}{{ u.displayName }}</strong>{% if isSelf %} <span class="badge text-bg-light">toi</span>{% endif %}
-                        <div class="small text-muted">{{ u.email }}{% if u.googleId %} · <i class="bi bi-google"></i> Google{% endif %}</div>
+                        <div class="small text-muted">{{ u.email }}{% if u.autheliaId %} · <i class="bi bi-shield-lock"></i> SSO{% endif %}</div>
                     </div>
                 </div>
             </td>

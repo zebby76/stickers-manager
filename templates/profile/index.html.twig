@@ -26,6 +26,11 @@
     </div></div></div>
 </div>
 
+<div class="card shadow-sm mb-4"><div class="card-body">
+    <h2 class="h5 mb-3"><i class="bi bi-trophy text-warning"></i> Trophées</h2>
+    {{ include('_badges.html.twig', {badges: badges, show_locked: true}) }}
+</div></div>
+
 <div class="row g-4">
     <div class="col-md-6">
         <div class="card shadow-sm"><div class="card-body">

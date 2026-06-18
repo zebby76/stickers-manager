@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\ProfileType;
 use App\Repository\UserRepository;
+use App\Service\BadgeService;
 use App\Service\CollectionStats;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,7 @@ class ProfileController extends AbstractController
         UserRepository $users,
         UserPasswordHasherInterface $hasher,
         CollectionStats $stats,
+        BadgeService $badges,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
@@ -61,6 +63,7 @@ class ProfileController extends AbstractController
             'profileForm' => $profileForm,
             'passwordForm' => $hasLocalPassword ? $passwordForm : null,
             'summary' => $stats->summarize($progresses),
+            'badges' => $badges->forUser($user),
         ]);
     }
 

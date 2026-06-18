@@ -10,6 +10,11 @@
         Collection de {{ owner.displayName }}
     </h1>
     <p class="text-muted">Vignettes <strong>à échanger</strong> (doublons) et <strong>manquantes</strong> — liste publique.</p>
+    {% if badges is not empty %}
+        <div class="d-flex justify-content-center">
+            {{ include('_badges.html.twig', {badges: badges, show_locked: false}) }}
+        </div>
+    {% endif %}
 </div>
 
 {% if albums is empty %}

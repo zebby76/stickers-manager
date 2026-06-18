@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserAlbumRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserStickerRepository;
+use App\Service\BadgeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
@@ -18,6 +19,7 @@ class PublicCollectionController extends AbstractController
         UserRepository $users,
         UserAlbumRepository $userAlbums,
         UserStickerRepository $userStickers,
+        BadgeService $badges,
     ): Response {
         $owner = $users->findOneBy(['shareToken' => $token]);
         if ($owner === null) {
@@ -52,6 +54,7 @@ class PublicCollectionController extends AbstractController
         $response = $this->render('public/collection.html.twig', [
             'owner' => $owner,
             'albums' => $albums,
+            'badges' => $badges->earnedForUser($owner),
         ]);
 
         // Public, anonymous page → cacheable (benefits from the nginx FastCGI

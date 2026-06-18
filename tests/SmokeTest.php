@@ -203,6 +203,17 @@ class SmokeTest extends WebTestCase
         self::assertStringContainsString('alice@example.com', (string) $this->client->getResponse()->getContent());
     }
 
+    public function testProfileShowsAchievementBadges(): void
+    {
+        $this->loginAs('alice@example.com');
+        $crawler = $this->client->request('GET', '/profile');
+        self::assertResponseIsSuccessful();
+
+        self::assertStringContainsString('Trophées', (string) $this->client->getResponse()->getContent());
+        // The full badge set is always rendered on the profile (earned + locked).
+        self::assertGreaterThan(0, $crawler->filter('.badge-trophy')->count(), 'Profile should show achievement badges');
+    }
+
     public function testPublicCollectionLinkWorksWithoutLogin(): void
     {
         // Set a share token directly, then hit the page as an anonymous visitor.

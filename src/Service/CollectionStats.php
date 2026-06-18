@@ -81,6 +81,26 @@ class CollectionStats
     }
 
     /**
+     * Number of fully collected teams/sections across all collected albums
+     * (used for the "full team" achievement badge).
+     */
+    public function completedTeamCount(User $user): int
+    {
+        $count = 0;
+        foreach ($this->userAlbums->findByUser($user) as $userAlbum) {
+            $album = $userAlbum->getAlbum();
+            $map = $this->userStickers->getQuantityMapForAlbum($user, $album);
+            foreach ($this->teamBreakdown($album, $map) as $team) {
+                if ($team->isComplete()) {
+                    ++$count;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
      * Global totals across all collected albums.
      *
      * @param AlbumProgress[] $progresses

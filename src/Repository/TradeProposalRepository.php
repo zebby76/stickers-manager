@@ -67,4 +67,20 @@ class TradeProposalRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Completed trades the user took part in, as either side (for the trade
+     * achievement badges / reputation).
+     */
+    public function countCompletedFor(User $user): int
+    {
+        return (int) $this->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->andWhere('t.fromUser = :user OR t.toUser = :user')
+            ->andWhere('t.status = :status')
+            ->setParameter('user', $user)
+            ->setParameter('status', TradeStatus::Completed)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ("X manq.") and a thin completion bar, so you can see at a glance which teams are
   nearly done. The team header updates live (Turbo Stream) when you add/remove a
   sticker, alongside the album totals.
+- **Achievement badges (trophies)** — a "Trophées" section on your profile shows
+  earned and still-locked achievements (with progress) derived from your collection
+  and trades: first album followed, 100 stickers owned, album completed, 3 albums
+  completed, a full team collected, 50 duplicates, first trade and 10 trades. Earned
+  badges also appear on your public share page. Computed on the fly, no extra storage.
 
 ## [1.4.0] - 2026-06-11
 

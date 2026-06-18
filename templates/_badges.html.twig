@@ -1,0 +1,28 @@
+{#- Achievement badges. Params:
+      badges      : Badge[]  (from BadgeService)
+      show_locked : bool     (profile shows locked ones dimmed; public shows earned only) -#}
+{% set show_locked = show_locked ?? true %}
+{% set visible = show_locked ? badges : badges|filter(b => b.isEarned) %}
+{% if visible is not empty %}
+<div class="d-flex flex-wrap gap-2">
+    {% for badge in visible %}
+        {% set earned = badge.isEarned %}
+        <div class="badge-trophy text-center p-2 rounded border {{ earned ? 'border-warning bg-warning-subtle' : 'border-light bg-light text-muted opacity-75' }}"
+             style="width: 7.5rem;"
+             title="{{ badge.description }}{% if not earned %} — {{ badge.current }}/{{ badge.target }}{% endif %}">
+            <div class="fs-3 lh-1 {{ earned ? 'text-warning' : '' }}"><i class="bi bi-{{ badge.icon }}"></i></div>
+            <div class="small fw-semibold mt-1">{{ badge.label }}</div>
+            {% if earned %}
+                <div class="small text-success"><i class="bi bi-check-circle-fill"></i> Obtenu</div>
+            {% else %}
+                <div class="progress mt-1" style="height: 4px;" role="progressbar"
+                     aria-valuenow="{{ badge.percent }}" aria-valuemin="0" aria-valuemax="100"
+                     aria-label="Progression {{ badge.label }}">
+                    <div class="progress-bar bg-secondary" style="width: {{ badge.percent }}%"></div>
+                </div>
+                <div class="small text-muted">{{ badge.current }}/{{ badge.target }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Per-team progress on the album checklist** — each team/section header now shows
+  how many stickers you own out of the total, the number still missing
+  ("X manq.") and a thin completion bar, so you can see at a glance which teams are
+  nearly done. The team header updates live (Turbo Stream) when you add/remove a
+  sticker, alongside the album totals.
+
 ## [1.4.0] - 2026-06-11
 
 ### Changed

@@ -63,12 +63,8 @@
 
     <div class="row row-cols-1 row-cols-lg-2 g-4">
         {% for team, stickers in groups %}
-            {% set cc = country_code(team) %}
             <div class="col" data-checklist-filter-target="section">
-                <h2 class="h5 mb-2">
-                    {% if cc %}<span class="fi fi-{{ cc }} flag-lg me-2"></span>{% endif %}{{ team }}
-                    <span class="badge text-bg-light">{{ stickers|length }}</span>
-                </h2>
+                {{ include('album/_team_header.html.twig', {team: team, tp: teamProgress[team]}) }}
                 <div class="row row-cols-3 row-cols-md-5 row-cols-lg-4 g-2">
                     {% for sticker in stickers %}
                         {{ include('album/_sticker_cell.html.twig', {sticker: sticker, qty: quantities[sticker.id]|default(0)}) }}

@@ -142,6 +142,22 @@ class SmokeTest extends WebTestCase
         $content = (string) $this->client->getResponse()->getContent();
         self::assertStringContainsString('<turbo-stream', $content);
         self::assertStringContainsString('target="album-progress"', $content);
+        // The adjusted sticker's team header is refreshed in place too.
+        self::assertStringContainsString('target="team-progress-', $content);
+    }
+
+    public function testAlbumShowsPerTeamProgress(): void
+    {
+        $this->loginAs('bob@example.com');
+        $crawler = $this->client->request('GET', '/albums/world-cup-2022');
+        self::assertResponseIsSuccessful();
+
+        // Each team section carries a per-team progress header (owned/total + bar).
+        self::assertGreaterThan(
+            0,
+            $crawler->filter('[id^="team-progress-"]')->count(),
+            'Album sections should show a per-team progress header'
+        );
     }
 
     public function testAdminCanImportAlbumFromJson(): void

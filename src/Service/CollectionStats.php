@@ -9,6 +9,9 @@ use App\Repository\UserStickerRepository;
 
 class CollectionStats
 {
+    /** Section label for stickers without a team. */
+    public const string UNGROUPED = 'Divers';
+
     public function __construct(
         private readonly UserStickerRepository $userStickers,
         private readonly UserAlbumRepository $userAlbums,
@@ -25,6 +28,41 @@ class CollectionStats
             owned: $counts['owned'],
             duplicates: $counts['duplicates'],
         );
+    }
+
+    /**
+     * Per-team (per-section) progress for one album, derived from an already
+     * fetched quantity map (sticker id => quantity) so it costs no extra query.
+     * Stickers without a team fall under {@see self::UNGROUPED}.
+     *
+     * @param array<int, int> $quantityMap
+     *
+     * @return array<string, TeamProgress> keyed by team label
+     */
+    public function teamBreakdown(Album $album, array $quantityMap): array
+    {
+        /** @var array<string, array{total: int, owned: int, duplicates: int}> $acc */
+        $acc = [];
+        foreach ($album->getStickers() as $sticker) {
+            $team = $sticker->getTeam() ?? self::UNGROUPED;
+            $acc[$team] ??= ['total' => 0, 'owned' => 0, 'duplicates' => 0];
+
+            $qty = $quantityMap[$sticker->getId()] ?? 0;
+            ++$acc[$team]['total'];
+            if ($qty >= 1) {
+                ++$acc[$team]['owned'];
+            }
+            if ($qty > 1) {
+                $acc[$team]['duplicates'] += $qty - 1;
+            }
+        }
+
+        $breakdown = [];
+        foreach ($acc as $team => $c) {
+            $breakdown[$team] = new TeamProgress($team, $c['total'], $c['owned'], $c['duplicates']);
+        }
+
+        return $breakdown;
     }
 
     /**

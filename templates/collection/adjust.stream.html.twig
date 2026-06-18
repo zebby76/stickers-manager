@@ -4,3 +4,8 @@
 <turbo-stream action="replace" target="album-progress">
     <template>{{ include('album/_progress.html.twig', {progress: progress, album: album}) }}</template>
 </turbo-stream>
+{% if teamProgress %}
+<turbo-stream action="replace" target="{{ teamProgress.domId }}">
+    <template>{{ include('album/_team_header.html.twig', {team: team, tp: teamProgress}) }}</template>
+</turbo-stream>
+{% endif %}

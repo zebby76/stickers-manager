@@ -1,0 +1,19 @@
+{#- Per-team progress header. Wrapped in tp.domId so a Turbo Stream can refresh it
+    in place after a sticker is added/removed (see collection/adjust.stream.html.twig). -#}
+{% set cc = country_code(team) %}
+<div id="{{ tp.domId }}">
+    <h2 class="h5 mb-1 d-flex align-items-center flex-wrap gap-2">
+        <span>{% if cc %}<span class="fi fi-{{ cc }} flag-lg me-2"></span>{% endif %}{{ team }}</span>
+        {% if tp.isComplete %}
+            <span class="badge text-bg-success"><i class="bi bi-check-lg"></i> {{ tp.owned }}/{{ tp.total }}</span>
+        {% else %}
+            <span class="badge text-bg-light border">{{ tp.owned }}/{{ tp.total }}</span>
+            <span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle">{{ tp.missing }} manq.</span>
+        {% endif %}
+    </h2>
+    <div class="progress mb-2" style="height: 4px;" role="progressbar"
+         aria-valuenow="{{ tp.completionPercent }}" aria-valuemin="0" aria-valuemax="100"
+         aria-label="Progression {{ team }}">
+        <div class="progress-bar {{ tp.isComplete ? 'bg-success' : '' }}" style="width: {{ tp.completionPercent }}%"></div>
+    </div>
+</div>

@@ -53,15 +53,21 @@ class CollectionController extends AbstractController
 
         $quantity = $holding?->getQuantity() ?? 0;
 
-        // Turbo Stream: update just the cell and the progress counters in place.
+        // Turbo Stream: update just the cell, the album counters and the team header in place.
         if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
             $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+            $album = $sticker->getAlbum();
+            $team = $sticker->getTeam() ?? CollectionStats::UNGROUPED;
+            $teamProgress = $stats->teamBreakdown($album, $repo->getQuantityMapForAlbum($user, $album))[$team] ?? null;
 
             return $this->render('collection/adjust.stream.html.twig', [
                 'sticker' => $sticker,
                 'qty' => $quantity,
-                'album' => $sticker->getAlbum(),
-                'progress' => $stats->forAlbum($user, $sticker->getAlbum()),
+                'album' => $album,
+                'progress' => $stats->forAlbum($user, $album),
+                'team' => $team,
+                'teamProgress' => $teamProgress,
             ]);
         }
 

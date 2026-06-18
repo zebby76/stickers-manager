@@ -129,11 +129,11 @@ class AlbumController extends AbstractController
         // Group stickers by team for display.
         $groups = [];
         foreach ($album->getStickers() as $sticker) {
-            $groups[$sticker->getTeam() ?? 'Divers'][] = $sticker;
+            $groups[$sticker->getTeam() ?? CollectionStats::UNGROUPED][] = $sticker;
         }
 
         // Non-country sections come first, then countries alphabetically (accent-aware).
-        $sectionOrder = ['Ouverture' => 0, 'Palmarès' => 1, 'Divers' => 99];
+        $sectionOrder = ['Ouverture' => 0, 'Palmarès' => 1, CollectionStats::UNGROUPED => 99];
         $collator = new \Collator('fr_FR');
         uksort($groups, static function (string $a, string $b) use ($sectionOrder, $collator): int {
             $pa = $sectionOrder[$a] ?? 50;
@@ -146,6 +146,7 @@ class AlbumController extends AbstractController
             'album' => $album,
             'groups' => $groups,
             'quantities' => $quantities,
+            'teamProgress' => $stats->teamBreakdown($album, $quantities),
             'collected' => $collected,
             'progress' => $stats->forAlbum($user, $album),
         ]);

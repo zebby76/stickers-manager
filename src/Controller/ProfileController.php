@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\ProfileType;
+use App\Repository\TradeProposalRepository;
 use App\Repository\UserRepository;
 use App\Service\BadgeService;
 use App\Service\CollectionStats;
+use App\Service\Reputation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +27,7 @@ class ProfileController extends AbstractController
         UserPasswordHasherInterface $hasher,
         CollectionStats $stats,
         BadgeService $badges,
+        TradeProposalRepository $trades,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
@@ -64,6 +67,7 @@ class ProfileController extends AbstractController
             'passwordForm' => $hasLocalPassword ? $passwordForm : null,
             'summary' => $stats->summarize($progresses),
             'badges' => $badges->forUser($user),
+            'reputation' => new Reputation($trades->countCompletedFor($user)),
         ]);
     }
 

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Repository\TradeProposalRepository;
 use App\Repository\UserAlbumRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserStickerRepository;
 use App\Service\BadgeService;
+use App\Service\Reputation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
@@ -20,6 +22,7 @@ class PublicCollectionController extends AbstractController
         UserAlbumRepository $userAlbums,
         UserStickerRepository $userStickers,
         BadgeService $badges,
+        TradeProposalRepository $trades,
     ): Response {
         $owner = $users->findOneBy(['shareToken' => $token]);
         if ($owner === null) {
@@ -55,6 +58,7 @@ class PublicCollectionController extends AbstractController
             'owner' => $owner,
             'albums' => $albums,
             'badges' => $badges->earnedForUser($owner),
+            'reputation' => new Reputation($trades->countCompletedFor($owner)),
         ]);
 
         // Public, anonymous page → cacheable (benefits from the nginx FastCGI

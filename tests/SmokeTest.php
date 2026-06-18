@@ -3,8 +3,11 @@
 namespace App\Tests;
 
 use App\Entity\Album;
+use App\Entity\TradeProposal;
 use App\Entity\User;
+use App\Enum\TradeStatus;
 use App\Repository\AlbumRepository;
+use App\Repository\TradeProposalRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -286,5 +289,41 @@ class SmokeTest extends WebTestCase
             $crawler->filter('input[type=checkbox]')->count(),
             'There should be stickers to trade between Alice and Bob'
         );
+    }
+
+    public function testCompletedTradeCountsTowardReputation(): void
+    {
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $users = static::getContainer()->get(UserRepository::class);
+        $trades = static::getContainer()->get(TradeProposalRepository::class);
+
+        $alice = $users->findOneBy(['email' => 'alice@example.com']);
+        $bob = $users->findOneBy(['email' => 'bob@example.com']);
+        $before = $trades->countCompletedFor($alice);
+
+        $proposal = (new TradeProposal())
+            ->setFromUser($alice)
+            ->setToUser($bob)
+            ->setStatus(TradeStatus::Completed);
+        $em->persist($proposal);
+        $em->flush();
+
+        // Counted for both participants, individually and via the batch lookup.
+        self::assertSame($before + 1, $trades->countCompletedFor($alice));
+        self::assertSame($before + 1, $trades->countCompletedFor($bob));
+        $counts = $trades->completedCountsForUsers([$alice->getId(), $bob->getId()]);
+        self::assertSame($before + 1, $counts[$alice->getId()]);
+        self::assertSame($before + 1, $counts[$bob->getId()]);
+
+        // The reputation chip surfaces on the public page.
+        $alice->setShareToken('rep-test-token');
+        $em->flush();
+        $this->client->request('GET', '/u/rep-test-token');
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString('échange(s) réalisé', (string) $this->client->getResponse()->getContent());
+
+        // Clean up so other tests keep their expected counts.
+        $em->remove($proposal);
+        $em->flush();
     }
 }

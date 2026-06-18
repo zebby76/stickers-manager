@@ -24,6 +24,7 @@
                             <h3 class="h6 mb-0"><i class="bi bi-person-circle"></i> {{ match.other.displayName }}</h3>
                             {% if match.isMutual %}<span class="badge text-bg-success">Match mutuel</span>{% endif %}
                         </div>
+                        {{ include('_reputation.html.twig', {reputation: reputations[match.other.id]}) }}
                         <div class="d-flex gap-3 my-2">
                             <span class="text-success"><i class="bi bi-arrow-up-right"></i> Je peux donner : <strong>{{ match.giveCount }}</strong></span>
                         </div>

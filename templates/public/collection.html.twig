@@ -9,7 +9,8 @@
         {% if owner.country %}<span class="fi fi-{{ owner.country|lower }} me-2"></span>{% endif %}
         Collection de {{ owner.displayName }}
     </h1>
-    <p class="text-muted">Vignettes <strong>à échanger</strong> (doublons) et <strong>manquantes</strong> — liste publique.</p>
+    <p class="text-muted mb-2">Vignettes <strong>à échanger</strong> (doublons) et <strong>manquantes</strong> — liste publique.</p>
+    {{ include('_reputation.html.twig', {reputation: reputation}) }}
     {% if badges is not empty %}
         <div class="d-flex justify-content-center">
             {{ include('_badges.html.twig', {badges: badges, show_locked: false}) }}

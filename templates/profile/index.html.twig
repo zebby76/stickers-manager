@@ -5,10 +5,13 @@
 {% block body %}
 <div class="d-flex align-items-center gap-3 mb-4">
     <img src="{{ avatar_url(app.user.email) }}" alt="" width="72" height="72" class="avatar avatar-lg">
-    <h1 class="h3 mb-0">
-        {% if app.user.country %}<span class="fi fi-{{ app.user.country|lower }} me-2"></span>{% endif %}
-        {{ app.user.displayName }}
-    </h1>
+    <div>
+        <h1 class="h3 mb-1">
+            {% if app.user.country %}<span class="fi fi-{{ app.user.country|lower }} me-2"></span>{% endif %}
+            {{ app.user.displayName }}
+        </h1>
+        {{ include('_reputation.html.twig', {reputation: reputation}) }}
+    </div>
 </div>
 
 <div class="row g-3 mb-4">

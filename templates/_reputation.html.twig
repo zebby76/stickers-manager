@@ -1,0 +1,9 @@
+{#- Reputation chip: completed-trade count + a "reliable trader" check above the
+    threshold. Param: reputation (App\Service\Reputation). -#}
+{% if reputation and reputation.completedTrades > 0 %}
+    <span class="badge rounded-pill {{ reputation.isReliable ? 'text-bg-success' : 'text-bg-light border text-body-secondary' }}"
+          title="{{ reputation.completedTrades }} échange(s) réalisé(s)">
+        <i class="bi bi-arrow-left-right"></i> {{ reputation.completedTrades }}
+        {%- if reputation.isReliable %} <i class="bi bi-patch-check-fill"></i> Fiable{% endif %}
+    </span>
+{% endif %}

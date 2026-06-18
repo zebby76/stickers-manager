@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and trades: first album followed, 100 stickers owned, album completed, 3 albums
   completed, a full team collected, 50 duplicates, first trade and 10 trades. Earned
   badges also appear on your public share page. Computed on the fly, no extra storage.
+- **Trade reputation** — a small chip shows how many trades a collector has
+  completed, with a "Fiable" (reliable trader) check above 5 completed trades. It
+  appears next to candidate partners on the Échanges page (fetched in one query, no
+  N+1), on the proposal page, on your profile and on the public share page — so you
+  can see at a glance who is an active, trustworthy trader.
 
 ## [1.4.0] - 2026-06-11
 

@@ -83,4 +83,39 @@ class TradeProposalRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Completed-trade counts for several users at once (avoids an N+1 when
+     * showing reputation on a list of trade partners).
+     *
+     * @param int[] $userIds
+     *
+     * @return array<int, int> userId => completed-trade count (every requested id is present)
+     */
+    public function completedCountsForUsers(array $userIds): array
+    {
+        $counts = array_fill_keys($userIds, 0);
+        if ($userIds === []) {
+            return $counts;
+        }
+
+        $rows = $this->createQueryBuilder('t')
+            ->select('IDENTITY(t.fromUser) AS fromId', 'IDENTITY(t.toUser) AS toId')
+            ->andWhere('t.status = :status')
+            ->andWhere('t.fromUser IN (:ids) OR t.toUser IN (:ids)')
+            ->setParameter('status', TradeStatus::Completed)
+            ->setParameter('ids', $userIds)
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach ($rows as $row) {
+            foreach ([(int) $row['fromId'], (int) $row['toId']] as $id) {
+                if (isset($counts[$id])) {
+                    ++$counts[$id];
+                }
+            }
+        }
+
+        return $counts;
+    }
 }

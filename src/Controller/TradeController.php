@@ -10,6 +10,7 @@ use App\Enum\TradeStatus;
 use App\Repository\StickerRepository;
 use App\Repository\TradeProposalRepository;
 use App\Repository\UserRepository;
+use App\Service\Reputation;
 use App\Service\TradeManager;
 use App\Service\TradeMatcher;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,15 +30,23 @@ class TradeController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $matches = $matcher->findMatches($user);
+
+        // Reputation of every candidate partner, fetched in one query (no N+1).
+        $partnerIds = array_map(static fn ($m): int => $m->other->getId(), $matches);
+        $counts = $proposals->completedCountsForUsers($partnerIds);
+        $reputations = array_map(static fn (int $n): Reputation => new Reputation($n), $counts);
+
         return $this->render('trade/index.html.twig', [
-            'matches' => $matcher->findMatches($user),
+            'matches' => $matches,
+            'reputations' => $reputations,
             'incoming' => $proposals->findIncoming($user),
             'outgoing' => $proposals->findOutgoing($user),
         ]);
     }
 
     #[Route('/with/{id}', name: 'app_trade_with', methods: ['GET'])]
-    public function with(User $other, TradeMatcher $matcher): Response
+    public function with(User $other, TradeMatcher $matcher, TradeProposalRepository $proposals): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -48,6 +57,7 @@ class TradeController extends AbstractController
 
         return $this->render('trade/with.html.twig', [
             'match' => $matcher->match($user, $other),
+            'reputation' => new Reputation($proposals->countCompletedFor($other)),
         ]);
     }
 

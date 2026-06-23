@@ -59,10 +59,10 @@ jobs:
           [ "${{ github.event_name }}" = "pull_request" ] \
             && echo "push=false" >> "${GITHUB_OUTPUT}" \
             || echo "push=true"  >> "${GITHUB_OUTPUT}"
-          # latest only on main or a release tag
-          { [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref_type }}" = "tag" ]; } \
-            && echo "latest=true"  >> "${GITHUB_OUTPUT}" \
-            || echo "latest=false" >> "${GITHUB_OUTPUT}"
+          # No `latest` tag: prod pulls a version tag (1.5.x), local pulls `snapshot`,
+          # so nothing consumes `latest` — and publishing it from both the main and
+          # tag builds raced non-deterministically. Each build only gets its own tag.
+          echo "latest=false" >> "${GITHUB_OUTPUT}"
 
       - name: Build the platforms matrix
         id: matrix
@@ -141,10 +141,10 @@ jobs:
           set: |
             *.tags=
             *.platform=${{ matrix.platform }}
-            prd.cache-from=type=gha,scope=prd-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }}
-            prd.cache-to=type=gha,scope=prd-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
-            dev.cache-from=type=gha,scope=dev-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }}
-            dev.cache-to=type=gha,scope=dev-${{ github.ref_name }}-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
+            prd.cache-from=type=gha,scope=prd-${{ steps.prepare.outputs.slug }}
+            prd.cache-to=type=gha,scope=prd-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
+            dev.cache-from=type=gha,scope=dev-${{ steps.prepare.outputs.slug }}
+            dev.cache-to=type=gha,scope=dev-${{ steps.prepare.outputs.slug }},mode=max,ignore-error=true
             ${{ fromJson(needs.prepare.outputs.push) && format('*.output=type=image,name={0},push-by-digest=true,name-canonical=true,push=true', env.DOCKER_IMAGE_NAME) || '' }}
         env:
           DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}

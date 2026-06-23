@@ -11,7 +11,7 @@ variable "DOCKER_IMAGE_TAG" {
 }
 
 variable "DOCKER_IMAGE_LATEST" {
-  default = true
+  default = false
 }
 
 variable "BASE_IMAGE" {

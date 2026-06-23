@@ -33,8 +33,6 @@ jobs:
             echo "docker pull ${IMG}:${TAG}        # production"
             echo "docker pull ${IMG}:${TAG}-dev    # development"
             echo '```'
-            echo ""
-            echo "Also published as \`${IMG}:latest\` / \`${IMG}:latest-dev\`."
             echo "EOF"
           } >> "${GITHUB_OUTPUT}"
 

@@ -1,0 +1,18 @@
+{% for u in updated %}
+<turbo-stream action="replace" target="sticker-{{ u.sticker.id }}">
+    <template>{{ include('album/_sticker_cell.html.twig', {sticker: u.sticker, qty: u.qty}) }}</template>
+</turbo-stream>
+{% endfor %}
+<turbo-stream action="replace" target="album-progress">
+    <template>{{ include('album/_progress.html.twig', {progress: progress, album: album}) }}</template>
+</turbo-stream>
+{% for team, tp in teams %}
+    {% if tp %}
+<turbo-stream action="replace" target="{{ tp.domId }}">
+    <template>{{ include('album/_team_header.html.twig', {team: team, tp: tp}) }}</template>
+</turbo-stream>
+    {% endif %}
+{% endfor %}
+<turbo-stream action="replace" target="pack-opening">
+    <template>{{ include('album/_pack_opening.html.twig', {album: album, feedback: feedback}) }}</template>
+</turbo-stream>

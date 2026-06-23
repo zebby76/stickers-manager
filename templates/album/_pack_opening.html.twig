@@ -1,0 +1,28 @@
+{#- Pack-opening bulk entry. Re-rendered by the Turbo Stream after a submit so the
+    input resets and the feedback (added / unknown) shows. `feedback` is optional. -#}
+<div id="pack-opening" class="card shadow-sm mb-4"><div class="card-body py-3">
+    <form method="post" action="{{ path('app_collection_bulk_add', {slug: album.slug}) }}" class="row g-2 align-items-end">
+        <input type="hidden" name="_token" value="{{ csrf_token('bulk-add-' ~ album.id) }}">
+        <div class="col-12 col-md">
+            <label class="form-label mb-1"><i class="bi bi-box-seam"></i> Ouverture de pochette</label>
+            <input type="text" name="numbers" class="form-control" autocomplete="off"
+                   placeholder="Numéros séparés par espace/virgule — ex. 12 45 7 7 103-108">
+        </div>
+        <div class="col-12 col-md-auto">
+            <button class="btn btn-success w-100"><i class="bi bi-plus-lg"></i> Ajouter la pochette</button>
+        </div>
+    </form>
+    {% if feedback is defined and feedback %}
+        <div class="mt-2 small d-flex flex-wrap gap-2 align-items-center">
+            {% if feedback.added > 0 %}
+                <span class="badge badge-mint"><i class="bi bi-check-lg"></i> +{{ feedback.added }} ajoutée(s)</span>
+            {% endif %}
+            {% if feedback.unknown is not empty %}
+                <span class="badge badge-amber">Inconnus : {{ feedback.unknown|join(', ') }}</span>
+            {% endif %}
+            {% if feedback.added == 0 and feedback.unknown is empty %}
+                <span class="text-muted">Aucun numéro reconnu.</span>
+            {% endif %}
+        </div>
+    {% endif %}
+</div></div>

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **"Pack opening" bulk entry** — on an album's checklist you can now type a whole
+  batch of sticker numbers (space/comma separated, with numeric ranges like
+  `103-108`, and repeats counting as extra copies) and add them all in one go. Each
+  affected sticker, the album progress and the touched team headers update live via a
+  single Turbo Stream, with a recap of how many were added and any unknown numbers.
+
+### Fixed
+- **Checklist spacing** — the owned-counter and decrement badges overhang each cell,
+  and with the tight grid gutter they overlapped neighbouring stickers; the grid now
+  has more breathing room and the badges sit slightly tighter.
+
 ## [1.6.0] - 2026-06-23
 
 ### Changed

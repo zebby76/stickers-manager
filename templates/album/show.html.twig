@@ -38,6 +38,7 @@
 
 {% if groups is not empty %}
 <div data-controller="checklist-filter">
+    {{ include('album/_pack_opening.html.twig', {album: album}) }}
     <div class="card shadow-sm mb-4"><div class="card-body py-2">
         <div class="row g-2 align-items-center">
             <div class="col-md-5">

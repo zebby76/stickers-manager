@@ -9,6 +9,7 @@ use App\Enum\TradeStatus;
 use App\Repository\AlbumRepository;
 use App\Repository\TradeProposalRepository;
 use App\Repository\UserRepository;
+use App\Repository\UserStickerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
@@ -147,6 +148,61 @@ class SmokeTest extends WebTestCase
         self::assertStringContainsString('target="album-progress"', $content);
         // The adjusted sticker's team header is refreshed in place too.
         self::assertStringContainsString('target="team-progress-', $content);
+    }
+
+    public function testPackOpeningBulkAddsStickers(): void
+    {
+        $this->loginAs('bob@example.com');
+
+        $album = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022']);
+        self::assertInstanceOf(Album::class, $album);
+        $sticker = $album->getStickers()->first();
+        $stickerId = $sticker->getId();
+        $number = $sticker->getNumber();
+
+        $repo = static::getContainer()->get(UserStickerRepository::class);
+        $bob = static::getContainer()->get(UserRepository::class)->findOneBy(['email' => 'bob@example.com']);
+        $before = $repo->findOneByUserAndSticker($bob, $sticker)?->getQuantity() ?? 0;
+
+        $crawler = $this->client->request('GET', '/albums/world-cup-2022');
+        self::assertResponseIsSuccessful();
+        $form = $crawler->filter('#pack-opening form');
+        self::assertGreaterThan(0, $form->count(), 'The album page should show the pack-opening form');
+        $token = $form->filter('input[name="_token"]')->attr('value');
+
+        // Same number twice (=> +2) plus a token that matches nothing.
+        $this->client->request(
+            'POST',
+            '/collection/album/world-cup-2022/bulk-add',
+            ['_token' => $token, 'numbers' => $number.' '.$number.' zzz-nope'],
+            [],
+            ['HTTP_ACCEPT' => 'text/vnd.turbo-stream.html']
+        );
+
+        self::assertResponseIsSuccessful();
+        $content = (string) $this->client->getResponse()->getContent();
+        self::assertStringContainsString('<turbo-stream', $content);
+        self::assertStringContainsString('target="sticker-'.$stickerId.'"', $content);
+        self::assertStringContainsString('target="album-progress"', $content);
+        self::assertStringContainsString('target="pack-opening"', $content);
+        self::assertStringContainsString('ajoutée', $content);
+        self::assertStringContainsString('Inconnus', $content);
+
+        // The owned quantity went up by exactly two.
+        static::getContainer()->get(EntityManagerInterface::class)->clear();
+        $bob = static::getContainer()->get(UserRepository::class)->findOneBy(['email' => 'bob@example.com']);
+        $freshAlbum = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022']);
+        $freshSticker = $freshAlbum->getStickers()->filter(static fn ($s) => $s->getId() === $stickerId)->first();
+        $holding = $repo->findOneByUserAndSticker($bob, $freshSticker);
+        self::assertNotNull($holding);
+        self::assertSame($before + 2, $holding->getQuantity(), 'Bulk add should have added two copies');
+
+        // Clean up so the shared test DB keeps its original state.
+        if ($before === 0) {
+            $repo->remove($holding);
+        } else {
+            $repo->save($holding->setQuantity($before));
+        }
     }
 
     public function testAlbumShowsPerTeamProgress(): void

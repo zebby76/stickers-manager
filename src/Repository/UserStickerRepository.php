@@ -117,6 +117,27 @@ class UserStickerRepository extends ServiceEntityRepository
     }
 
     /**
+     * Other collectors' spare copies for one album: rows with quantity > 1 on a
+     * sticker of this album, excluding one user, with the sticker and owner eagerly
+     * loaded. A single query — used by the per-album trade radar (no N+1).
+     *
+     * @return UserSticker[]
+     */
+    public function findDuplicateHoldingsForAlbum(Album $album, User $excludeUser): array
+    {
+        return $this->createQueryBuilder('us')
+            ->join('us.sticker', 's')->addSelect('s')
+            ->join('us.user', 'u')->addSelect('u')
+            ->andWhere('s.album = :album')
+            ->andWhere('us.user != :me')
+            ->andWhere('us.quantity > 1')
+            ->setParameter('album', $album)
+            ->setParameter('me', $excludeUser)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Duplicates available for trade: UserSticker rows with quantity > 1, with
      * sticker and album eagerly loaded.
      *

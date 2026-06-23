@@ -1,0 +1,29 @@
+{#- Trade radar for one album: collectors who hold spares of stickers I still miss.
+    `radar` = array of {user, canGet, samples[]}, `reputations` = userId => Reputation. -#}
+{% if radar is not empty %}
+<div class="card shadow-sm mb-4"><div class="card-body">
+    <h2 class="h5 mb-1"><i class="bi bi-broadcast text-success"></i> Radar d'échange</h2>
+    <p class="text-muted small mb-3">Des collectionneurs ont en double des vignettes qu'il te manque ici.</p>
+    <div class="tile-grid">
+        {% for row in radar|slice(0, 8) %}
+            <div class="tile d-flex flex-column gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ avatar_url(row.user.email) }}" alt="" width="28" height="28" class="avatar">
+                    <span class="cell-code text-truncate" title="{{ row.user.displayName }}">{{ row.user.displayName }}</span>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-1">
+                    <span class="badge badge-mint">{{ row.canGet }} pour toi</span>
+                    {{ include('_reputation.html.twig', {reputation: reputations[row.user.id] ?? null}) }}
+                </div>
+                <div class="num-chips">
+                    {% for s in row.samples %}<span class="num-chip dupe">{{ s.number }}</span>{% endfor %}
+                    {% if row.canGet > row.samples|length %}<span class="num-chip">+{{ row.canGet - row.samples|length }}</span>{% endif %}
+                </div>
+                <a href="{{ path('app_trade_with', {id: row.user.id}) }}" class="cell-action mint text-decoration-none">
+                    <i class="bi bi-arrow-left-right"></i> Proposer un échange
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div></div>
+{% endif %}

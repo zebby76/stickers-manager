@@ -5,7 +5,9 @@ namespace App\Tests;
 use App\Entity\Album;
 use App\Entity\TradeProposal;
 use App\Entity\User;
+use App\Entity\UserSticker;
 use App\Enum\TradeStatus;
+use App\Service\TradeMatcher;
 use App\Repository\AlbumRepository;
 use App\Repository\TradeProposalRepository;
 use App\Repository\UserRepository;
@@ -203,6 +205,71 @@ class SmokeTest extends WebTestCase
         } else {
             $repo->save($holding->setQuantity($before));
         }
+    }
+
+    public function testAlbumTradeRadarSurfacesAHelpfulCollector(): void
+    {
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $repo = static::getContainer()->get(UserStickerRepository::class);
+        $users = static::getContainer()->get(UserRepository::class);
+        $album = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022']);
+        $alice = $users->findOneBy(['email' => 'alice@example.com']);
+        $bob = $users->findOneBy(['email' => 'bob@example.com']);
+        $bobId = $bob->getId();
+        $sticker = $album->getStickers()->first();
+        $stickerId = $sticker->getId();
+
+        // Snapshot so we can restore the shared fixtures afterwards.
+        $aliceQtyBefore = $repo->findOneByUserAndSticker($alice, $sticker)?->getQuantity() ?? 0;
+        $bobQtyBefore = $repo->findOneByUserAndSticker($bob, $sticker)?->getQuantity() ?? 0;
+
+        // Arrange: Alice is missing this sticker, Bob holds a spare of it.
+        if (($ah = $repo->findOneByUserAndSticker($alice, $sticker)) !== null) {
+            $repo->remove($ah, false);
+        }
+        $bh = $repo->findOneByUserAndSticker($bob, $sticker) ?? (new UserSticker())->setUser($bob)->setSticker($sticker)->setQuantity(0);
+        $repo->save($bh->setQuantity(2), false);
+        $em->flush();
+        $em->clear();
+
+        $alice = $users->findOneBy(['email' => 'alice@example.com']);
+        $album = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022']);
+
+        $radar = static::getContainer()->get(TradeMatcher::class)->albumRadar($alice, $album);
+        self::assertContains($bobId, array_map(static fn (array $r): int => $r['user']->getId(), $radar), 'Bob should appear on the radar');
+
+        // It renders on the album page with a prefilled trade link to Bob.
+        $this->loginAs('alice@example.com');
+        $this->client->request('GET', '/albums/world-cup-2022');
+        self::assertResponseIsSuccessful();
+        $content = (string) $this->client->getResponse()->getContent();
+        self::assertStringContainsString("Radar d'échange", $content);
+        self::assertStringContainsString('/trades/with/'.$bobId, $content);
+
+        // Restore the original fixture quantities.
+        $em->clear();
+        $repo2 = static::getContainer()->get(UserStickerRepository::class);
+        $alice = $users->findOneBy(['email' => 'alice@example.com']);
+        $bob = $users->findOneBy(['email' => 'bob@example.com']);
+        $sticker = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022'])
+            ->getStickers()->filter(static fn ($s) => $s->getId() === $stickerId)->first();
+        $this->restoreHolding($repo2, $bob, $sticker, $bobQtyBefore);
+        $this->restoreHolding($repo2, $alice, $sticker, $aliceQtyBefore);
+        $em->flush();
+    }
+
+    private function restoreHolding(UserStickerRepository $repo, User $user, $sticker, int $qty): void
+    {
+        $holding = $repo->findOneByUserAndSticker($user, $sticker);
+        if ($qty === 0) {
+            if ($holding !== null) {
+                $repo->remove($holding, false);
+            }
+
+            return;
+        }
+        $holding ??= (new UserSticker())->setUser($user)->setSticker($sticker)->setQuantity(0);
+        $repo->save($holding->setQuantity($qty), false);
     }
 
     public function testAlbumShowsPerTeamProgress(): void

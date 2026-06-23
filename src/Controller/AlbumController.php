@@ -7,10 +7,13 @@ use App\Entity\User;
 use App\Entity\UserAlbum;
 use App\Form\AlbumType;
 use App\Repository\AlbumRepository;
+use App\Repository\TradeProposalRepository;
 use App\Repository\UserAlbumRepository;
 use App\Repository\UserStickerRepository;
 use App\Service\AlbumImporter;
 use App\Service\CollectionStats;
+use App\Service\Reputation;
+use App\Service\TradeMatcher;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -119,12 +122,19 @@ class AlbumController extends AbstractController
         UserStickerRepository $userStickers,
         UserAlbumRepository $userAlbums,
         CollectionStats $stats,
+        TradeMatcher $matcher,
+        TradeProposalRepository $proposals,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
         $quantities = $userStickers->getQuantityMapForAlbum($user, $album);
         $collected = $userAlbums->findOneByUserAndAlbum($user, $album) !== null;
+
+        // Trade radar: other collectors who hold spares I'm still missing here.
+        $radar = $matcher->albumRadar($user, $album);
+        $repCounts = $proposals->completedCountsForUsers(array_map(static fn (array $r): int => $r['user']->getId(), $radar));
+        $reputations = array_map(static fn (int $n): Reputation => new Reputation($n), $repCounts);
 
         // Group stickers by team for display.
         $groups = [];
@@ -149,6 +159,8 @@ class AlbumController extends AbstractController
             'teamProgress' => $stats->teamBreakdown($album, $quantities),
             'collected' => $collected,
             'progress' => $stats->forAlbum($user, $album),
+            'radar' => $radar,
+            'reputations' => $reputations,
         ]);
     }
 

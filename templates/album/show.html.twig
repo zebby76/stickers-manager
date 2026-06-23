@@ -29,6 +29,8 @@
 
 {{ include('album/_progress.html.twig', {progress: progress, album: album}) }}
 
+{{ include('album/_radar.html.twig', {radar: radar, reputations: reputations}) }}
+
 {% if album.totalStickers == 0 %}
     <div class="alert alert-warning">
         Cet album n'a pas encore de vignettes.

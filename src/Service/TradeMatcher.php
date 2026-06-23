@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Album;
 use App\Entity\Sticker;
 use App\Entity\User;
 use App\Repository\UserAlbumRepository;
@@ -65,6 +66,38 @@ class TradeMatcher
         });
 
         return $results;
+    }
+
+    /**
+     * Per-album radar: other collectors ranked by how many of the stickers *I* am
+     * still missing in this album they hold as spares. Two queries total — my owned
+     * ids for the album, and every other collector's duplicates for it.
+     *
+     * @return array<int, array{user: User, canGet: int, samples: Sticker[]}>
+     */
+    public function albumRadar(User $me, Album $album): array
+    {
+        $myOwned = array_flip($this->userStickers->findOwnedStickerIds($me, $album));
+
+        $byUser = [];
+        foreach ($this->userStickers->findDuplicateHoldingsForAlbum($album, $me) as $holding) {
+            $sticker = $holding->getSticker();
+            if (isset($myOwned[$sticker->getId()])) {
+                continue; // I already own this one — not useful to me.
+            }
+
+            $other = $holding->getUser();
+            $uid = $other->getId();
+            $byUser[$uid] ??= ['user' => $other, 'canGet' => 0, 'samples' => []];
+            ++$byUser[$uid]['canGet'];
+            if (\count($byUser[$uid]['samples']) < 8) {
+                $byUser[$uid]['samples'][] = $sticker;
+            }
+        }
+
+        usort($byUser, static fn (array $a, array $b): int => $b['canGet'] <=> $a['canGet']);
+
+        return $byUser;
     }
 
     /**

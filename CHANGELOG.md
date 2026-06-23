@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Per-album trade radar** — each album page now shows a "Radar d'échange" panel
+  ranking other collectors by how many stickers you're still missing here they hold
+  as spares, with their reputation, a sample of the numbers, and a one-click
+  pre-filled "Proposer un échange" link. Computed in two batched queries (no N+1).
 - **"Pack opening" bulk entry** — on an album's checklist you can now type a whole
   batch of sticker numbers (space/comma separated, with numeric ranges like
   `103-108`, and repeats counting as extra copies) and add them all in one go. Each

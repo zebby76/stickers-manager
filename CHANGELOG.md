@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-06-23
+
 ### Added
 - **Per-team progress on the album checklist** — each team/section header now shows
   how many stickers you own out of the total, the number still missing
@@ -152,7 +154,9 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.3.4...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/zebby76/stickers-manager/compare/1.4.0...1.5.0
+[1.4.0]: https://github.com/zebby76/stickers-manager/compare/1.3.4...1.4.0
 [1.3.4]: https://github.com/zebby76/stickers-manager/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/zebby76/stickers-manager/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/zebby76/stickers-manager/compare/1.3.1...1.3.2

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des échanges · Stickers Manager{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-3"><i class="bi bi-arrow-left-right"></i> Gestion des échanges</h1>
+
+{% set total = counts|reduce((acc, c) => acc + c, 0) %}
+<div class="btn-group btn-group-sm flex-wrap filter-toolbar mb-3" role="group">
+    <a href="{{ path('app_admin_trades') }}" class="btn {{ currentStatus is null ? 'btn-primary' : 'btn-outline-primary' }}">Tous <span class="badge text-bg-light">{{ total }}</span></a>
+    {% for s in statuses %}
+        <a href="{{ path('app_admin_trades', {status: s.value}) }}" class="btn {{ currentStatus == s ? 'btn-primary' : 'btn-outline-primary' }}">
+            {{ s.label }} <span class="badge text-bg-light">{{ counts[s.value] ?? 0 }}</span>
+        </a>
+    {% endfor %}
+</div>
+
+{% if proposals is empty %}
+    <div class="alert alert-info">Aucune proposition{% if currentStatus %} dans ce statut{% endif %}.</div>
+{% else %}
+<div class="card shadow-sm"><div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>De → À</th>
+                <th class="text-center">Donne / Reçoit</th>
+                <th>Statut</th>
+                <th>Mise à jour</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in proposals %}
+                <tr>
+                    <td class="text-muted">{{ p.id }}</td>
+                    <td>
+                        <strong>{{ p.fromUser.displayName }}</strong>
+                        <i class="bi bi-arrow-right text-muted"></i>
+                        <strong>{{ p.toUser.displayName }}</strong>
+                        {% if p.message %}<i class="bi bi-chat-left-text text-muted ms-1" title="{{ p.message }}"></i>{% endif %}
+                    </td>
+                    <td class="text-center">
+                        <span class="badge text-bg-success">{{ p.givenItems|length }}</span>
+                        <span class="badge text-bg-primary">{{ p.receivedItems|length }}</span>
+                    </td>
+                    <td>{{ include('trade/_status_badge.html.twig', {status: p.status}) }}</td>
+                    <td class="small text-muted">{{ p.updatedAt|date('d/m/Y H:i') }}</td>
+                    <td class="text-end">
+                        <div class="d-inline-flex gap-1">
+                            {% if p.status.isOpen %}
+                                <form method="post" action="{{ path('app_admin_trade_cancel', {id: p.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('admin-trade-cancel-' ~ p.id) }}">
+                                    <button class="btn btn-sm btn-outline-secondary" title="Annuler la proposition"><i class="bi bi-x-circle"></i></button>
+                                </form>
+                            {% endif %}
+                            <form method="post" action="{{ path('app_admin_trade_delete', {id: p.id}) }}"
+                                  onsubmit="return confirm('Supprimer définitivement la proposition #{{ p.id }} ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('admin-trade-delete-' ~ p.id) }}">
+                                <button class="btn btn-sm btn-outline-danger" title="Supprimer"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div></div>
+{% endif %}
+{% endblock %}

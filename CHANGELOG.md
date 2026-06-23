@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Admin trades panel** (`/admin/trades`, ROLE_ADMIN) — an overview of every trade
+  proposal on the site with status filter pills (and per-status counts), participants,
+  give/receive counts and dates, plus moderation actions (cancel an open proposal,
+  delete one). Linked from the admin menu.
 - **Per-album trade radar** — each album page now shows a "Radar d'échange" panel
   ranking other collectors by how many stickers you're still missing here they hold
   as spares, with their reputation, a sample of the numbers, and a one-click

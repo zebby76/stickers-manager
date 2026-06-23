@@ -382,6 +382,41 @@ class SmokeTest extends WebTestCase
         self::assertResponseStatusCodeSame(403, 'A regular user must not manage users');
     }
 
+    public function testTradeAdminPanelRequiresAdminAndCanDelete(): void
+    {
+        // A regular collector cannot reach the admin trades panel.
+        $this->loginAs('bob@example.com');
+        $this->client->request('GET', '/admin/trades');
+        self::assertResponseStatusCodeSame(403, 'A regular user must not manage trades');
+
+        // An admin can, and the panel renders.
+        $this->loginAs('alice@example.com');
+        $this->client->request('GET', '/admin/trades');
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString('Gestion des échanges', (string) $this->client->getResponse()->getContent());
+
+        // Create a proposal, then delete it from the panel.
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $users = static::getContainer()->get(UserRepository::class);
+        $proposal = (new TradeProposal())
+            ->setFromUser($users->findOneBy(['email' => 'bob@example.com']))
+            ->setToUser($users->findOneBy(['email' => 'alice@example.com']));
+        $em->persist($proposal);
+        $em->flush();
+        $id = $proposal->getId();
+
+        $crawler = $this->client->request('GET', '/admin/trades');
+        $token = $crawler->filter('form[action="/admin/trades/'.$id.'/delete"] input[name="_token"]')->attr('value');
+        $this->client->request('POST', '/admin/trades/'.$id.'/delete', ['_token' => $token]);
+        self::assertResponseRedirects();
+
+        $em->clear();
+        self::assertNull(
+            static::getContainer()->get(TradeProposalRepository::class)->find($id),
+            'The proposal should have been deleted by the admin'
+        );
+    }
+
     public function testAdminCanApprovePendingUser(): void
     {
         $users = static::getContainer()->get(UserRepository::class);

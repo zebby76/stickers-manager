@@ -56,6 +56,46 @@ class TradeProposalRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * All proposals for the admin overview, newest activity first, with both
+     * participants eagerly loaded. Optionally filtered by status.
+     *
+     * @return TradeProposal[]
+     */
+    public function findAllForAdmin(?TradeStatus $status = null): array
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->join('t.fromUser', 'f')->addSelect('f')
+            ->join('t.toUser', 'r')->addSelect('r')
+            ->orderBy('t.updatedAt', 'DESC');
+
+        if ($status !== null) {
+            $qb->andWhere('t.status = :status')->setParameter('status', $status);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Number of proposals per status (for the admin filter pills).
+     *
+     * @return array<string, int> status value => count
+     */
+    public function countsByStatus(): array
+    {
+        $counts = [];
+        foreach ($this->createQueryBuilder('t')
+            ->select('t.status AS status', 'COUNT(t.id) AS total')
+            ->groupBy('t.status')
+            ->getQuery()->getArrayResult() as $row) {
+            $status = $row['status'];
+            $key = $status instanceof TradeStatus ? $status->value : (string) $status;
+            $counts[$key] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
     public function countPendingIncoming(User $user): int
     {
         return (int) $this->createQueryBuilder('t')

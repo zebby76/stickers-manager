@@ -1,0 +1,2 @@
+{%- set map = {'pending': 'secondary', 'accepted': 'info', 'declined': 'danger', 'cancelled': 'dark', 'completed': 'success'} -%}
+<span class="badge text-bg-{{ map[status.value] }}">{{ status.label }}</span>

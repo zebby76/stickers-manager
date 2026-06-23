@@ -3,9 +3,9 @@
 {% block title %}Mes doublons · Stickers Manager{% endblock %}
 
 {% block body %}
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
     <h1 class="h3 mb-0">Mes doublons</h1>
-    <span class="badge text-bg-warning fs-6">{{ totalSpare }} vignette(s) à échanger</span>
+    <span class="badge badge-mint fs-6">{{ totalSpare }} vignette{{ totalSpare > 1 ? 's' : '' }}</span>
 </div>
 
 {% if byAlbum is empty %}
@@ -13,18 +13,17 @@
 {% else %}
     <p class="text-muted">Trouve des collectionneurs intéressés depuis la page <a href="{{ path('app_trade_index') }}">Échanges</a>.</p>
     {% for group in byAlbum %}
-        <h2 class="h5 mt-4">{{ group.album.name }}</h2>
-        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-2">
+        <h2 class="h5 mt-4 mb-3 d-flex align-items-center gap-2"><i class="bi bi-square-fill text-success" style="font-size: .6em;"></i> {{ group.album.name }}</h2>
+        <div class="tile-grid">
             {% for holding in group.items %}
                 {% set s = holding.sticker %}
                 {% set cc = country_code(s.team) %}
-                <div class="col">
-                    <div class="card text-center h-100 duplicate {{ s.rarity.value == 'shiny' ? 'rarity-shiny' : '' }}">
-                        <div class="card-body p-2">
-                            <div class="fw-bold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ s.number }}</div>
-                            <span class="badge text-bg-warning mt-1">{{ holding.duplicates }} en trop</span>
-                        </div>
+                <div class="tile d-flex flex-column gap-2 {{ s.rarity.value == 'shiny' ? 'rarity-shiny' : '' }}">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if cc %}<span class="fi fi-{{ cc }} flag-lg"></span>{% endif %}
+                        <span class="cell-code text-truncate" title="{{ s.team }} · n°{{ s.number }}">{{ s.team ?? 'Divers' }} <strong>#{{ s.number }}</strong></span>
                     </div>
+                    <span class="cell-action amber">{{ holding.duplicates }} en trop</span>
                 </div>
             {% endfor %}
         </div>

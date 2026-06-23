@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Refined "16-bit editorial" visual theme** — same pixel/retro spirit (Press Start
+  2P / VT323 fonts, flags, dot-grid background), but lighter and more precise: thin
+  1px cool grey-blue borders instead of heavy 3px ink, gently rounded corners, soft
+  diffuse shadows, a powder-blue field, and a desaturated palette (amber instead of
+  bright gold, plus a mint accent). The header is cleaner with the active tab
+  underlined, and the **"Mes doublons"** page is now a responsive auto-fit grid of
+  cards (flag + code + amber "X en trop" action). Theming stays centralised on the
+  existing Bootstrap variables — no new build tooling.
+
 ## [1.5.1] - 2026-06-23
 
 ### Security

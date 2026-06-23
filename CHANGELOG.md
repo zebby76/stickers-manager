@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   affected sticker, the album progress and the touched team headers update live via a
   single Turbo Stream, with a recap of how many were added and any unknown numbers.
 
+### Changed
+- **Échanges page is now a real management area** — your incoming and outgoing
+  proposals are merged into one "Mes échanges" list (direction marked, with
+  give/receive counts and dates) that you can filter by status (pending, accepted,
+  completed…) with per-status counts.
+
 ### Fixed
 - **Checklist spacing** — the owned-counter and decrement badges overhang each cell,
   and with the tight grid gutter they overlapped neighbouring stickers; the grid now

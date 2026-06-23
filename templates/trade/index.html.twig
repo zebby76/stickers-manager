@@ -2,13 +2,7 @@
 
 {% block title %}Échanges · Stickers Manager{% endblock %}
 
-{% macro status_badge(status) %}
-    {% set map = {'pending': 'secondary', 'accepted': 'info', 'declined': 'danger', 'cancelled': 'dark', 'completed': 'success'} %}
-    <span class="badge text-bg-{{ map[status.value] }}">{{ status.label }}</span>
-{% endmacro %}
-
 {% block body %}
-{% import _self as ui %}
 <h1 class="h3 mb-4"><i class="bi bi-arrow-left-right"></i> Échanges</h1>
 
 <h2 class="h5 mb-3">Collectionneurs compatibles</h2>
@@ -41,36 +35,40 @@
     </div>
 {% endif %}
 
-<div class="row">
-    <div class="col-lg-6 mb-4">
-        <h2 class="h5 mb-3">Propositions reçues</h2>
-        {% if incoming is empty %}
-            <p class="text-muted">Aucune proposition reçue.</p>
-        {% else %}
-            <div class="list-group">
-                {% for p in incoming %}
-                    <a href="{{ path('app_trade_show', {id: p.id}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <span>De <strong>{{ p.fromUser.displayName }}</strong> · {{ p.items|length }} vignette(s)</span>
-                        {{ ui.status_badge(p.status) }}
-                    </a>
-                {% endfor %}
-            </div>
+<h2 class="h5 mb-3">Mes échanges</h2>
+
+{% set myTotal = statusCounts|reduce((acc, c) => acc + c, 0) %}
+<div class="btn-group btn-group-sm flex-wrap filter-toolbar mb-3" role="group">
+    <a href="{{ path('app_trade_index') }}" class="btn {{ currentStatus is null ? 'btn-primary' : 'btn-outline-primary' }}">Tous <span class="badge text-bg-light">{{ myTotal }}</span></a>
+    {% for s in statuses %}
+        {% if (statusCounts[s.value] ?? 0) > 0 %}
+            <a href="{{ path('app_trade_index', {status: s.value}) }}" class="btn {{ currentStatus == s ? 'btn-primary' : 'btn-outline-primary' }}">
+                {{ s.label }} <span class="badge text-bg-light">{{ statusCounts[s.value] }}</span>
+            </a>
         {% endif %}
-    </div>
-    <div class="col-lg-6 mb-4">
-        <h2 class="h5 mb-3">Propositions envoyées</h2>
-        {% if outgoing is empty %}
-            <p class="text-muted">Aucune proposition envoyée.</p>
-        {% else %}
-            <div class="list-group">
-                {% for p in outgoing %}
-                    <a href="{{ path('app_trade_show', {id: p.id}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <span>À <strong>{{ p.toUser.displayName }}</strong> · {{ p.items|length }} vignette(s)</span>
-                        {{ ui.status_badge(p.status) }}
-                    </a>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+    {% endfor %}
 </div>
+
+{% if myTrades is empty %}
+    <p class="text-muted">{% if currentStatus %}Aucun échange dans ce statut.{% else %}Aucun échange pour l'instant. Propose un échange à un collectionneur compatible ci-dessus.{% endif %}</p>
+{% else %}
+    <div class="list-group mb-4">
+        {% for p in myTrades %}
+            {% set sent = p.fromUser.id == me.id %}
+            <a href="{{ path('app_trade_show', {id: p.id}) }}" class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                    <span>
+                        {% if sent %}
+                            <i class="bi bi-arrow-up-right text-success" title="Envoyée"></i> À <strong>{{ p.toUser.displayName }}</strong>
+                        {% else %}
+                            <i class="bi bi-arrow-down-left text-primary" title="Reçue"></i> De <strong>{{ p.fromUser.displayName }}</strong>
+                        {% endif %}
+                        <span class="text-muted small ms-1">· donne {{ p.givenItems|length }} / reçoit {{ p.receivedItems|length }} · {{ p.updatedAt|date('d/m/Y') }}</span>
+                    </span>
+                    {{ include('trade/_status_badge.html.twig', {status: p.status}) }}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}

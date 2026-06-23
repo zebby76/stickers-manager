@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class TradeController extends AbstractController
 {
     #[Route('', name: 'app_trade_index', methods: ['GET'])]
-    public function index(TradeMatcher $matcher, TradeProposalRepository $proposals): Response
+    public function index(Request $request, TradeMatcher $matcher, TradeProposalRepository $proposals): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -37,11 +37,16 @@ class TradeController extends AbstractController
         $counts = $proposals->completedCountsForUsers($partnerIds);
         $reputations = array_map(static fn (int $n): Reputation => new Reputation($n), $counts);
 
+        $status = TradeStatus::tryFrom((string) $request->query->get('status', ''));
+
         return $this->render('trade/index.html.twig', [
             'matches' => $matches,
             'reputations' => $reputations,
-            'incoming' => $proposals->findIncoming($user),
-            'outgoing' => $proposals->findOutgoing($user),
+            'myTrades' => $proposals->findForUser($user, $status),
+            'statusCounts' => $proposals->countsByStatusForUser($user),
+            'currentStatus' => $status,
+            'statuses' => TradeStatus::cases(),
+            'me' => $user,
         ]);
     }
 

@@ -96,6 +96,50 @@ class TradeProposalRepository extends ServiceEntityRepository
         return $counts;
     }
 
+    /**
+     * Every proposal the user takes part in (either side), newest activity first,
+     * with both participants eagerly loaded. Optionally filtered by status.
+     *
+     * @return TradeProposal[]
+     */
+    public function findForUser(User $user, ?TradeStatus $status = null): array
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->join('t.fromUser', 'f')->addSelect('f')
+            ->join('t.toUser', 'r')->addSelect('r')
+            ->andWhere('t.fromUser = :user OR t.toUser = :user')
+            ->setParameter('user', $user)
+            ->orderBy('t.updatedAt', 'DESC');
+
+        if ($status !== null) {
+            $qb->andWhere('t.status = :status')->setParameter('status', $status);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Number of the user's own proposals per status (for the filter pills).
+     *
+     * @return array<string, int> status value => count
+     */
+    public function countsByStatusForUser(User $user): array
+    {
+        $counts = [];
+        foreach ($this->createQueryBuilder('t')
+            ->select('t.status AS status', 'COUNT(t.id) AS total')
+            ->andWhere('t.fromUser = :user OR t.toUser = :user')
+            ->setParameter('user', $user)
+            ->groupBy('t.status')
+            ->getQuery()->getArrayResult() as $row) {
+            $status = $row['status'];
+            $key = $status instanceof TradeStatus ? $status->value : (string) $status;
+            $counts[$key] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
     public function countPendingIncoming(User $user): int
     {
         return (int) $this->createQueryBuilder('t')

@@ -453,6 +453,40 @@ class SmokeTest extends WebTestCase
         );
     }
 
+    public function testUserTradesPageListsAndFiltersMyTrades(): void
+    {
+        $em = static::getContainer()->get(EntityManagerInterface::class);
+        $users = static::getContainer()->get(UserRepository::class);
+        $proposal = (new TradeProposal())
+            ->setFromUser($users->findOneBy(['email' => 'bob@example.com']))
+            ->setToUser($users->findOneBy(['email' => 'alice@example.com'])); // status = pending
+        $em->persist($proposal);
+        $em->flush();
+        $id = $proposal->getId();
+
+        $this->loginAs('alice@example.com');
+
+        $this->client->request('GET', '/trades');
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString('Mes échanges', (string) $this->client->getResponse()->getContent());
+        self::assertStringContainsString('/trades/'.$id, (string) $this->client->getResponse()->getContent());
+
+        // The "pending" filter keeps it; "completed" hides it.
+        $this->client->request('GET', '/trades?status=pending');
+        self::assertStringContainsString('/trades/'.$id, (string) $this->client->getResponse()->getContent());
+        $this->client->request('GET', '/trades?status=completed');
+        self::assertStringNotContainsString('/trades/'.$id, (string) $this->client->getResponse()->getContent());
+
+        // Clean up the shared fixtures (the client reboots the kernel between
+        // requests, so fetch a fresh EM from the current container).
+        $freshEm = static::getContainer()->get(EntityManagerInterface::class);
+        $p = static::getContainer()->get(TradeProposalRepository::class)->find($id);
+        if ($p !== null) {
+            $freshEm->remove($p);
+            $freshEm->flush();
+        }
+    }
+
     public function testCompletedTradeCountsTowardReputation(): void
     {
         $em = static::getContainer()->get(EntityManagerInterface::class);

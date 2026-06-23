@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-06-23
+
 ### Changed
 - **Refined "16-bit editorial" visual theme** — same pixel/retro spirit (Press Start
   2P / VT323 fonts, flags, dot-grid background), but lighter and more precise: thin
@@ -173,7 +175,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.5.1...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.6.0...HEAD
+[1.6.0]: https://github.com/zebby76/stickers-manager/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/zebby76/stickers-manager/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/zebby76/stickers-manager/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/zebby76/stickers-manager/compare/1.3.4...1.4.0

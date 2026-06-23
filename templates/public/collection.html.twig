@@ -16,6 +16,14 @@
             {{ include('_badges.html.twig', {badges: badges, show_locked: false}) }}
         </div>
     {% endif %}
+    {% if albums is not empty %}
+        <div class="mt-3">
+            <a href="{{ path('app_trade_with', {id: owner.id}) }}" class="btn btn-primary">
+                <i class="bi bi-arrow-left-right"></i> Propose-moi un échange
+            </a>
+            <p class="text-muted small mt-1 mb-0">Connecte-toi pour voir ce qu'on peut s'échanger — la proposition est pré-remplie.</p>
+        </div>
+    {% endif %}
 </div>
 
 {% if albums is empty %}
@@ -35,7 +43,7 @@
                     {% for team, items in a.duplicates %}
                         {% set cc = country_code(team) %}
                         <div class="mb-2">
-                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }}</div>
+                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }} <span class="text-muted fw-normal">({{ items|length }})</span></div>
                             {% for it in items %}<span class="badge text-bg-light border me-1 mb-1">{{ it.sticker.number }}{% if it.spare > 1 %} ×{{ it.spare }}{% endif %}</span>{% endfor %}
                         </div>
                     {% endfor %}
@@ -50,7 +58,7 @@
                     {% for team, stickers in a.missing %}
                         {% set cc = country_code(team) %}
                         <div class="mb-2">
-                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }}</div>
+                            <div class="small fw-semibold">{% if cc %}<span class="fi fi-{{ cc }} me-1"></span>{% endif %}{{ team }} <span class="text-muted fw-normal">({{ stickers|length }})</span></div>
                             {% for s in stickers %}<span class="badge text-bg-light border me-1 mb-1">{{ s.number }}</span>{% endfor %}
                         </div>
                     {% endfor %}

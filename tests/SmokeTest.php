@@ -227,7 +227,11 @@ class SmokeTest extends WebTestCase
 
         $this->client->request('GET', '/u/share-test-token');
         self::assertResponseIsSuccessful();
-        self::assertStringContainsString($alice->getDisplayName(), (string) $this->client->getResponse()->getContent());
+        $content = (string) $this->client->getResponse()->getContent();
+        self::assertStringContainsString($alice->getDisplayName(), $content);
+        // Enriched wishlist: a deep-link CTA to start a (prefilled) trade with the owner.
+        self::assertStringContainsString('/trades/with/'.$alice->getId(), $content);
+        self::assertStringContainsString('Propose-moi un échange', $content);
 
         $this->client->request('GET', '/u/does-not-exist');
         self::assertResponseStatusCodeSame(404);

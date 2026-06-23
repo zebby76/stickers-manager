@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   appears next to candidate partners on the Échanges page (fetched in one query, no
   N+1), on the proposal page, on your profile and on the public share page — so you
   can see at a glance who is an active, trustworthy trader.
+- **Enriched public wishlist** — the public share page (`/u/{token}`) now has a
+  "Propose-moi un échange" button that deep-links straight into the trade flow with
+  the owner, where the give/receive lists are already computed and pre-checked. Each
+  team section also shows a count of missing/duplicate stickers. The page stays
+  cacheable and works for anonymous visitors (they are sent through login first).
 
 ## [1.4.0] - 2026-06-11
 

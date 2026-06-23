@@ -65,7 +65,7 @@
         {% for team, stickers in groups %}
             <div class="col" data-checklist-filter-target="section">
                 {{ include('album/_team_header.html.twig', {team: team, tp: teamProgress[team]}) }}
-                <div class="row row-cols-3 row-cols-md-5 row-cols-lg-4 g-2">
+                <div class="row row-cols-3 row-cols-md-5 row-cols-lg-4 g-4">
                     {% for sticker in stickers %}
                         {{ include('album/_sticker_cell.html.twig', {sticker: sticker, qty: quantities[sticker.id]|default(0)}) }}
                     {% endfor %}

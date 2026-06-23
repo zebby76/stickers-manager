@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-06-23
+
+### Security
+- **Bumped `guzzlehttp/guzzle` (7.11.0 → 7.12.3) and `guzzlehttp/psr7`
+  (2.11.0 → 2.12.3)** to clear three moderate Dependabot advisories (dot-only cookie
+  domains matching all hosts, silent HTTPS-proxy downgrade to cleartext, and CRLF
+  injection in HTTP start-line serialization). These are transitive dependencies of
+  `league/oauth2-client` (the Authelia OIDC flow); only `composer.lock` changed.
+
 ## [1.5.0] - 2026-06-23
 
 ### Added
@@ -154,7 +163,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.5.1...HEAD
+[1.5.1]: https://github.com/zebby76/stickers-manager/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/zebby76/stickers-manager/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/zebby76/stickers-manager/compare/1.3.4...1.4.0
 [1.3.4]: https://github.com/zebby76/stickers-manager/compare/1.3.3...1.3.4

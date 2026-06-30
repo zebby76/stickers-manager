@@ -17,12 +17,22 @@
         </div>
     {% endif %}
     {% if albums is not empty %}
-        <div class="mt-3">
+        <div class="mt-3 no-print">
             <a href="{{ path('app_trade_with', {id: owner.id}) }}" class="btn btn-primary">
                 <i class="bi bi-arrow-left-right"></i> Propose-moi un échange
             </a>
+            <button type="button" class="btn btn-outline-primary" onclick="window.print()">
+                <i class="bi bi-printer"></i> Imprimer la liste
+            </button>
             <p class="text-muted small mt-1 mb-0">Connecte-toi pour voir ce qu'on peut s'échanger — la proposition est pré-remplie.</p>
         </div>
+    {% endif %}
+
+    {% if albums is not empty %}
+        <p class="small text-muted mt-3 mb-0">
+            Légende : <span class="num-chip dupe">n°</span> doublon à échanger ·
+            <span class="num-chip miss">n°</span> vignette manquante
+        </p>
     {% endif %}
 </div>
 

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Framed checklist sections** — on an album page each team / country / section
+  (groups, knockout, palmarès…) is now wrapped in its own bordered card with a tinted
+  header strip, so the sections stand out from one another at a glance. Completed
+  sections get a mint frame. The live per-section Turbo Stream updates still work.
+- **Public share page: clearer & printable** — added a quick legend (doublon to swap
+  vs. missing sticker) and a "Imprimer la liste" button. A print stylesheet drops the
+  navbar, footer, buttons and forms, keeps the colours, and avoids splitting a card
+  across pages — handy for taking a paper want/swap list to a meet.
+
 ## [1.7.0] - 2026-06-23
 
 ### Added

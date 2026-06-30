@@ -217,6 +217,25 @@
         @keyframes pulseAdd { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
         @keyframes pulseRemove { 0% { transform: scale(1); } 45% { transform: scale(.9); } 100% { transform: scale(1); } }
 
+        /* —— Framed checklist sections (one cadre per team / pays / section) —— */
+        .team-frame {
+            height: 100%; background: var(--surface);
+            border: 1px solid var(--line); border-radius: var(--radius);
+            box-shadow: var(--shadow-sm); overflow: hidden;
+        }
+        .team-frame__head {
+            padding: .7rem .8rem .55rem;
+            background: linear-gradient(180deg, #f1f7fb, #ffffff);
+            border-bottom: 1px solid var(--line);
+        }
+        .team-frame__head .progress { margin-bottom: 0 !important; }
+        .team-frame.is-complete { border-color: var(--mint-edge); }
+        .team-frame.is-complete .team-frame__head {
+            background: linear-gradient(180deg, var(--mint-bg), #ffffff);
+            border-bottom-color: var(--mint-edge);
+        }
+        .team-frame__body { padding: .8rem .8rem .9rem; }
+
         /* —— Country flags (flag-icons) ——————————————————————————————— */
         .fi { border-radius: 2px; box-shadow: 0 0 0 1px var(--line); vertical-align: -2px; }
         .fi.flag-lg { width: 1.7em; line-height: 1.28em; }
@@ -245,6 +264,25 @@
             box-shadow: var(--shadow-sm); margin-left: .35rem;
         }
         body { display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* —— Printable view (swap meets / paper checklists) ——————————————
+           Hide chrome and interactive bits, keep colours, avoid breaking a
+           section across pages. Add .no-print to anything else to drop it. */
+        @media print {
+            :root { --shadow: none; --shadow-sm: none; }
+            body {
+                background: #fff !important; color: #000;
+                font-size: 11pt; display: block;
+                -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            }
+            .navbar-app, .app-footer, .alert, .btn, .filter-toolbar,
+            form, .no-print { display: none !important; }
+            main.container { max-width: 100% !important; padding: 0 !important; }
+            a { color: inherit !important; text-decoration: none !important; }
+            .card, .tile, .team-frame, .num-chips { box-shadow: none !important; }
+            .card, .tile, .team-frame { border-color: #999 !important; break-inside: avoid; }
+            h1, h2, h3, .h1, .h2, .h3, .h4, .h5, .h6 { break-after: avoid; }
+        }
     </style>
     {% block stylesheets %}{% endblock %}
     {% block javascripts %}{{ importmap('app') }}{% endblock %}

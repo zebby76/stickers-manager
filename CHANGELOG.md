@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-06-30
+
 ### Changed
 - **Framed checklist sections** — on an album page each team / country / section
   (groups, knockout, palmarès…) is now wrapped in its own bordered card with a tinted
@@ -213,7 +215,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.7.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.7.1...HEAD
+[1.7.1]: https://github.com/zebby76/stickers-manager/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/zebby76/stickers-manager/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/zebby76/stickers-manager/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/zebby76/stickers-manager/compare/1.5.0...1.5.1

@@ -40,7 +40,7 @@ jobs:
       metadata: ${{ steps.matrix.outputs.metadata }}
     steps:
       - name: Checkout source
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
@@ -99,7 +99,7 @@ jobs:
           echo "slug=${platform//\//-}" >> "${GITHUB_OUTPUT}"
 
       - name: Checkout source
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -264,7 +264,7 @@ jobs:
           ignore-unfixed: true
 
       - name: Upload SARIF to GitHub Security
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.37.3
         with:
           sarif_file: trivy.sarif
           category: trivy-image

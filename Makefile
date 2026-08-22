@@ -23,7 +23,11 @@ help: ## Show this help
 		| awk 'BEGIN {FS = ":.*?## "}{printf "\033[36m%-16s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[36m##/[33m/'
 
 ## —— Packaging ————————————————————————————————————————————————————————————————
+# var/cache/prod is gitignored and NOT invalidated by the commands below, so a stale one keeps
+# resolving classes that no longer exist (a controller deleted in 1.4.0 kept breaking
+# asset-map:compile: 'Class App\Controller\GoogleController does not exist'). Rebuild it clean.
 build-app: ## Build vendor + assets (Composer + AssetMapper) for the image
+	rm -rf var/cache/prod
 	$(DEV) composer install --no-interaction --no-scripts --prefer-dist --optimize-autoloader --ignore-platform-req=ext-opentelemetry
 	APP_ENV=prod $(DEV) php bin/console importmap:install
 	APP_ENV=prod $(DEV) php bin/console asset-map:compile

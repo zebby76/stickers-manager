@@ -132,21 +132,28 @@ micro-cache, rate limiting and the OpenTelemetry extension by default.
   pushed *by digest*, then the digests are merged into a multi-arch manifest
   (GHA cache + SBOM + provenance):
   - **pull request** → validation build, no push;
-  - **push to `main`** → `:latest` / `:latest-dev`;
-  - **tag `X.Y.Z`** → `:X.Y.Z` / `:X.Y.Z-dev` (+ `latest`);
+  - **push to `main`** → `:snapshot` / `:snapshot-dev`;
+  - **tag `X.Y.Z`** → `:X.Y.Z` / `:X.Y.Z-dev`;
   - **workflow_dispatch** → manual version.
+
+  No `:latest` is published: production pulls a version tag and local pulls `snapshot`,
+  so nothing consumes it.
 
   After push, images are **signed with cosign** (keyless / OIDC) and **scanned with
   Trivy** (SARIF uploaded to the *Security* tab). Verify a signature:
 
   ```bash
-  cosign verify zebby76/stickers-manager:latest \
+  cosign verify zebby76/stickers-manager:1.7.1 \
     --certificate-identity-regexp "https://github.com/zebby76/stickers-manager/.github/workflows/docker.yml@.*" \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com
   ```
 
 - **`release.yml`** — on tag `X.Y.Z`: creates a **GitHub Release** (auto-generated
   notes + `docker pull` commands for the published images).
+
+Cut a release with `make release VERSION=X.Y.Z` (see `make help`): it commits, creates a
+signed tag and pushes it — the two workflows above take it from there. Update
+`CHANGELOG.md` first, the release commit picks the edit up.
 
 Required repository secrets (Settings → Secrets → Actions): `DOCKERHUB_USERNAME`
 and `DOCKERHUB_TOKEN` (a Docker Hub token with *push* access to `zebby76/stickers-manager`).

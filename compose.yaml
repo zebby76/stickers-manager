@@ -56,8 +56,12 @@ services:
       - ./:/app/src/stickers:rw
       # Symfony writable runtime dir (cache, logs, sessions)
       - app-var:/app/src/stickers/var:rw
-      # Packaging overlay (nginx vhost + setup script), as in the built image
+      # Packaging overlay (nginx vhost + logging config + setup script), as in the built image
       - ./.docker/config/nginx/sites-enabled/zz-stickers.conf.tmpl:/opt/config/nginx/sites-enabled/zz-stickers.conf.tmpl:ro
+      # Overrides base-php's logging.conf: defines the traffic-class maps + the logfmt access log.
+      # MUST be mounted -- the vhost references $traffic_class, so without it nginx aborts at startup
+      # with: [emerg] unknown "traffic_class" variable.
+      - ./.docker/config/nginx/conf.d/logging.conf.tmpl:/opt/config/nginx/conf.d/logging.conf.tmpl:ro
       - ./.docker/bin/container-entrypoint.d/10-stickers-setup.sh:/opt/bin/container-entrypoint.d/10-stickers-setup.sh:ro
     tmpfs:
       - /opt/sbin:rw,exec,size=8m,mode=1777

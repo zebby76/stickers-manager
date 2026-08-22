@@ -50,6 +50,11 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
 
+        # Propagate the request id + traffic class to php-fpm so its access.format can emit the SAME
+        # rid → nginx and php-fpm lines correlate in Loki. (log_format + maps live in conf.d/logging.conf.)
+        fastcgi_param UNIQUE_ID     $request_id;
+        fastcgi_param traffic_class $traffic_class;
+
         # add_header in a location stops inheritance → re-declare security headers
         add_header X-Frame-Options        "{{ getenv "NGINX_X_FRAME_OPTIONS" "SAMEORIGIN" }}" always;
         add_header X-Content-Type-Options "{{ getenv "NGINX_X_CONTENT_TYPE_OPTIONS" "nosniff" }}" always;
@@ -75,4 +80,7 @@ server {
     location ~ \.php$ {
         return 404;
     }
+
+    # Access/error logging (logfmt → stdout) + traffic-class maps are defined in http context by the
+    # overlay conf.d/logging.conf.tmpl (log_format is NOT valid inside server{}). Nothing to do here.
 }

@@ -1,0 +1,57 @@
+# App overlay — OVERRIDES base-php's conf.d/logging.conf (http context).
+# Defines a logfmt access log on stdout + traffic classification, so the cluster Alloy can parse
+# nginx access lines and correlate them with php-fpm via a shared request-id (UNIQUE_ID). See the
+# vhost (sites-enabled/zz-stickers.conf.tmpl) for the fastcgi_param that propagates $request_id to
+# php-fpm, and cluster/observability/alloy.alloy (infra repo) for the loki.process pipeline.
+#
+# NOT the OpenShift/Smals variant: no Varnish, no X-Smals-* headers. Client IP + request id come from
+# Cloudflare (CF-Connecting-IP / CF-Ray); proto from X-Forwarded-Proto.
+
+# ── Traffic classification (http context; referenced by $traffic_class in the log_format below and
+#    dropped as probe/metrics in the Alloy pipeline). map order is irrelevant (resolved per request).
+map $http_user_agent $tc_ua {
+    default                                 "";
+    "~*^kube-probe/"                        "probe";
+    "~*^Prometheus/"                        "metrics";
+    "~*(UptimeRobot|Pingdom|StatusCake|Better\ Uptime)" "monitor";
+}
+map $request_uri $tc_uri {
+    default       "";
+    "~^/ping"     "probe";
+    "~^/status"   "metrics";
+    "~^/metrics"  "metrics";
+}
+# fallback cascade: UA wins, then URI, then default "client".
+map $tc_uri $tc_fallback {
+    ""       "client";
+    default  $tc_uri;
+}
+map $tc_ua $traffic_class {
+    ""       $tc_fallback;
+    default  $tc_ua;
+}
+
+# ── logfmt access log (escape=default → any " becomes \x22, so logfmt never breaks). dur_s and
+#    up_dur_s are both nginx-side seconds (total vs upstream/php-fpm) → uniform unit for latency panels.
+log_format logfmt escape=default
+    'ts=$time_iso8601 '
+    'rid=$request_id '
+    'class=$traffic_class '
+    'src=nginx '
+    'status=$status '
+    'dur_s=$request_time '
+    'up_dur_s=$upstream_response_time '
+    'method=$request_method '
+    'uri="$request_uri" '
+    'target="$uri" '
+    'bytes=$body_bytes_sent '
+    'host=$host '
+    'client=$http_cf_connecting_ip '
+    'cf_ray=$http_cf_ray '
+    'proto=$http_x_forwarded_proto '
+    'ua="$http_user_agent"';
+
+# stdout, unbuffered (the cluster Alloy ships container stdout to Loki). error_log is not logfmt-able
+# (nginx limitation) → shipped raw, without rid.
+access_log /dev/stdout logfmt;
+error_log  /dev/stderr warn;

@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Correlated access logs** — nginx and php-fpm now both log in logfmt and share a
+  request id (`rid`), so a single request can be followed across the two. nginx reports
+  the total time and the php-fpm share separately (`dur_s` / `up_dur_s`), and tags each
+  request with a traffic class (client, probe, metrics) so health checks can be filtered
+  out downstream. Client IP and ray id are read from Cloudflare (`CF-Connecting-IP`,
+  `CF-Ray`).
+
+### Changed
+- **Release tooling** — `make release VERSION=x.y.z` now cuts a release (guards on branch
+  and existing tags, signed commit, signed tag, push), with `retag`, `tag-restore`,
+  `notes` and `build-version` for the usual follow-ups. Pushing the tag still drives the
+  image build and the GitHub Release. Brings this repo in line with the other ones.
+
+### Fixed
+- **Dev and production no longer log differently** — the php-fpm log format was only set
+  where the app is deployed, so the correlation above could not be observed, nor tested,
+  locally. The dev stack now uses the same format.
+- **A stale Symfony cache could break the asset build** — `var/cache/prod` is not
+  invalidated by `make build-app`, so an outdated one kept resolving a controller removed
+  in 1.4.0 and `asset-map:compile` aborted. It is now purged before the assets are built.
+
+### Security
+- **Guzzle updated to 7.15.3** — clears six advisories, one of them high
+  (`CVE-2026-69246`, a noncanonical host bypassing host-based checks). Guzzle is pulled
+  in by the OIDC login client, so it sits on the authentication path. doctrine-bundle and
+  pwa-bundle were updated alongside it, which also removes the remaining Symfony 8.1
+  deprecation notices raised while compiling assets.
+
 ## [1.7.1] - 2026-06-30
 
 ### Changed

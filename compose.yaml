@@ -48,6 +48,9 @@ services:
       NGINX_SOFT_THROTTLE_DRY_RUN_ENABLED: "on"
       # FastCGI micro-cache left OFF in dev for predictability (ON in the prod image)
       NGINX_FASTCGI_CACHE_ENABLED: "false"
+      # php-fpm access log in logfmt, carrying the same rid as nginx (UNIQUE_ID comes from the
+      # vhost's fastcgi_param). Mirrors the prod stack so dev and prod log identically.
+      PHP_FPM_ACCESS_FORMAT: "rid=%{UNIQUE_ID}e class=%{traffic_class}e src=php-fpm status=%s method=%m uri=%r%Q%q dur_ms=%{milli}d mem_kb=%{kilo}M cpu=%C"
     ports:
       - "8080:9000"   # app
       - "9090:9090"   # metrics (nginx VTS /metrics + php-fpm /status)

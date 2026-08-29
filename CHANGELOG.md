@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-08-29
+
 ### Added
 - **Fiche d'album à imprimer** — a paper checklist for one album, reachable from the
   album page (« Fiche à imprimer », route `/albums/{slug}/print`). Every number of the
@@ -24,6 +26,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   calibrated against headless Chromium over albums of 23 to 960 stickers — a standard
   48×20 album prints at ~6pt. An album too large to fit legibly says so on screen rather
   than silently spilling onto a second page.
+
+### Changed
+- **Dependencies refreshed** — doctrine/orm 3.6.8 and Symfony 8.1.1→8.1.4 across
+  console, framework-bundle, http-client, twig-bridge, twig-bundle, asset-mapper,
+  web-profiler-bundle and finder; `actions/checkout` moved to v7 in the workflows. All
+  patch-level within the same minor, verified against the full suite before merging.
+
+### Security
+- **The published image was rebuilt on a refreshed base image**, clearing 352 of the
+  356 vulnerabilities Trivy reported against it (openssl 3.5.7→3.5.8, plus the
+  postgresql-client and python3 packages inherited from the base). All of them came
+  from the base image — this repository's Dockerfile installs no packages of its own.
+  The four that remain are Go modules compiled into `gomplate`, the base image's
+  start-up templating tool, which only ever runs on this repository's own config
+  templates.
+
+## [1.8.0] - 2026-08-22
+
+### Added
 - **Correlated access logs** — nginx and php-fpm now both log in logfmt and share a
   request id (`rid`), so a single request can be followed across the two. nginx reports
   the total time and the php-fpm share separately (`dur_s` / `up_dur_s`), and tags each
@@ -260,7 +281,9 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.7.1...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.0...HEAD
+[1.9.0]: https://github.com/zebby76/stickers-manager/compare/1.8.0...1.9.0
+[1.8.0]: https://github.com/zebby76/stickers-manager/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/zebby76/stickers-manager/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/zebby76/stickers-manager/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/zebby76/stickers-manager/compare/1.5.1...1.6.0

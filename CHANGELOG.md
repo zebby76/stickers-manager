@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Fiche d'album à imprimer** — a paper checklist for one album, reachable from the
+  album page (« Fiche à imprimer », route `/albums/{slug}/print`). Every number of the
+  album is laid out as a dense grid, one block per team/section: collected stickers are
+  ticked, duplicates carry how many copies are spare, and missing ones stay blank so
+  they can be ticked with a pen at a swap meet. The grid stays readable in black and
+  white (missing cells are dashed, not just pale).
+
+  **The sheet always fits a single A4 page.** `App\Service\SheetLayout` solves the print
+  geometry per album: it walks every column count in two arrangements (section label
+  above its grid, or in a narrow left column) and keeps whichever prints the largest
+  numbers. Cell width and height are solved independently, since on a dense album it is
+  the page height that binds; below a legibility floor the mark moves beside the number
+  instead of under it, to spend the whole cell height on one line. The height model is
+  calibrated against headless Chromium over albums of 23 to 960 stickers — a standard
+  48×20 album prints at ~6pt. An album too large to fit legibly says so on screen rather
+  than silently spilling onto a second page.
 - **Correlated access logs** — nginx and php-fpm now both log in logfmt and share a
   request id (`rid`), so a single request can be followed across the two. nginx reports
   the total time and the php-fpm share separately (`dur_s` / `up_dur_s`), and tags each

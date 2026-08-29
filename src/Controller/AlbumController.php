@@ -13,6 +13,7 @@ use App\Repository\UserStickerRepository;
 use App\Service\AlbumImporter;
 use App\Service\CollectionStats;
 use App\Service\Reputation;
+use App\Service\SheetLayout;
 use App\Service\TradeMatcher;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -142,25 +143,39 @@ class AlbumController extends AbstractController
             $groups[$sticker->getTeam() ?? CollectionStats::UNGROUPED][] = $sticker;
         }
 
-        // Non-country sections come first, then countries alphabetically (accent-aware).
-        $sectionOrder = ['Ouverture' => 0, 'Palmarès' => 1, CollectionStats::UNGROUPED => 99];
-        $collator = new \Collator('fr_FR');
-        uksort($groups, static function (string $a, string $b) use ($sectionOrder, $collator): int {
-            $pa = $sectionOrder[$a] ?? 50;
-            $pb = $sectionOrder[$b] ?? 50;
-
-            return $pa !== $pb ? $pa <=> $pb : $collator->compare($a, $b);
-        });
-
         return $this->render('album/show.html.twig', [
             'album' => $album,
-            'groups' => $groups,
+            'groups' => $stats->orderSections($groups),
             'quantities' => $quantities,
             'teamProgress' => $stats->teamBreakdown($album, $quantities),
             'collected' => $collected,
             'progress' => $stats->forAlbum($user, $album),
             'radar' => $radar,
             'reputations' => $reputations,
+        ]);
+    }
+
+    /**
+     * Paper checklist for one album: the full grid of numbers per section, each
+     * cell marked owned / duplicate, missing ones left blank to tick with a pen.
+     */
+    #[Route('/{slug}/print', name: 'app_album_print', methods: ['GET'])]
+    public function printSheet(
+        #[MapEntity(mapping: ['slug' => 'slug'])] Album $album,
+        UserStickerRepository $userStickers,
+        CollectionStats $stats,
+    ): Response {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $quantities = $userStickers->getQuantityMapForAlbum($user, $album);
+        $sections = $stats->printableSheet($album, $quantities);
+
+        return $this->render('album/print.html.twig', [
+            'album' => $album,
+            'sections' => $sections,
+            'layout' => SheetLayout::forSheet($sections),
+            'progress' => $stats->forAlbum($user, $album),
         ]);
     }
 

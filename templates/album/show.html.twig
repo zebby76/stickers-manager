@@ -21,6 +21,11 @@
                 <button class="btn btn-success btn-sm"><i class="bi bi-bookmark-plus"></i> Suivre cet album</button>
             </form>
         {% endif %}
+        {% if album.totalStickers > 0 %}
+            <a href="{{ path('app_album_print', {slug: album.slug}) }}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-printer"></i> Fiche à imprimer
+            </a>
+        {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('app_album_edit', {slug: album.slug}) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil"></i></a>
         {% endif %}

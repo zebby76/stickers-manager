@@ -66,6 +66,58 @@ class CollectionStats
     }
 
     /**
+     * Order sections the way the on-screen checklist does: the album's opening
+     * sections first, then teams alphabetically (accent-aware), "Divers" last.
+     *
+     * @template TValue
+     *
+     * @param array<string, TValue> $bySection
+     *
+     * @return array<string, TValue>
+     */
+    public function orderSections(array $bySection): array
+    {
+        $priority = ['Ouverture' => 0, 'Palmarès' => 1, self::UNGROUPED => 99];
+        $collator = new \Collator('fr_FR');
+
+        uksort($bySection, static function (string $a, string $b) use ($priority, $collator): int {
+            $pa = $priority[$a] ?? 50;
+            $pb = $priority[$b] ?? 50;
+
+            return $pa !== $pb ? $pa <=> $pb : $collator->compare($a, $b);
+        });
+
+        return $bySection;
+    }
+
+    /**
+     * Printable checklist for one album: every sticker of every section with the
+     * quantity held, ready to be laid out as a paper grid. Derived from an
+     * already fetched quantity map, so it costs no extra query.
+     *
+     * @param array<int, int> $quantityMap
+     *
+     * @return array<string, SheetSection> keyed by section label, in checklist order
+     */
+    public function printableSheet(Album $album, array $quantityMap): array
+    {
+        $cells = [];
+        foreach ($album->getStickers() as $sticker) {
+            $team = $sticker->getTeam() ?? self::UNGROUPED;
+            $cells[$team][] = new SheetCell($sticker, $quantityMap[$sticker->getId()] ?? 0);
+        }
+
+        $progress = $this->teamBreakdown($album, $quantityMap);
+
+        $sections = [];
+        foreach ($this->orderSections($cells) as $team => $sectionCells) {
+            $sections[$team] = new SheetSection($team, $sectionCells, $progress[$team]);
+        }
+
+        return $sections;
+    }
+
+    /**
      * Progress for every album the user actively collects.
      *
      * @return AlbumProgress[]

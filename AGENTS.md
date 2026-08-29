@@ -81,7 +81,8 @@ triggers the Docker build + GitHub Release workflows.
 
 - Conventional commits: `feat(scope): …`, `fix(scope): …`, etc. (see `git log`).
 - End commit messages with:
-  `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`
+  `Co-Authored-By: Claude <noreply@anthropic.com>`
+  (deliberately not pinned to a model version, so it survives model upgrades)
 - Branch off `main` before committing if asked to open a PR; otherwise commit to the
   branch you're on only when the user asks.
 

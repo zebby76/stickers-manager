@@ -25,8 +25,20 @@ final readonly class SheetLayout
     /** Sheet header + legend. */
     private const float CHROME_HEIGHT = 26.0;
 
-    private const float LABEL_COLUMN = 26.0;
+    /**
+     * The printed left column carries a flag (or a stand-in icon) and nothing
+     * else: the sticker codes already name the team (BEL1, USA2…), so spelling it
+     * out again was redundant. One flag wide instead of a name, which hands the
+     * grid ~17mm more to spend on cells.
+     */
+    private const float LABEL_COLUMN = 9.0;
+    /** Never so narrow that the flag stops being recognisable. */
+    private const float MIN_LABEL_COLUMN = 4.6;
+    /** Breathing room around the flag inside its column. */
+    private const float LABEL_PADDING = 0.8;
     private const float LABEL_GAP = 2.0;
+    /** Flags render 4:3, and are scaled to the height of the row they label. */
+    private const float FLAG_RATIO = 4 / 3;
     private const float STACKED_LABEL_HEIGHT = 4.2;
     private const float STACKED_SECTION_GAP = 1.2;
     private const float INLINE_SECTION_GAP = 0.5;
@@ -68,6 +80,9 @@ final readonly class SheetLayout
         public bool $labelAbove,
         /** Number and mark side by side rather than stacked, for dense albums. */
         public bool $singleLine,
+        public float $labelWidth,
+        public float $flagWidth,
+        public float $flagHeight,
         public bool $fits,
     ) {
     }
@@ -100,6 +115,28 @@ final readonly class SheetLayout
             return self::at(self::MAX_CELL_WIDTH, 6.8, 1, true, $longestNumber, true);
         }
 
+        // The label column holds one flag, scaled to the row it labels — but the
+        // row height is itself a result of how much width the column leaves. Solve
+        // once at full width, then again with the column the flag actually needs,
+        // so a dense sheet does not reserve 9mm to centre a 4mm flag in it.
+        $first = self::solve($sectionSizes, $longestNumber, self::LABEL_COLUMN);
+        $tighter = max(
+            self::MIN_LABEL_COLUMN,
+            min(self::LABEL_COLUMN, $first->cellHeight * self::FLAG_RATIO + self::LABEL_PADDING),
+        );
+
+        return $tighter < self::LABEL_COLUMN - 0.05
+            ? self::solve($sectionSizes, $longestNumber, $tighter)
+            : $first;
+    }
+
+    /**
+     * @param int[] $sectionSizes
+     */
+    private static function solve(array $sectionSizes, int $longestNumber, float $labelColumn): self
+    {
+
+
         $usableWidth = self::PAGE_WIDTH - 2 * self::MARGIN;
         $usableHeight = (self::PAGE_HEIGHT - 2 * self::MARGIN - self::CHROME_HEIGHT) * self::SAFETY;
         $sectionCount = \count($sectionSizes);
@@ -108,7 +145,7 @@ final readonly class SheetLayout
         foreach ([true, false] as $labelAbove) {
             $gridWidth = $labelAbove
                 ? $usableWidth
-                : $usableWidth - self::LABEL_COLUMN - self::LABEL_GAP;
+                : $usableWidth - $labelColumn - self::LABEL_GAP;
 
             $sectionGap = $labelAbove ? self::STACKED_SECTION_GAP : self::INLINE_SECTION_GAP;
             // Every section costs a gap (bar the last) and, when stacked, a label.
@@ -138,7 +175,7 @@ final readonly class SheetLayout
                 }
                 $height = min($height, $width * self::MAX_CELL_RATIO);
 
-                $candidate = self::at($width, $height, $columns, $labelAbove, $longestNumber, true);
+                $candidate = self::at($width, $height, $columns, $labelAbove, $longestNumber, true, $labelColumn);
                 // Bigger numbers win; at equal size the grid that fills the row
                 // wins, so a small album never prints as a single tall column.
                 if ($best === null
@@ -155,10 +192,10 @@ final readonly class SheetLayout
         }
 
         // Nothing fits: print as tight as still legible and let the caller say so.
-        $gridWidth = $usableWidth - self::LABEL_COLUMN - self::LABEL_GAP;
+        $gridWidth = $usableWidth - $labelColumn - self::LABEL_GAP;
         $columns = max(1, (int) floor(($gridWidth + self::CELL_GAP) / (self::MIN_CELL_WIDTH + self::CELL_GAP)));
 
-        return self::at(self::MIN_CELL_WIDTH, self::MIN_CELL_HEIGHT, $columns, false, $longestNumber, false);
+        return self::at(self::MIN_CELL_WIDTH, self::MIN_CELL_HEIGHT, $columns, false, $longestNumber, false, $labelColumn);
     }
 
     private static function at(
@@ -168,6 +205,7 @@ final readonly class SheetLayout
         bool $labelAbove,
         int $longestNumber,
         bool $fits,
+        float $labelColumn = self::LABEL_COLUMN,
     ): self {
         // Stacked, the number owns the top half of the cell; on one line it shares
         // the cell width with the mark ("×2") sitting beside it. Prefer stacked —
@@ -185,6 +223,11 @@ final readonly class SheetLayout
             }
         }
 
+        // The flag is scaled to the row it labels, never wider than its column.
+        $labelWidth = $labelColumn;
+        $flagHeight = min($height, ($labelWidth - self::LABEL_PADDING) / self::FLAG_RATIO);
+        $flagWidth = $flagHeight * self::FLAG_RATIO;
+
         return new self(
             cellWidth: round($width, 2),
             cellHeight: round($height, 2),
@@ -193,6 +236,9 @@ final readonly class SheetLayout
             columns: $columns,
             labelAbove: $labelAbove,
             singleLine: $singleLine,
+            labelWidth: round($labelWidth, 2),
+            flagWidth: round($flagWidth, 2),
+            flagHeight: round($flagHeight, 2),
             fits: $fits,
         );
     }

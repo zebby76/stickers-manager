@@ -16,7 +16,9 @@
         --sheet-cell-h: {{ layout.cellHeight }}mm;
         --sheet-num: {{ layout.numberSize }}pt;
         --sheet-mark: {{ layout.markSize }}pt;
-        --sheet-label-w: 26mm;
+        --sheet-label-w: {{ layout.labelWidth }}mm;
+        --sheet-flag-w: {{ layout.flagWidth }}mm;
+        --sheet-flag-h: {{ layout.flagHeight }}mm;
         --sheet-cell-gap: .7mm;
     }
 
@@ -71,11 +73,13 @@
        Chosen by the solver for albums with many sections: it buys back a whole
        line per section, which is what makes a 700-sticker album fit one page. */
     .sheet.is-inline .sheet-section { display: flex; align-items: flex-start; gap: 2mm; }
+    /* On screen there is width to spare, so the section is still spelled out. */
     .sheet.is-inline .sheet-section__head {
-        flex: 0 0 var(--sheet-label-w); min-width: 0;
+        flex: 0 0 26mm; min-width: 0;
         flex-wrap: wrap; margin: 0; padding-top: .3mm;
     }
     .sheet.is-inline .sheet-grid { flex: 1 1 auto; min-width: 0; }
+    .sheet-section__head .bi { color: var(--muted); }
 
     /* On screen the cell keeps a comfortable floor; print uses the exact size. */
     .sheet-grid { grid-template-columns: repeat(auto-fill, minmax(max(2.5rem, var(--sheet-cell-w)), 1fr)); }
@@ -91,8 +95,24 @@
         .sheet-legend { font-size: 7pt; gap: .3rem; margin-bottom: 2mm; }
         .sheet-legend .sheet-cell { width: 9mm; }
         .sheet-section__head { font-size: 5pt; }
-        .sheet-section__head .c { font-size: 6pt; }
-        .sheet-section__head .fi { width: 1.1em; }
+
+        /* The printed left column is the flag and nothing else: the sticker codes
+           already carry the team (BEL1, USA2…), so the name was redundant. The
+           flag is scaled to the row it labels. */
+        .sheet.is-inline .sheet-section__head {
+            flex: 0 0 var(--sheet-label-w);
+            align-items: center; justify-content: center;
+            height: var(--sheet-cell-h); padding: 0;
+        }
+        .sheet.is-inline .sheet-section__head .t,
+        .sheet.is-inline .sheet-section__head .c { display: none; }
+        .sheet.is-inline .sheet-section__head .fi {
+            width: var(--sheet-flag-w); height: var(--sheet-flag-h);
+            background-size: contain; box-shadow: 0 0 0 .5pt var(--line);
+        }
+        .sheet.is-inline .sheet-section__head .bi {
+            font-size: var(--sheet-flag-h); line-height: 1; color: var(--ink);
+        }
 
         .sheet-grid { grid-template-columns: repeat({{ layout.columns }}, 1fr); }
         .sheet-cell {
@@ -163,8 +183,12 @@
     {% for section in sections %}
         {% set cc = country_code(section.team) %}
         <section class="sheet-section" data-sheet-section>
-            <h3 class="sheet-section__head">
-                {% if cc %}<span class="fi fi-{{ cc }}"></span>{% endif %}
+            <h3 class="sheet-section__head" title="{{ section.team }}">
+                {% if cc %}
+                    <span class="fi fi-{{ cc }}"></span>
+                {% else %}
+                    <i class="bi {{ team_icon(section.team) }}" aria-hidden="true"></i>
+                {% endif %}
                 <span class="t">{{ section.team }}</span>
                 <span class="c">{{ section.progress.owned }}/{{ section.progress.total }}</span>
             </h3>

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.1] - 2026-08-29
+
+### Changed
+- **The printed sheet's left column is now just a flag.** Spelling the section out
+  there was redundant — the sticker codes already carry the team (`BEL1`, `USA2`…) —
+  and it cost 26mm of every row. The column is now one flag wide, scaled to the height
+  of the row it labels, and solved in two passes so a dense sheet does not reserve 9mm
+  to centre a 4mm flag in it. Sections that are not countries (a club, « Palmarès »,
+  « Divers ») fall back to a Bootstrap Icons glyph rather than an empty box, so every
+  row still carries a mark. On screen the section name and its owned/total count are
+  kept, since there is width to spare there.
+
+  The reclaimed width goes straight into the grid: on a 48×20 album with three-letter
+  codes the cells widen from 7.44mm to 8.5mm and the numbers print at 5.22pt instead of
+  4.57pt — 14% larger, still on a single A4 page.
+- The country-name → ISO code map moved out of the Twig extension into
+  `App\Service\TeamFlag`, so the sheet can reason about flags without going through
+  Twig. `country_code()` keeps working unchanged, and `team_icon()` joins it.
+
 ## [1.9.0] - 2026-08-29
 
 ### Added
@@ -281,7 +300,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.1...HEAD
+[1.9.1]: https://github.com/zebby76/stickers-manager/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/zebby76/stickers-manager/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/zebby76/stickers-manager/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/zebby76/stickers-manager/compare/1.7.0...1.7.1

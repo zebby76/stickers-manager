@@ -69,6 +69,33 @@ class SheetLayoutTest extends TestCase
         self::assertFalse($layout->fits);
     }
 
+    public function testTheLabelColumnShrinksToTheFlagItHolds(): void
+    {
+        // A dense album prints short rows, so the flag — and the column around it
+        // — must shrink with them rather than reserve width for a name that is no
+        // longer printed.
+        $dense = SheetLayout::fit(array_fill(0, 48, 20), 5);
+        $roomy = SheetLayout::fit([6, 6, 6, 5], 3);
+
+        self::assertLessThan($roomy->labelWidth, $dense->labelWidth);
+        self::assertEqualsWithDelta($dense->cellHeight, $dense->flagHeight, 0.01,
+            'The flag is scaled to the row it labels');
+        self::assertEqualsWithDelta($dense->flagHeight * 4 / 3, $dense->flagWidth, 0.01,
+            'Flags keep their 4:3 aspect');
+        self::assertLessThanOrEqual($dense->labelWidth, $dense->flagWidth,
+            'The flag never overflows its column');
+    }
+
+    public function testDroppingTheSectionNameBuysWidthForTheCells(): void
+    {
+        // Regression guard for 1.9.1: the printed left column is one flag wide,
+        // not a spelled-out name, which is what widened the cells.
+        $layout = SheetLayout::fit(array_fill(0, 48, 20), 5);
+
+        self::assertLessThan(10.0, $layout->labelWidth);
+        self::assertGreaterThan(8.0, $layout->cellWidth);
+    }
+
     public function testEmptyAlbumDoesNotBlowUp(): void
     {
         $layout = SheetLayout::fit([], 3);

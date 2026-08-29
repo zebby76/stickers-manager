@@ -286,6 +286,42 @@ class SmokeTest extends WebTestCase
         );
     }
 
+    public function testAlbumPrintSheetRendersAChecklistGrid(): void
+    {
+        $this->loginAs('bob@example.com');
+
+        // The album page offers the sheet.
+        $crawler = $this->client->request('GET', '/albums/world-cup-2022');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorExists('a[href="/albums/world-cup-2022/print"]');
+
+        $crawler = $this->client->request('GET', '/albums/world-cup-2022/print');
+        self::assertResponseIsSuccessful();
+
+        $album = static::getContainer()->get(AlbumRepository::class)->findOneBy(['slug' => 'world-cup-2022']);
+        self::assertNotNull($album);
+
+        // One cell per sticker, laid out in per-section grids.
+        self::assertGreaterThan(0, $crawler->filter('[data-sheet-section]')->count());
+        self::assertSame(
+            $album->getTotalStickers(),
+            $crawler->filter('.sheet-grid .sheet-cell')->count(),
+            'The printable grid should hold one cell per sticker of the album'
+        );
+
+        // Bob's fixture holdings cover all three states.
+        foreach (['missing', 'owned', 'duplicate'] as $state) {
+            self::assertGreaterThan(
+                0,
+                $crawler->filter(sprintf('.sheet-cell[data-state="%s"]', $state))->count(),
+                sprintf('The sheet should mark %s stickers', $state)
+            );
+        }
+
+        // The toolbar must not end up on paper.
+        self::assertSelectorExists('.no-print button[onclick="window.print()"]');
+    }
+
     public function testAdminCanImportAlbumFromJson(): void
     {
         $this->loginAs('alice@example.com');

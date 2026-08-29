@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche à imprimer · {{ album.name }} · Stickers Manager{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* —— Paper checklist ————————————————————————————————————————————
+       A dense grid of every number in the album, one block per section.
+       Owned cells are ticked, duplicates carry their spare count, missing ones
+       stay blank so they can be ticked with a pen at the swap meet.
+
+       The geometry below is solved server-side by App\Service\SheetLayout so the
+       whole album fits one A4 page — never hard-code these sizes. */
+    :root {
+        --sheet-cell-w: {{ layout.cellWidth }}mm;
+        --sheet-cell-h: {{ layout.cellHeight }}mm;
+        --sheet-num: {{ layout.numberSize }}pt;
+        --sheet-mark: {{ layout.markSize }}pt;
+        --sheet-label-w: 26mm;
+        --sheet-cell-gap: .7mm;
+    }
+
+    .sheet-head {
+        display: flex; flex-wrap: wrap; gap: .75rem;
+        justify-content: space-between; align-items: flex-end;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: .4rem; margin-bottom: .6rem;
+    }
+    .sheet-title { font-family: var(--font-pixel); font-size: .95rem; margin: 0 0 .4rem; }
+    .sheet-sub { font-family: var(--font-body); font-size: 1.05rem; color: var(--muted); }
+    .sheet-totals {
+        list-style: none; display: flex; flex-wrap: wrap; gap: .9rem;
+        margin: 0; padding: 0; font-family: var(--font-body); font-size: 1.05rem;
+    }
+    .sheet-totals .is-missing strong { color: var(--red); }
+    .sheet-totals .is-dupe strong { color: var(--amber-edge); }
+
+    .sheet-legend {
+        display: flex; flex-wrap: wrap; align-items: center; gap: .45rem;
+        font-family: var(--font-body); color: var(--muted); margin-bottom: .6rem;
+    }
+    /* The legend reuses the real cell markup, so it needs the box behaviour. */
+    .sheet-legend .sheet-cell { display: inline-block; width: 3rem; vertical-align: middle; }
+
+    .sheet-section { break-inside: avoid; page-break-inside: avoid; }
+    .sheet.is-stacked .sheet-section { margin-bottom: 1.2mm; }
+    .sheet.is-inline .sheet-section { margin-bottom: .5mm; }
+    .sheet-section__head {
+        display: flex; align-items: center; gap: .3rem;
+        font-family: var(--font-pixel); font-size: .58rem;
+        margin: 0 0 .45mm;
+    }
+    .sheet-section__head .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sheet-section__head .c { font-family: var(--font-body); font-size: .95rem; color: var(--muted); }
+
+    .sheet-grid { display: grid; gap: var(--sheet-cell-gap); }
+    .sheet-cell {
+        border: 1px solid var(--line); border-radius: 4px; background: #fff;
+        text-align: center; overflow: hidden;
+    }
+    .sheet-cell .n { display: block; font-family: var(--font-body); line-height: 1.05; color: var(--muted); }
+    .sheet-cell .m { display: block; font-family: var(--font-body); line-height: 1.05; }
+    .sheet-cell.is-owned { background: var(--mint-bg); border-color: var(--mint-edge); }
+    .sheet-cell.is-owned .n, .sheet-cell.is-owned .m { color: var(--mint-ink); }
+    .sheet-cell.is-duplicate { background: var(--amber-bg); border-color: var(--amber-edge); }
+    .sheet-cell.is-duplicate .n, .sheet-cell.is-duplicate .m { color: var(--amber-ink); }
+    /* Dashed on purpose: the sheet stays readable on a black-and-white printer. */
+    .sheet-cell.is-missing { background: #fff; border-style: dashed; border-color: #9aa1b8; }
+
+    /* —— Label pushed into a left column ————————————————————————————
+       Chosen by the solver for albums with many sections: it buys back a whole
+       line per section, which is what makes a 700-sticker album fit one page. */
+    .sheet.is-inline .sheet-section { display: flex; align-items: flex-start; gap: 2mm; }
+    .sheet.is-inline .sheet-section__head {
+        flex: 0 0 var(--sheet-label-w); min-width: 0;
+        flex-wrap: wrap; margin: 0; padding-top: .3mm;
+    }
+    .sheet.is-inline .sheet-grid { flex: 1 1 auto; min-width: 0; }
+
+    /* On screen the cell keeps a comfortable floor; print uses the exact size. */
+    .sheet-grid { grid-template-columns: repeat(auto-fill, minmax(max(2.5rem, var(--sheet-cell-w)), 1fr)); }
+    .sheet-cell { padding: .18rem .1rem .22rem; }
+    .sheet-cell .n { font-size: .95rem; }
+    .sheet-cell .m { font-size: 1.15rem; min-height: 1.2em; }
+
+    @media print {
+        @page { size: A4 portrait; margin: 10mm; }
+        .sheet-head { padding-bottom: 1.5mm; margin-bottom: 2mm; }
+        .sheet-title { font-size: 11pt; }
+        .sheet-sub, .sheet-totals { font-size: 7.5pt; }
+        .sheet-legend { font-size: 7pt; gap: .3rem; margin-bottom: 2mm; }
+        .sheet-legend .sheet-cell { width: 9mm; }
+        .sheet-section__head { font-size: 5pt; }
+        .sheet-section__head .c { font-size: 6pt; }
+        .sheet-section__head .fi { width: 1.1em; }
+
+        .sheet-grid { grid-template-columns: repeat({{ layout.columns }}, 1fr); }
+        .sheet-cell {
+            height: var(--sheet-cell-h); padding: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            border-radius: 2px;
+        }
+        .sheet-cell .n { font-size: var(--sheet-num); }
+        .sheet-cell .m { font-size: var(--sheet-mark); min-height: 0; }
+
+        /* Dense albums: the mark sits beside the number instead of under it, so
+           the whole cell height goes to one line rather than two half-lines. */
+        .sheet.is-compact .sheet-cell { flex-direction: row; align-items: baseline; justify-content: center; gap: .35mm; }
+        .sheet.is-compact .sheet-cell .n,
+        .sheet.is-compact .sheet-cell .m { display: inline; line-height: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3 no-print">
+    <div>
+        <h1 class="h3 mb-1">Fiche à imprimer</h1>
+        <p class="text-muted mb-0">Les manquantes sont laissées vides — coche-les au stylo pendant l'échange.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ path('app_album_show', {slug: album.slug}) }}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Retour à l'album
+        </a>
+        <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">
+            <i class="bi bi-printer"></i> Imprimer
+        </button>
+    </div>
+</div>
+
+{% if not layout.fits %}
+    <div class="alert alert-warning no-print">
+        <i class="bi bi-exclamation-triangle"></i>
+        Cet album est trop grand pour tenir sur une seule page A4 sans devenir illisible.
+        La fiche est imprimée à la densité maximale et débordera sur une deuxième page.
+    </div>
+{% endif %}
+
+<div class="sheet-head">
+    <div>
+        <h2 class="sheet-title">{{ album.name }}</h2>
+        <p class="sheet-sub mb-0">
+            {{ app.user.displayName }}{% if album.year %} · {{ album.year }}{% endif %} · imprimée le {{ 'now'|date('d/m/Y') }}
+        </p>
+    </div>
+    <ul class="sheet-totals">
+        <li><strong>{{ progress.owned }}</strong>/{{ progress.total }} collées</li>
+        <li class="is-missing"><strong>{{ progress.missing }}</strong> manquantes</li>
+        <li class="is-dupe"><strong>{{ progress.duplicates }}</strong> à échanger</li>
+    </ul>
+</div>
+
+{% if sections is not empty %}
+    <p class="sheet-legend">
+        Légende :
+        <span class="sheet-cell is-owned"><span class="n">n°</span><span class="m">✓</span></span> collée ·
+        <span class="sheet-cell is-duplicate"><span class="n">n°</span><span class="m">×2</span></span> double à échanger ·
+        <span class="sheet-cell is-missing"><span class="n">n°</span><span class="m"></span></span> manquante
+    </p>
+{% endif %}
+
+<div class="sheet {{ layout.labelAbove ? 'is-stacked' : 'is-inline' }}{{ layout.singleLine ? ' is-compact' : '' }}">
+    {% for section in sections %}
+        {% set cc = country_code(section.team) %}
+        <section class="sheet-section" data-sheet-section>
+            <h3 class="sheet-section__head">
+                {% if cc %}<span class="fi fi-{{ cc }}"></span>{% endif %}
+                <span class="t">{{ section.team }}</span>
+                <span class="c">{{ section.progress.owned }}/{{ section.progress.total }}</span>
+            </h3>
+            <div class="sheet-grid">
+                {% for cell in section.cells %}
+                    <div class="sheet-cell is-{{ cell.state }}" data-state="{{ cell.state }}">
+                        <span class="n">{{ cell.sticker.number }}</span>
+                        {# Spare copies, not the quantity held: this is what can be traded away. #}
+                        <span class="m">{% if cell.isDuplicate %}×{{ cell.spare }}{% elseif not cell.isMissing %}✓{% endif %}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% else %}
+        <div class="alert alert-warning">Cet album n'a pas encore de vignettes.</div>
+    {% endfor %}
+</div>
+{% endblock %}

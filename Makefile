@@ -129,6 +129,7 @@ release: ## Cut a release:  make release VERSION=1.8.0 [YES=1]  (commit + signed
 	@[ -n "$(VERSION)" ] || { echo "VERSION=x.y.z required" >&2; exit 1; }
 	@b=$$(git rev-parse --abbrev-ref HEAD); [ "$$b" = main ] || { echo "release only from main (on $$b)" >&2; exit 1; }
 	@git rev-parse "$(VERSION)" >/dev/null 2>&1 && { echo "tag $(VERSION) already exists -> use 'make retag VERSION=$(VERSION)'" >&2; exit 1; } || true
+	@u=$$(git ls-files --others --exclude-standard); [ -z "$$u" ] || { echo "untracked files present -- 'git commit -a' would SKIP them:" >&2; echo "$$u" | sed 's/^/  /' >&2; echo "git add them (or gitignore them) before releasing" >&2; exit 1; }
 	@if [ -z "$(YES)" ]; then printf "Release $(VERSION) from main to $(RELEASE_REMOTE) ($(REPO))? [y/N] "; read a; [ "$$a" = y ] || [ "$$a" = Y ] || { echo Aborted >&2; exit 1; }; fi
 	@git commit -S -a -m "chore(release): $(VERSION)" || echo "No changes to commit."
 	@git tag -s -m "Version $(VERSION)" $(VERSION)

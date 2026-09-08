@@ -66,6 +66,12 @@ ENV APP_ENV=dev \
     NGINX_SOFT_THROTTLE_ENABLED=true \
     NGINX_SOFT_THROTTLE_DRY_RUN_ENABLED=on
 
+# Same as prd: the extension ships in the image but is gated behind this flag.
+# Left off, the auto-instrumentation package warns at autoload -- and this image
+# prints warnings to STDOUT, so they land inside every response body, ahead of the
+# doctype, breaking every served JS module.
+ENV PHP_OPENTELEMETRY_ENABLED=true
+
 USER 1001
 WORKDIR /app/src/stickers
 

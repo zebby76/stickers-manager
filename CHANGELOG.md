@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.3] - 2026-09-08
+
+### Fixed
+- **The published `-dev` image leaked warnings into its responses too.** 1.9.2 enabled
+  the `opentelemetry` extension for the dev *stack* (compose) and silenced the tooling,
+  but missed the `dev` stage of the Dockerfile — which is built and published as
+  `:<version>-dev` by the bake matrix, and only `prd` carried the flag. That image
+  served every response prefixed with the autoload warning, ahead of the doctype, and
+  every JS module it served was invalid as a result. The `dev` stage now sets
+  `PHP_OPENTELEMETRY_ENABLED=true` like `prd` does.
+
 ## [1.9.2] - 2026-09-08
 
 ### Fixed
@@ -332,7 +343,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.2...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.3...HEAD
+[1.9.3]: https://github.com/zebby76/stickers-manager/compare/1.9.2...1.9.3
 [1.9.2]: https://github.com/zebby76/stickers-manager/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/zebby76/stickers-manager/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/zebby76/stickers-manager/compare/1.8.0...1.9.0

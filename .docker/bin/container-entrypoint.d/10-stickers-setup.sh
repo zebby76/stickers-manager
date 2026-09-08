@@ -7,6 +7,8 @@
 APP_DIR="/app/src/stickers"
 CONSOLE="${APP_DIR}/bin/console"
 
+source /usr/local/bin/container-entrypoint.d/entrypoint.d/00-functions.sh
+
 log "INFO" "+---- Stickers Manager setup -----"
 
 if [ "${APP_SKIP_SETUP:-false}" = "true" ]; then

@@ -32,6 +32,7 @@ exec docker run --rm "${TTY_FLAGS[@]}" \
   --env COMPOSER_PROCESS_TIMEOUT=900 \
   --env COMPOSER_MEMORY_LIMIT=-1 \
   --env PHP_BYPASS_INI_DEFAULT_VALUES=true \
+  --env OTEL_PHP_DISABLED_INSTRUMENTATIONS="${OTEL_PHP_DISABLED_INSTRUMENTATIONS:-all}" \
   --env APP_ENV="${APP_ENV:-dev}" \
   --env TMPDIR=/tmp \
   "${DB_ENV[@]}" \

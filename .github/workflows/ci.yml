@@ -43,6 +43,10 @@ jobs:
       DATABASE_URL: "postgresql://stickers:stickers@postgres:5432/stickers?serverVersion=16&charset=utf8"
       COMPOSER_ALLOW_SUPERUSER: "1"
       PHP_BYPASS_INI_DEFAULT_VALUES: "true"
+      # No tracing from CI tooling. Without this the auto-instrumentation package
+      # warns on every command because the opentelemetry extension is not enabled
+      # here (see PHP_INI_SCAN_DIR below).
+      OTEL_PHP_DISABLED_INSTRUMENTATIONS: "all"
       # GitHub overrides the base-php entrypoint for `container:` jobs, so the PHP
       # extensions are never enabled. Point PHP at the standard conf.d to load them
       # (pdo_pgsql, intl, …) — otherwise Doctrine fails with "could not find driver".

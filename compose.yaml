@@ -29,7 +29,7 @@ services:
       - app-var:/v
 
   app:
-    image: smalswebtech/base-php:8.5-nginx-dev
+    image: smalswebtech/base-php:8.5.10-nginx-dev
     depends_on:
       database:
         condition: service_healthy
@@ -39,6 +39,11 @@ services:
       APP_ENV: "dev"
       APP_DEBUG: "1"
       APP_SECRET: "stickers_dev_secret_change_in_prod"
+      # The opentelemetry extension ships in the image but is gated behind this
+      # flag. Without it the auto-instrumentation package warns at autoload, and
+      # the dev image prints warnings to STDOUT -- which lands *inside* every
+      # response body, ahead of the doctype, and breaks served JS modules.
+      PHP_OPENTELEMETRY_ENABLED: "true"
       DATABASE_URL: "postgresql://stickers:stickers@database:5432/stickers?serverVersion=16&charset=utf8"
       VARNISH_ENABLED: "false"
       NGINX_REAL_IP_ENABLED: "true"
@@ -70,7 +75,7 @@ services:
       - /opt/sbin:rw,exec,size=8m,mode=1777
       - /opt/etc:rw,noexec,size=16m,mode=1777
       - /app/tmp:rw,noexec,size=64m,mode=1777
-      - /app/var/run:rw,size=16m,mode=1777
+      - /app/var:rw,noexec,size=64m,mode=1777
     read_only: true
     healthcheck:
       test: ["CMD-SHELL", "supervisorctl -c /opt/etc/supervisord.conf status php-fpm nginx | grep -c RUNNING | grep -q 2 || exit 1"]

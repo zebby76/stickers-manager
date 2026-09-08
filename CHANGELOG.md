@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.2] - 2026-09-08
+
+### Fixed
+- **The app runs on the upgraded base image again.** Its entrypoint no longer exports
+  helpers into the environment of the setup scripts it runs, so
+  `10-stickers-setup.sh` sources them itself. The read-only runtime also needs the
+  whole of `/app/var` on tmpfs now, not just `/app/var/run`.
+- **Warnings no longer leak into responses.** The `opentelemetry` extension ships in
+  the image but is gated behind `PHP_OPENTELEMETRY_ENABLED`, which the dev stack never
+  set. The auto-instrumentation package therefore warned at autoload, and the dev
+  image prints warnings to STDOUT — landing *inside* every response body, ahead of the
+  doctype, and breaking every served JS module. The dev stack now enables the
+  extension, as the built image already did.
+- **The tooling stopped warning on every command.** `bin/dev` and the CI job run in a
+  container where that extension is not enabled, so they now declare
+  `OTEL_PHP_DISABLED_INSTRUMENTATIONS=all`: nothing to trace from a CLI, and the
+  package returns quietly instead of warning.
+- **A failed release commit can no longer be mistaken for an empty one.** `make
+  release` swallowed every error from `git commit -S` behind « No changes to commit »,
+  so a GPG signing failure looked like a clean no-op and the release went on to tag a
+  tree with no release commit in it. Only an empty working tree may skip the commit
+  now; anything else stops the release.
+
+### Changed
+- **Dependencies refreshed** — 74 packages, Symfony to 8.1.6, doctrine/orm 3.7.0,
+  doctrine/collections 3.1.0, ux-turbo and stimulus-bundle 3.4.0, PHPUnit 13.3.2,
+  opentelemetry 1.15.0, guzzle 7.15.5, and idb-keyval 6.3.0 in the importmap. Three of
+  those are major bumps of transitive packages (`doctrine/collections`,
+  `google/protobuf`, `sebastian/diff`), so the suite, the Doctrine mapping, the asset
+  build and the Turbo Stream endpoints were all exercised rather than trusted to
+  semver. The dev stack is pinned to `base-php:8.5.10-nginx-dev`.
+
 ## [1.9.1] - 2026-08-29
 
 ### Changed
@@ -300,7 +332,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.1...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.2...HEAD
+[1.9.2]: https://github.com/zebby76/stickers-manager/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/zebby76/stickers-manager/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/zebby76/stickers-manager/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/zebby76/stickers-manager/compare/1.7.1...1.8.0

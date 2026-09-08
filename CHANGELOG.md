@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **A published image could end up unsigned and unscanned.** The release workflow read
+  the pushed manifest's digest with a single `imagetools inspect` right after pushing
+  it; when the registry had not caught up yet it answered with nothing, and the empty
+  value flowed on as a bare `name@` reference. Cosign then failed on an opaque parse
+  error — after the image was already public — so it stayed unsigned and the Trivy job
+  was skipped. The digest is now retried, validated against `sha256:<64 hex>`, and the
+  step fails outright rather than handing an empty reference downstream.
+
 ## [1.9.3] - 2026-09-08
 
 ### Fixed

@@ -228,7 +228,26 @@ jobs:
         id: digest
         run: |
           tag="$(jq -cr '.target."${{ matrix.target }}".tags | first' <<< "${METADATA}")"
-          digest="$(docker buildx imagetools inspect "${tag}" --format '{{ json .Manifest.Digest }}' | tr -d '"')"
+          # The manifest list was pushed moments ago and the registry can answer an
+          # inspect with no digest yet (read-after-write). Retry, then fail loudly:
+          # passing an empty digest through produced a bare "name@", which failed in
+          # cosign with an opaque parse error *after* the image was already public --
+          # leaving it unsigned and skipping the vulnerability scan.
+          digest=""
+          for attempt in 1 2 3 4 5; do
+            digest="$(docker buildx imagetools inspect "${tag}" --format '{{ json .Manifest.Digest }}' 2>/dev/null | tr -d '"' || true)"
+            if [[ "${digest}" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+              break
+            fi
+            echo "attempt ${attempt}/5: no digest yet for ${tag}" >&2
+            digest=""
+            if [ "${attempt}" -lt 5 ]; then sleep 3; fi
+          done
+          if [ -z "${digest}" ]; then
+            echo "::error::could not resolve a digest for ${tag} after 5 attempts" >&2
+            exit 1
+          fi
+          echo "resolved ${tag} -> ${digest}"
           echo "ref=${DOCKER_IMAGE_NAME}@${digest}" >> "${GITHUB_OUTPUT}"
         env:
           METADATA: ${{ needs.prepare.outputs.metadata }}

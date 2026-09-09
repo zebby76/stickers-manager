@@ -7,7 +7,7 @@
 APP_DIR="/app/src/stickers"
 CONSOLE="${APP_DIR}/bin/console"
 
-source /usr/local/bin/container-entrypoint.d/entrypoint.d/00-functions.sh
+print-banner /opt/config/banner
 
 log "INFO" "+---- Stickers Manager setup -----"
 

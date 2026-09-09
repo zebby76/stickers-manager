@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 #
 # Stickers Manager — one-time application setup, run by the base image's
-# entrypoint (base.d/90-app.sh) on first container boot. Sourced, so it must not
-# `exit` or rely on `set -e`; failures are logged but never abort the container.
+# entrypoint (base.d/90-app.sh) on first container boot. It runs as a child
+# process under `bash -e -o pipefail`, so an unguarded failure aborts the boot:
+# guard whatever is allowed to fail. `exit` ends this hook, not the container.
 #
 APP_DIR="/app/src/stickers"
 CONSOLE="${APP_DIR}/bin/console"
 
-print-banner /opt/config/banner
+# Decorative: a banner that cannot be read must never stop the container.
+print-banner /opt/config/banner || true
 
 log "INFO" "+---- Stickers Manager setup -----"
 

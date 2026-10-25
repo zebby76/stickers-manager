@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- **ReDoS through the `Cache-Control` request header (CVE-2026-108082).**
+  `symfony/http-foundation` 8.1.6 split that header with a regex an attacker could make
+  backtrack catastrophically, so any anonymous request — the public share page
+  included — could pin a PHP worker. Upgraded to 8.1.9, which fixes it.
+
+### Changed
+- Dependencies refreshed within their current ranges: Symfony 8.1.9, Doctrine ORM
+  3.7.5, Symfony UX Turbo / Stimulus 3.6, Monolog bundle 4.1, Twig 3.30,
+  OpenTelemetry auto-instrumentation 1.7, PHPUnit 13.4. Guzzle (used by the Authelia
+  OIDC client) moves to 8.x, which `league/oauth2-client` 2.9.1 now supports.
+
 ### Fixed
 - **A published image could end up unsigned and unscanned.** The release workflow read
   the pushed manifest's digest with a single `imagetools inspect` right after pushing

@@ -22,3 +22,18 @@ knpu_oauth2_client:
                 urlResourceOwnerDetails: '%env(OIDC_ISSUER)%/api/oidc/userinfo'
                 responseResourceOwnerId: sub
                 scopeSeparator: ' '
+
+# Tests talk to a fake Authelia (tests/Security/FakeAuthelia.php) wired in as the
+# Guzzle handler: the real client + Guzzle stack run, only the network is replaced.
+when@test:
+    services:
+        App\Tests\Security\FakeAuthelia: ~
+        app.test.authelia_handler_stack:
+            class: GuzzleHttp\HandlerStack
+            factory: ['GuzzleHttp\HandlerStack', 'create']
+            arguments: ['@App\Tests\Security\FakeAuthelia']
+        app.test.authelia_http_client:
+            class: GuzzleHttp\Client
+            arguments: [{ handler: '@app.test.authelia_handler_stack' }]
+    knpu_oauth2_client:
+        http_client: app.test.authelia_http_client

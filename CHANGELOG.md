@@ -17,7 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies refreshed within their current ranges: Symfony 8.1.9, Doctrine ORM
   3.7.5, Symfony UX Turbo / Stimulus 3.6, Monolog bundle 4.1, Twig 3.30,
   OpenTelemetry auto-instrumentation 1.7, PHPUnit 13.4. Guzzle (used by the Authelia
-  OIDC client) moves to 8.x, which `league/oauth2-client` 2.9.1 now supports.
+  OIDC client) moves to 8.x, which `league/oauth2-client` 2.9.1 now supports; the
+  Authelia return leg is now covered by an automated test (see below).
+- **The Authelia SSO return leg is tested.** `AutheliaLoginTest` drives
+  `/connect/authelia` → `/connect/authelia/check` through the real OAuth2 client and
+  Guzzle stack against a fake Authelia: state check, PKCE code exchange, userinfo,
+  account creation / linking by e-mail / reuse by subject, and failures sent back to
+  `/login`.
 
 ### Fixed
 - **A published image could end up unsigned and unscanned.** The release workflow read

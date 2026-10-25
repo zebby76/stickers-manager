@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-10-25
+
 ### Security
 - **ReDoS through the `Cache-Control` request header (CVE-2026-108082).**
   `symfony/http-foundation` 8.1.6 split that header with a regex an attacker could make
@@ -24,6 +26,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Guzzle stack against a fake Authelia: state check, PKCE code exchange, userinfo,
   account creation / linking by e-mail / reuse by subject, and failures sent back to
   `/login`.
+
+### Fixed
+- **A banner that could not be read would have stopped the container.** Since base-php
+  runs entrypoint hooks as child processes under `bash -e -o pipefail`, the setup
+  hook's `print-banner` (which fails on an unreadable path) was an unguarded failure
+  that aborted the boot. It is now guarded; the hook's header comment describes the
+  current contract.
+
+## [1.9.4] - 2026-09-09
+
+### Changed
+- New startup banner in the container logs.
 
 ### Fixed
 - **A published image could end up unsigned and unscanned.** The release workflow read
@@ -370,7 +384,9 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.9.3...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.0...HEAD
+[1.10.0]: https://github.com/zebby76/stickers-manager/compare/1.9.4...1.10.0
+[1.9.4]: https://github.com/zebby76/stickers-manager/compare/1.9.3...1.9.4
 [1.9.3]: https://github.com/zebby76/stickers-manager/compare/1.9.2...1.9.3
 [1.9.2]: https://github.com/zebby76/stickers-manager/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/zebby76/stickers-manager/compare/1.9.0...1.9.1

@@ -27,7 +27,7 @@ return [
     '@hotwired/stimulus' => ['version' => '3.2.2'],
     '@symfony/stimulus-bundle' => ['path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js'],
     '@hotwired/turbo' => ['version' => '8.0.23'],
-    'idb' => ['version' => '8.0.3'],
     'idb-keyval' => ['version' => '6.3.0'],
     '@spomky-labs/pwa/helpers' => ['path' => './vendor/spomky-labs/pwa-bundle/assets/src/helpers.js'],
+    'idb' => ['version' => '8.0.4'],
 ];

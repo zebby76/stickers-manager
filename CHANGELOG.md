@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- **E-mail header injection via MIME parameter names (CVE-2026-45070).**
+  `symfony/mime` 8.1.7 did not reject non-token characters in MIME parameter names,
+  letting crafted input smuggle extra headers into an outgoing e-mail (the app sends
+  password-reset and registration mails). Upgraded to 8.1.10, which fixes it.
+- **PHPUnit shared-temp-dir code execution (CVE-2026-119193).** Dev-only: another
+  local user could get code run through PHPT coverage files in a shared temporary
+  directory. PHPUnit 13.4.5 fixes it; the production image never ships PHPUnit.
+
+### Changed
+- Dependencies refreshed within their current ranges: Symfony 8.1.10, Doctrine ORM
+  3.7.6, DoctrineBundle 3.3.4, reset-password-bundle 1.26.1, Flex 2.12, Guzzle 8.3.1,
+  and the `idb` JS module 8.0.4.
+
 ## [1.10.0] - 2026-10-25
 
 ### Security

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-11-01
+
 ### Security
 - **E-mail header injection via MIME parameter names (CVE-2026-45070).**
   `symfony/mime` 8.1.7 did not reject non-token characters in MIME parameter names,
@@ -398,7 +400,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.0...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.1...HEAD
+[1.10.1]: https://github.com/zebby76/stickers-manager/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/zebby76/stickers-manager/compare/1.9.4...1.10.0
 [1.9.4]: https://github.com/zebby76/stickers-manager/compare/1.9.3...1.9.4
 [1.9.3]: https://github.com/zebby76/stickers-manager/compare/1.9.2...1.9.3

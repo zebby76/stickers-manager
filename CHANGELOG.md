@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.2] - 2026-11-07
+
+### Security
+- **18 Symfony advisories, 11 packages.** `composer audit` flagged them after 1.10.1;
+  Symfony 8.1.11 clears them all. They include bypasses of path- and method-based
+  access control (CVE-2026-118514, CVE-2026-118516), client-chosen hosts in generated
+  URLs, spoofable trusted proxies, Serializer local-file reads (CVE-2026-118515), an
+  SSRF filter bypass in the `Ip` constraint, YAML parse-time denial of service, and
+  programmatic logins skipping `checkPostAuth()`.
+- **Rebuilt on the current base-php 8.5.12**, picking up curl 8.23.0
+  (CVE-2026-92392). 1.10.1 already shipped PHP 8.5.12, the PHP2Shell fix
+  (CVE-2026-109618, CVE-2026-109619).
+- **The dev stack no longer runs a PHP2Shell-vulnerable PHP.** `compose.yaml` pinned
+  `base-php:8.5.10-nginx-dev`, older than the fix; it now pins 8.5.12.
+
+### Changed
+- Dependencies refreshed within their current ranges: Symfony UX Turbo / Stimulus 3.7,
+  OpenTelemetry SDK 1.16 and OTLP exporter 1.5, PHPUnit 13.4.6.
+
 ## [1.10.1] - 2026-11-01
 
 ### Security
@@ -400,7 +419,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.1...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.2...HEAD
+[1.10.2]: https://github.com/zebby76/stickers-manager/compare/1.10.1...1.10.2
 [1.10.1]: https://github.com/zebby76/stickers-manager/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/zebby76/stickers-manager/compare/1.9.4...1.10.0
 [1.9.4]: https://github.com/zebby76/stickers-manager/compare/1.9.3...1.9.4

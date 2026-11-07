@@ -29,7 +29,7 @@ services:
       - app-var:/v
 
   app:
-    image: smalswebtech/base-php:8.5.10-nginx-dev
+    image: smalswebtech/base-php:8.5.12-nginx-dev
     depends_on:
       database:
         condition: service_healthy

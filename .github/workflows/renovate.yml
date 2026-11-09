@@ -1,0 +1,54 @@
+---
+name: Renovate
+
+run-name: Renovate by @${{ github.actor }}
+
+# Self-hosted Renovate, as a GitHub App: pull requests opened with GITHUB_TOKEN do
+# not trigger workflows, so the CI would never run on them. It covers every
+# repository of the account where the App is installed and that has a renovate.json.
+on:
+  schedule:
+    # Every day, so that a republished base image gets its pull request quickly.
+    - cron: "30 3 * * *"
+  # A dry run is set with the repository variable RENOVATE_DRY_RUN ("lookup" lists
+  # the updates without touching anything); unset, the run is real.
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  renovate:
+    # A fork holds no credentials.
+    if: github.repository == 'zebby76/stickers-manager'
+
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Get a token for the Renovate GitHub App
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
+        with:
+          client-id: ${{ vars.RENOVATE_CLIENT_ID }}
+          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Renovate
+        uses: renovatebot/github-action@266fef21329c44765ad42f9dea1f01f5d2d91084 # v46.3.13
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          renovate-version: 44.222.5
+        env:
+          RENOVATE_AUTODISCOVER: "true"
+          RENOVATE_AUTODISCOVER_FILTER: ${{ github.repository_owner }}/*
+          RENOVATE_ONBOARDING: "false"
+          RENOVATE_REQUIRE_CONFIG: "required"
+          RENOVATE_PLATFORM_COMMIT: "enabled"
+          # The only command a postUpgradeTask may run: the CHANGELOG line.
+          RENOVATE_ALLOWED_COMMANDS: '["^bash \\.github/renovate/changelog-base-image\\.sh$"]'
+          RENOVATE_DRY_RUN: ${{ vars.RENOVATE_DRY_RUN }}
+          LOG_LEVEL: info

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Base images, Composer and GitHub Actions. Run from .github/workflows/renovate.yml.",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "enabledManagers": ["dockerfile", "composer", "github-actions"],
+  "timezone": "Europe/Brussels",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 10,
+  "labels": ["dependencies"],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "The three base-php tags move together: one pull request, with a CHANGELOG line.",
+      "matchPackageNames": ["docker.io/smalswebtech/base-php"],
+      "groupName": "base-php image",
+      "postUpgradeTasks": {
+        "commands": ["bash .github/renovate/changelog-base-image.sh"],
+        "fileFilters": ["CHANGELOG.md"],
+        "executionMode": "branch"
+      }
+    },
+    {
+      "description": "A new PHP minor is a decision, not an update: wait for an approval on the Dependency Dashboard.",
+      "matchPackageNames": ["docker.io/smalswebtech/base-php"],
+      "matchUpdateTypes": ["minor", "major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Composer and the Actions, once a week and grouped. Security updates do not wait.",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "composer",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "description": "Major versions wait for an approval on the Dependency Dashboard.",
+      "matchManagers": ["composer", "github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": null,
+      "dependencyDashboardApproval": true
+    }
+  ]
+}

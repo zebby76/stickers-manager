@@ -14,14 +14,6 @@ variable "DOCKER_IMAGE_LATEST" {
   default = false
 }
 
-variable "BASE_IMAGE" {
-  default = "docker.io/smalswebtech/base-php"
-}
-
-variable "PHP_TAG" {
-  default = "8.5"
-}
-
 variable "GIT_HASH" {}
 
 function "tag" {
@@ -38,11 +30,6 @@ target "default" {
   dockerfile = "Dockerfile"
   target     = "${tgt}"
   platforms  = ["linux/amd64", "linux/arm64"]
-
-  args = {
-    BASE_IMAGE = BASE_IMAGE
-    PHP_TAG    = PHP_TAG
-  }
 
   labels = {
     "org.opencontainers.image.title"       = "Stickers Manager"

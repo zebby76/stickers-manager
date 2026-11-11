@@ -9,7 +9,7 @@
 # digest shows it. Renovate updates them (see renovate.json).
 
 # —— Builder: lay out the app at /app/src/stickers and the .docker overlay ——————
-FROM docker.io/smalswebtech/base-php:8.5-cli-dev@sha256:9e4f66aeffeab17c4d0a8107b5b5456abe72ca8fa686d7f1ed102ba527e3fd19 AS builder
+FROM docker.io/smalswebtech/base-php:8.5-cli-dev@sha256:2879199f66108e2aed05414d3368db0792db52e7f26395c5bb3e51e33af761bc AS builder
 
 USER root
 
@@ -21,7 +21,7 @@ RUN mv /tmpfs/.docker /bootstrap \
  && rm -rf /app/src/stickers/var/* /app/src/stickers/.git
 
 # —— Runtime (prod) ————————————————————————————————————————————————————————————
-FROM docker.io/smalswebtech/base-php:8.5-nginx@sha256:bc31fa92a3bc3174cc91c1276921c79e05e2bbed17b666350c5ee4603a149a21 AS prd
+FROM docker.io/smalswebtech/base-php:8.5-nginx@sha256:dd6b44e0492ec9d90f32057cc78c589bb9e4101f5d6d920f4fbd824b1ab1d4df AS prd
 
 USER root
 
@@ -50,7 +50,7 @@ HEALTHCHECK --start-period=10s --interval=10s --timeout=3s --retries=5 \
     CMD [ "$(supervisorctl -c /opt/etc/supervisord.conf status php-fpm nginx | grep -c RUNNING)" -eq 2 ] || exit 1
 
 # —— Runtime (dev) —————————————————————————————————————————————————————————————
-FROM docker.io/smalswebtech/base-php:8.5-nginx-dev@sha256:e4b05cbf3d7a6771c773e962d3b9a93ccfe349ed5e11a541e97ee0fa5cc9498a AS dev
+FROM docker.io/smalswebtech/base-php:8.5-nginx-dev@sha256:338e5a761761e2a88ca7db2a3c5dd2a3dc9a2f7f09d9a93188c2851275bd5137 AS dev
 
 USER root
 

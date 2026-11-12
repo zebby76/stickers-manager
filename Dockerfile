@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.15
+# syntax=docker/dockerfile:1.29
 #
 # Stickers Manager — packaged on the Smals base-php image.
 # Dependencies (vendor/) and assets (public/assets) are pre-built on the host via

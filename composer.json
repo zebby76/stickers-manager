@@ -30,14 +30,14 @@
         "symfony/monolog-bundle": "^4.1",
         "symfony/runtime": "8.1.*",
         "symfony/security-bundle": "8.1.*",
-        "symfony/stimulus-bundle": "^3.7",
+        "symfony/stimulus-bundle": "^3.8",
         "symfony/translation": "8.1.*",
         "symfony/twig-bundle": "8.1.*",
-        "symfony/ux-turbo": "^3.7",
+        "symfony/ux-turbo": "^3.8",
         "symfony/validator": "8.1.*",
         "symfony/yaml": "8.1.*",
         "symfonycasts/reset-password-bundle": "^1.26.1",
-        "twig/extra-bundle": "^3.29"
+        "twig/extra-bundle": "^3.31"
     },
     "config": {
         "allow-plugins": {

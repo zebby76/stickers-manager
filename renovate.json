@@ -34,16 +34,16 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Composer and the Actions, once a week and grouped. Security updates do not wait.",
+      "description": "Composer and the Actions, once a week and grouped. Security updates do not wait. The whole Monday, not before 6am: GitHub starts this personal repository's 03:30 UTC run about nine hours late, so a run never fell inside the morning window and these pull requests were never opened.",
       "matchManagers": ["composer"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "composer",
-      "schedule": ["before 6am on monday"]
+      "schedule": ["on monday"]
     },
     {
       "matchManagers": ["github-actions"],
       "groupName": "github-actions",
-      "schedule": ["before 6am on monday"]
+      "schedule": ["on monday"]
     },
     {
       "description": "Major versions wait for an approval on the Dependency Dashboard.",

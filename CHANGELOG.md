@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **base-php images updated** to their latest published digests.
 - **The base-php images are pinned by digest.** Renovate opens a pull request when one is
   republished.
 - **Renovate replaces Dependabot** for the Composer and GitHub Actions updates.

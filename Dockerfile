@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.15
+# syntax=docker/dockerfile:1.29
 #
 # Stickers Manager — packaged on the Smals base-php image.
 # Dependencies (vendor/) and assets (public/assets) are pre-built on the host via
@@ -9,7 +9,7 @@
 # digest shows it. Renovate updates them (see renovate.json).
 
 # —— Builder: lay out the app at /app/src/stickers and the .docker overlay ——————
-FROM docker.io/smalswebtech/base-php:8.5-cli-dev@sha256:9e4f66aeffeab17c4d0a8107b5b5456abe72ca8fa686d7f1ed102ba527e3fd19 AS builder
+FROM docker.io/smalswebtech/base-php:8.5-cli-dev@sha256:62ffc5d6bdefb131639aae4accdf86f460cd04995be35f7ddb409d29f5b5da79 AS builder
 
 USER root
 
@@ -21,7 +21,7 @@ RUN mv /tmpfs/.docker /bootstrap \
  && rm -rf /app/src/stickers/var/* /app/src/stickers/.git
 
 # —— Runtime (prod) ————————————————————————————————————————————————————————————
-FROM docker.io/smalswebtech/base-php:8.5-nginx@sha256:bc31fa92a3bc3174cc91c1276921c79e05e2bbed17b666350c5ee4603a149a21 AS prd
+FROM docker.io/smalswebtech/base-php:8.5-nginx@sha256:6c4f00f19e30653584723747441df22aafae7d437f24d3ae825f2542c0f2144c AS prd
 
 USER root
 
@@ -50,7 +50,7 @@ HEALTHCHECK --start-period=10s --interval=10s --timeout=3s --retries=5 \
     CMD [ "$(supervisorctl -c /opt/etc/supervisord.conf status php-fpm nginx | grep -c RUNNING)" -eq 2 ] || exit 1
 
 # —— Runtime (dev) —————————————————————————————————————————————————————————————
-FROM docker.io/smalswebtech/base-php:8.5-nginx-dev@sha256:e4b05cbf3d7a6771c773e962d3b9a93ccfe349ed5e11a541e97ee0fa5cc9498a AS dev
+FROM docker.io/smalswebtech/base-php:8.5-nginx-dev@sha256:9707661b271ceb29e230c4172a097aaaf4b8430d7bb3137f32335c835ddd7d5b AS dev
 
 USER root
 

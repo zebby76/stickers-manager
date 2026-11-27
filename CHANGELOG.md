@@ -7,11 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.3] - 2026-11-27
+
+### Security
+- **26 Symfony and Twig advisories.** `composer audit` flagged them after 1.10.2; Symfony
+  8.1.12 and Twig 3.31.1 clear them all. Among the 17 Symfony ones: login redirects and
+  generated URLs that could reach another host (CVE-2026-134790, CVE-2026-133746,
+  CVE-2026-133754), `access_control` rules granted by the unanimous strategy when only one
+  of their attributes matched (CVE-2026-133753), Mailer's `require_tls` bypassable by a man
+  in the middle (CVE-2026-133751, CVE-2026-133755), HttpClient credential and proxy leaks,
+  and the Serializer not enforcing `#[Ignore]` on a discriminated class. The 9 Twig ones are
+  sandbox bypasses and a missing autoescaping (CVE-2026-133771).
+- **Rebuilt on base-php 8.5.13**: PHP 8.5.13, a security release (17 advisories), Composer
+  2.11.3 (GHSA-374h-4mh9-7rpm), and zlib 1.4 (CVE-2026-4738). The dev stack moves to
+  `base-php:8.5.13-nginx-dev` too.
+
 ### Changed
-- **base-php images updated** to their latest published digests.
 - **The base-php images are pinned by digest.** Renovate opens a pull request when one is
   republished.
-- **Renovate replaces Dependabot** for the Composer and GitHub Actions updates.
+- **Renovate replaces Dependabot** for the Composer and GitHub Actions updates; its weekly
+  groups now get the whole Monday, as this repository's scheduled run starts hours late.
+- `docker/dockerfile` 1.29.
 
 ## [1.10.2] - 2026-11-07
 
@@ -425,7 +441,8 @@ First public release.
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
 
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.2...HEAD
+[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.3...HEAD
+[1.10.3]: https://github.com/zebby76/stickers-manager/compare/1.10.2...1.10.3
 [1.10.2]: https://github.com/zebby76/stickers-manager/compare/1.10.1...1.10.2
 [1.10.1]: https://github.com/zebby76/stickers-manager/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/zebby76/stickers-manager/compare/1.9.4...1.10.0

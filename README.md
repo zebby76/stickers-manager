@@ -148,12 +148,24 @@ micro-cache, rate limiting and the OpenTelemetry extension by default.
     --certificate-oidc-issuer https://token.actions.githubusercontent.com
   ```
 
-- **`release.yml`** — on tag `X.Y.Z`: creates a **GitHub Release** (auto-generated
-  notes + `docker pull` commands for the published images).
+Releases use `.github/release.mk`, the release tooling every image repository I maintain
+shares (base-php holds the reference copy and describes it in
+[docs/release-tooling.md](https://github.com/Smals-Webtech/base-php/blob/main/docs/release-tooling.md)):
 
-Cut a release with `make release VERSION=X.Y.Z` (see `make help`): it commits, creates a
-signed tag and pushes it — the two workflows above take it from there. Update
-`CHANGELOG.md` first, the release commit picks the edit up.
+```bash
+make release-prepare VERSION=X.Y.Z   # CHANGELOG section from the merged pull requests, then the lint
+git diff CHANGELOG.md                # read it; add a sentence if one helps
+make release VERSION=X.Y.Z           # signed commit + tag, push, GitHub Release with generated notes
+```
+
+A re-publication of an existing version (a new base image) is `make release-prepare
+VERSION=X.Y.Z RETAG=1`, then `make retag VERSION=X.Y.Z`. The tag push makes `docker.yml`
+publish the images:
+
+```bash
+docker pull zebby76/stickers-manager:X.Y.Z       # production
+docker pull zebby76/stickers-manager:X.Y.Z-dev   # development
+```
 
 Required repository secrets (Settings → Secrets → Actions): `DOCKERHUB_USERNAME`
 and `DOCKERHUB_TOKEN` (a Docker Hub token with *push* access to `zebby76/stickers-manager`).

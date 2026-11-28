@@ -18,14 +18,9 @@
     },
     "packageRules": [
         {
-            "description": "The three base-php tags move together: one pull request, with a CHANGELOG line.",
+            "description": "The three base-php tags move together: one pull request. Its CHANGELOG line is written at release time (make release-prepare, .github/changelog-deps.sh), so Renovate pull requests never conflict on CHANGELOG.md.",
             "matchPackageNames": ["docker.io/smalswebtech/base-php"],
-            "groupName": "base-php image",
-            "postUpgradeTasks": {
-                "commands": ["bash .github/renovate/changelog-base-image.sh"],
-                "fileFilters": ["CHANGELOG.md"],
-                "executionMode": "branch"
-            }
+            "groupName": "base-php image"
         },
         {
             "description": "A new PHP minor is a decision, not an update: wait for an approval on the Dependency Dashboard.",

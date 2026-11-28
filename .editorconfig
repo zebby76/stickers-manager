@@ -14,4 +14,13 @@ trim_trailing_whitespace = true
 indent_size = 2
 
 [*.md]
+indent_size = 2
 trim_trailing_whitespace = false
+
+# The workflows are indented like those of the other image repositories (base-php is the
+# reference); their shell scripts and the Makefile use tabs.
+[.github/**]
+indent_size = 2
+
+[{.github/**.sh,Makefile}]
+indent_style = tab

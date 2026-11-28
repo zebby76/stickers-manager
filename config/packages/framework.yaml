@@ -1,6 +1,6 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    secret: '%env(APP_SECRET)%'
+    secret: "%env(APP_SECRET)%"
 
     # Note that the session will be started ONLY if you read or write from it.
     # File-based by default (dev / CLI). In production sessions live in Valkey/Redis
@@ -17,11 +17,17 @@ when@prod:
         # the public host. Trust the proxy so the app knows it's served over HTTPS and
         # generates https:// URLs; otherwise redirects are http:// and Turbo's fetch is
         # blocked as mixed content (login then appears to need a manual refresh).
-        trusted_proxies: '127.0.0.1,REMOTE_ADDR'
-        trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+        trusted_proxies: "127.0.0.1,REMOTE_ADDR"
+        trusted_headers:
+            [
+                "x-forwarded-for",
+                "x-forwarded-host",
+                "x-forwarded-proto",
+                "x-forwarded-port",
+            ]
         session:
             # A redis:// DSN — Symfony's SessionHandlerFactory builds a RedisSessionHandler.
-            handler_id: '%env(REDIS_URL)%'
+            handler_id: "%env(REDIS_URL)%"
 
 when@test:
     framework:

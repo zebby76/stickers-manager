@@ -44,6 +44,7 @@ services:
       # the dev image prints warnings to STDOUT -- which lands *inside* every
       # response body, ahead of the doctype, and breaks served JS modules.
       PHP_OPENTELEMETRY_ENABLED: "true"
+      # checkov:skip=CKV_SECRET_4: the throwaway database of the local dev stack, not a credential
       DATABASE_URL: "postgresql://stickers:stickers@database:5432/stickers?serverVersion=16&charset=utf8"
       VARNISH_ENABLED: "false"
       NGINX_REAL_IP_ENABLED: "true"
@@ -57,8 +58,8 @@ services:
       # vhost's fastcgi_param). Mirrors the prod stack so dev and prod log identically.
       PHP_FPM_ACCESS_FORMAT: "rid=%{UNIQUE_ID}e class=%{traffic_class}e src=php-fpm status=%s method=%m uri=%r%Q%q dur_ms=%{milli}d mem_kb=%{kilo}M cpu=%C"
     ports:
-      - "8080:9000"   # app
-      - "9090:9090"   # metrics (nginx VTS /metrics + php-fpm /status)
+      - "8080:9000" # app
+      - "9090:9090" # metrics (nginx VTS /metrics + php-fpm /status)
     volumes:
       # Live-mounted application code at the runtime path
       - ./:/app/src/stickers:rw
@@ -79,7 +80,11 @@ services:
       - /app/var:rw,noexec,size=64m,mode=1777
     read_only: true
     healthcheck:
-      test: ["CMD-SHELL", "supervisorctl -c /opt/etc/supervisord.conf status php-fpm nginx | grep -c RUNNING | grep -q 2 || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "supervisorctl -c /opt/etc/supervisord.conf status php-fpm nginx | grep -c RUNNING | grep -q 2 || exit 1",
+        ]
       interval: 10s
       timeout: 3s
       retries: 5

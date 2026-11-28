@@ -9,7 +9,7 @@ Read this before making changes. Claude Code loads it automatically via `CLAUDE.
 A self-hosted web app to manage **football sticker collections** (albums, owned
 stickers, duplicates, swaps between collectors). Symfony 8 / PHP 8.4+, built on the
 `smalswebtech/base-php` image. Deployed as a signed multi-arch Docker image; a
-release is cut by pushing a `X.Y.Z` git tag.
+release is cut by pushing a `X.Y.Z` Git tag.
 
 ## ⚠️ Hard constraints (do not break)
 
@@ -51,7 +51,7 @@ make diff / make migrate             # generate / run migrations
 make composer ARGS="require ..."
 ```
 
-- Dev app: **http://localhost:8080** (container nginx :9000 → host :8080).
+- Dev app: **<http://localhost:8080>** (container nginx :9000 → host :8080).
 - Tooling runs inside the `cli-dev` container with `--network host`.
 
 ### Preparing the test DB (first run / after schema changes)
@@ -93,9 +93,9 @@ triggers the Docker build + GitHub Release workflows.
   `TeamProgress`, `Badge`, `Reputation`. Derive from existing entities each request.
 - **No N+1**: when a feature touches a list of users/albums, add a **batch query** to
   the repository (e.g. `TradeProposalRepository::completedCountsForUsers()` using
-  `IDENTITY()` to select FK ids) rather than querying per-row.
+  `IDENTITY()` to select FK IDs) rather than querying per-row.
 - **Turbo Streams**: partial updates return `<turbo-stream action="replace"
-  target="…">` blocks targeting **stable DOM ids**. A shared id helper on the VO
+  target="…">` blocks targeting **stable DOM IDs**. A shared ID helper on the VO
   (e.g. `TeamProgress::domId()`) keeps the initial render and the stream in sync.
   Reuse the same Twig partial for first render *and* the stream block
   (e.g. `templates/album/_team_header.html.twig`).
@@ -119,10 +119,10 @@ triggers the Docker build + GitHub Release workflows.
 Integration/smoke tests live in `tests/SmokeTest.php` (boots the kernel, hits routes,
 asserts rendered HTML and repository queries). When a feature has no fixture data
 (e.g. trades), **create the rows in-test and clean them up** (`em->remove`) so state
-doesn't leak between tests. Assert on stable markers (DOM ids, labels), not layout.
+doesn't leak between tests. Assert on stable markers (DOM IDs, labels), not layout.
 
 ## Backlog & memory
 
 Project-private context (personal preferences, the live feature backlog, secrets to
 rotate) is kept in the agent's out-of-repo memory, **not here**. This file holds only
-shared, versioned conventions. Don't duplicate secrets or personal notes into git.
+shared, versioned conventions. Don't duplicate secrets or personal notes into Git.

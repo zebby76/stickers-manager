@@ -13,6 +13,10 @@ on:
     branches:
       - main
 
+# The job only reads the repository.
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: Lint & tests

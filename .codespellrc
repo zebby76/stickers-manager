@@ -1,0 +1,4 @@
+[codespell]
+# The interface speaks French: these are French words, not typos. "invokable" is
+# Symfony's own term (config/reference.php).
+ignore-words-list = adresse,bord,brillant,commun,complet,connexion,correspondance,espace,exemple,groupe,informations,invalide,invokable,mis,mot,te,toi,valide

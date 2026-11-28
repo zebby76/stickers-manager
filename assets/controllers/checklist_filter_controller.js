@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from "@hotwired/stimulus";
 
 /*
  * Client-side filtering of the album checklist: search by sticker number and
@@ -6,10 +6,10 @@ import { Controller } from '@hotwired/stimulus';
  * sections are hidden. Re-applies automatically when Turbo replaces a cell.
  */
 export default class extends Controller {
-    static targets = ['search', 'cell', 'section', 'count'];
+    static targets = ["search", "cell", "section", "count"];
 
     connect() {
-        this.mode = 'all';
+        this.mode = "all";
         this.apply();
     }
 
@@ -29,22 +29,27 @@ export default class extends Controller {
     }
 
     apply() {
-        const q = (this.hasSearchTarget ? this.searchTarget.value : '').trim().toLowerCase();
+        const q = (this.hasSearchTarget ? this.searchTarget.value : "")
+            .trim()
+            .toLowerCase();
         let visible = 0;
 
         for (const cell of this.cellTargets) {
             const show = this.matches(cell, q);
-            cell.classList.toggle('d-none', !show);
+            cell.classList.toggle("d-none", !show);
             if (show) visible++;
         }
 
         for (const section of this.sectionTargets) {
-            const anyVisible = section.querySelector('[data-checklist-filter-target="cell"]:not(.d-none)') !== null;
-            section.classList.toggle('d-none', !anyVisible);
+            const anyVisible =
+                section.querySelector(
+                    '[data-checklist-filter-target="cell"]:not(.d-none)',
+                ) !== null;
+            section.classList.toggle("d-none", !anyVisible);
         }
 
         if (this.hasCountTarget) {
-            this.countTarget.textContent = `${visible} vignette${visible > 1 ? 's' : ''}`;
+            this.countTarget.textContent = `${visible} vignette${visible > 1 ? "s" : ""}`;
         }
     }
 
@@ -53,11 +58,16 @@ export default class extends Controller {
             return false;
         }
         switch (this.mode) {
-            case 'missing': return cell.dataset.owned === '0';
-            case 'owned': return cell.dataset.owned === '1';
-            case 'duplicates': return cell.dataset.dup === '1';
-            case 'shiny': return cell.dataset.rarity === 'shiny';
-            default: return true;
+            case "missing":
+                return cell.dataset.owned === "0";
+            case "owned":
+                return cell.dataset.owned === "1";
+            case "duplicates":
+                return cell.dataset.dup === "1";
+            case "shiny":
+                return cell.dataset.rarity === "shiny";
+            default:
+                return true;
         }
     }
 }

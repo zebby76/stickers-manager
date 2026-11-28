@@ -1,0 +1,10 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
+    "files": {
+        "includes": [
+            "**",
+            "!assets/vendor",
+            "!assets/controllers/csrf_protection_controller.js"
+        ]
+    }
+}

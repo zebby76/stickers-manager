@@ -24,3 +24,8 @@ indent_size = 2
 
 [{.github/**.sh,Makefile}]
 indent_style = tab
+
+# The shared release.mk (copied from base-php, never edited here) continues its recipe lines
+# with a tab then spaces, which make reads as one indentation.
+[.github/release.mk]
+indent_style = unset

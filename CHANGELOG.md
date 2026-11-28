@@ -445,29 +445,3 @@ First public release.
 - GitHub Actions: lint + PHPUnit, `docker buildx bake` (native per-arch build →
   push by digest → manifest merge), cosign signing, Trivy scan, automated
   GitHub Release, scheduled run cleanup, grouped Dependabot updates.
-
-[Unreleased]: https://github.com/zebby76/stickers-manager/compare/1.10.3...HEAD
-[1.10.3]: https://github.com/zebby76/stickers-manager/compare/1.10.2...1.10.3
-[1.10.2]: https://github.com/zebby76/stickers-manager/compare/1.10.1...1.10.2
-[1.10.1]: https://github.com/zebby76/stickers-manager/compare/1.10.0...1.10.1
-[1.10.0]: https://github.com/zebby76/stickers-manager/compare/1.9.4...1.10.0
-[1.9.4]: https://github.com/zebby76/stickers-manager/compare/1.9.3...1.9.4
-[1.9.3]: https://github.com/zebby76/stickers-manager/compare/1.9.2...1.9.3
-[1.9.2]: https://github.com/zebby76/stickers-manager/compare/1.9.1...1.9.2
-[1.9.1]: https://github.com/zebby76/stickers-manager/compare/1.9.0...1.9.1
-[1.9.0]: https://github.com/zebby76/stickers-manager/compare/1.8.0...1.9.0
-[1.8.0]: https://github.com/zebby76/stickers-manager/compare/1.7.1...1.8.0
-[1.7.1]: https://github.com/zebby76/stickers-manager/compare/1.7.0...1.7.1
-[1.7.0]: https://github.com/zebby76/stickers-manager/compare/1.6.0...1.7.0
-[1.6.0]: https://github.com/zebby76/stickers-manager/compare/1.5.1...1.6.0
-[1.5.1]: https://github.com/zebby76/stickers-manager/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/zebby76/stickers-manager/compare/1.4.0...1.5.0
-[1.4.0]: https://github.com/zebby76/stickers-manager/compare/1.3.4...1.4.0
-[1.3.4]: https://github.com/zebby76/stickers-manager/compare/1.3.3...1.3.4
-[1.3.3]: https://github.com/zebby76/stickers-manager/compare/1.3.2...1.3.3
-[1.3.2]: https://github.com/zebby76/stickers-manager/compare/1.3.1...1.3.2
-[1.3.1]: https://github.com/zebby76/stickers-manager/compare/1.3.0...1.3.1
-[1.3.0]: https://github.com/zebby76/stickers-manager/compare/1.2.0...1.3.0
-[1.2.0]: https://github.com/zebby76/stickers-manager/compare/1.1.0...1.2.0
-[1.1.0]: https://github.com/zebby76/stickers-manager/compare/1.0.0...1.1.0
-[1.0.0]: https://github.com/zebby76/stickers-manager/releases/tag/1.0.0

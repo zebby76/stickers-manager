@@ -4,13 +4,8 @@ name: Cleanup workflow runs
 # Keeps the Actions history tidy: deletes workflow runs older than RETENTION_DAYS.
 on:
   schedule:
-    - cron: "0 4 * * 1"   # every Monday 04:00 UTC
+    - cron: "0 4 * * 1" # every Monday 04:00 UTC
   workflow_dispatch:
-    inputs:
-      retention_days:
-        description: "Delete runs older than N days"
-        required: false
-        default: "30"
 
 permissions:
   actions: write
@@ -28,7 +23,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          RETENTION_DAYS: ${{ github.event.inputs.retention_days || '30' }}
+          RETENTION_DAYS: "30"
         run: |
           cutoff=$(date -u -d "${RETENTION_DAYS} days ago" +%s)
           echo "Deleting runs created before $(date -u -d @"${cutoff}")"

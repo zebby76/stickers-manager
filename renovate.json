@@ -1,56 +1,56 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Base images, Composer and GitHub Actions. Run from .github/workflows/renovate.yml.",
-  "extends": [
-    "config:recommended",
-    ":semanticCommits",
-    ":semanticCommitTypeAll(chore)",
-    "helpers:pinGitHubActionDigests"
-  ],
-  "enabledManagers": ["dockerfile", "composer", "github-actions"],
-  "timezone": "Europe/Brussels",
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 10,
-  "labels": ["dependencies"],
-  "osvVulnerabilityAlerts": true,
-  "vulnerabilityAlerts": {
-    "schedule": ["at any time"]
-  },
-  "packageRules": [
-    {
-      "description": "The three base-php tags move together: one pull request, with a CHANGELOG line.",
-      "matchPackageNames": ["docker.io/smalswebtech/base-php"],
-      "groupName": "base-php image",
-      "postUpgradeTasks": {
-        "commands": ["bash .github/renovate/changelog-base-image.sh"],
-        "fileFilters": ["CHANGELOG.md"],
-        "executionMode": "branch"
-      }
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "description": "Base images, Composer and GitHub Actions. Run from .github/workflows/renovate.yml.",
+    "extends": [
+        "config:recommended",
+        ":semanticCommits",
+        ":semanticCommitTypeAll(chore)",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "enabledManagers": ["dockerfile", "composer", "github-actions"],
+    "timezone": "Europe/Brussels",
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 10,
+    "labels": ["dependencies"],
+    "osvVulnerabilityAlerts": true,
+    "vulnerabilityAlerts": {
+        "schedule": ["at any time"]
     },
-    {
-      "description": "A new PHP minor is a decision, not an update: wait for an approval on the Dependency Dashboard.",
-      "matchPackageNames": ["docker.io/smalswebtech/base-php"],
-      "matchUpdateTypes": ["minor", "major"],
-      "dependencyDashboardApproval": true
-    },
-    {
-      "description": "Composer and the Actions, once a week and grouped. Security updates do not wait. The whole Monday, not before 6am: GitHub starts this personal repository's 03:30 UTC run about nine hours late, so a run never fell inside the morning window and these pull requests were never opened.",
-      "matchManagers": ["composer"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "composer",
-      "schedule": ["on monday"]
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "groupName": "github-actions",
-      "schedule": ["on monday"]
-    },
-    {
-      "description": "Major versions wait for an approval on the Dependency Dashboard.",
-      "matchManagers": ["composer", "github-actions"],
-      "matchUpdateTypes": ["major"],
-      "groupName": null,
-      "dependencyDashboardApproval": true
-    }
-  ]
+    "packageRules": [
+        {
+            "description": "The three base-php tags move together: one pull request, with a CHANGELOG line.",
+            "matchPackageNames": ["docker.io/smalswebtech/base-php"],
+            "groupName": "base-php image",
+            "postUpgradeTasks": {
+                "commands": ["bash .github/renovate/changelog-base-image.sh"],
+                "fileFilters": ["CHANGELOG.md"],
+                "executionMode": "branch"
+            }
+        },
+        {
+            "description": "A new PHP minor is a decision, not an update: wait for an approval on the Dependency Dashboard.",
+            "matchPackageNames": ["docker.io/smalswebtech/base-php"],
+            "matchUpdateTypes": ["minor", "major"],
+            "dependencyDashboardApproval": true
+        },
+        {
+            "description": "Composer and the Actions, once a week and grouped. Security updates do not wait. The whole Monday, not before 6am: GitHub starts this personal repository's 03:30 UTC run about nine hours late, so a run never fell inside the morning window and these pull requests were never opened.",
+            "matchManagers": ["composer"],
+            "matchUpdateTypes": ["minor", "patch"],
+            "groupName": "composer",
+            "schedule": ["on monday"]
+        },
+        {
+            "matchManagers": ["github-actions"],
+            "groupName": "github-actions",
+            "schedule": ["on monday"]
+        },
+        {
+            "description": "Major versions wait for an approval on the Dependency Dashboard.",
+            "matchManagers": ["composer", "github-actions"],
+            "matchUpdateTypes": ["major"],
+            "groupName": null,
+            "dependencyDashboardApproval": true
+        }
+    ]
 }

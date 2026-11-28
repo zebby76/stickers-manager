@@ -55,7 +55,7 @@ server {
         fastcgi_param UNIQUE_ID     $request_id;
         fastcgi_param traffic_class $traffic_class;
 
-        # add_header in a location stops inheritance → re-declare security headers
+        # add_header in a location stops inheritance → redeclare security headers
         add_header X-Frame-Options        "{{ getenv "NGINX_X_FRAME_OPTIONS" "SAMEORIGIN" }}" always;
         add_header X-Content-Type-Options "{{ getenv "NGINX_X_CONTENT_TYPE_OPTIONS" "nosniff" }}" always;
         add_header Referrer-Policy        "{{ getenv "NGINX_REFERRER_POLICY" "strict-origin-when-cross-origin" }}" always;

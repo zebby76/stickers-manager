@@ -1,3 +1,8 @@
+<!-- markdownlint-configure-file { "MD024": { "siblings_only": true } } -->
+<!-- Keep a Changelog repeats "### Added" and "### Fixed" under every version, which MD024 flags by
+     default. siblings_only narrows it to duplicates under the SAME parent, which is the case that
+     actually signals a mistake. -->
+
 # Changelog
 
 All notable changes to this project are documented in this file.
@@ -38,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   URLs, spoofable trusted proxies, Serializer local-file reads (CVE-2026-118515), an
   SSRF filter bypass in the `Ip` constraint, YAML parse-time denial of service, and
   programmatic logins skipping `checkPostAuth()`.
-- **Rebuilt on the current base-php 8.5.12**, picking up curl 8.23.0
+- **Rebuilt on the current base-php 8.5.12**, picking up cURL 8.23.0
   (CVE-2026-92392). 1.10.1 already shipped PHP 8.5.12, the PHP2Shell fix
   (CVE-2026-109618, CVE-2026-109619).
 - **The dev stack no longer runs a PHP2Shell-vulnerable PHP.** `compose.yaml` pinned
@@ -51,9 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.10.1] - 2026-11-01
 
 ### Security
-- **E-mail header injection via MIME parameter names (CVE-2026-45070).**
+- **Email header injection via MIME parameter names (CVE-2026-45070).**
   `symfony/mime` 8.1.7 did not reject non-token characters in MIME parameter names,
-  letting crafted input smuggle extra headers into an outgoing e-mail (the app sends
+  letting crafted input smuggle extra headers into an outgoing email (the app sends
   password-reset and registration mails). Upgraded to 8.1.10, which fixes it.
 - **PHPUnit shared-temp-dir code execution (CVE-2026-119193).** Dev-only: another
   local user could get code run through PHPT coverage files in a shared temporary
@@ -68,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - **ReDoS through the `Cache-Control` request header (CVE-2026-108082).**
-  `symfony/http-foundation` 8.1.6 split that header with a regex an attacker could make
+  `symfony/http-foundation` 8.1.6 split that header with a regular expression an attacker could make
   backtrack catastrophically, so any anonymous request — the public share page
   included — could pin a PHP worker. Upgraded to 8.1.9, which fixes it.
 
@@ -81,7 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The Authelia SSO return leg is tested.** `AutheliaLoginTest` drives
   `/connect/authelia` → `/connect/authelia/check` through the real OAuth2 client and
   Guzzle stack against a fake Authelia: state check, PKCE code exchange, userinfo,
-  account creation / linking by e-mail / reuse by subject, and failures sent back to
+  account creation / linking by email / reuse by subject, and failures sent back to
   `/login`.
 
 ### Fixed
@@ -146,7 +151,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   those are major bumps of transitive packages (`doctrine/collections`,
   `google/protobuf`, `sebastian/diff`), so the suite, the Doctrine mapping, the asset
   build and the Turbo Stream endpoints were all exercised rather than trusted to
-  semver. The dev stack is pinned to `base-php:8.5.10-nginx-dev`.
+  SemVer. The dev stack is pinned to `base-php:8.5.10-nginx-dev`.
 
 ## [1.9.1] - 2026-08-29
 
@@ -195,7 +200,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - **The published image was rebuilt on a refreshed base image**, clearing 352 of the
-  356 vulnerabilities Trivy reported against it (openssl 3.5.7→3.5.8, plus the
+  356 vulnerabilities Trivy reported against it (OpenSSL 3.5.7→3.5.8, plus the
   postgresql-client and python3 packages inherited from the base). All of them came
   from the base image — this repository's Dockerfile installs no packages of its own.
   The four that remain are Go modules compiled into `gomplate`, the base image's
@@ -206,17 +211,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Correlated access logs** — nginx and php-fpm now both log in logfmt and share a
-  request id (`rid`), so a single request can be followed across the two. nginx reports
+  request ID (`rid`), so a single request can be followed across the two. nginx reports
   the total time and the php-fpm share separately (`dur_s` / `up_dur_s`), and tags each
   request with a traffic class (client, probe, metrics) so health checks can be filtered
-  out downstream. Client IP and ray id are read from Cloudflare (`CF-Connecting-IP`,
+  out downstream. Client IP and ray ID are read from Cloudflare (`CF-Connecting-IP`,
   `CF-Ray`).
 
 ### Changed
 - **Release tooling** — `make release VERSION=x.y.z` now cuts a release (guards on branch
   and existing tags, signed commit, signed tag, push), with `retag`, `tag-restore`,
   `notes` and `build-version` for the usual follow-ups. Pushing the tag still drives the
-  image build and the GitHub Release. Brings this repo in line with the other ones.
+  image build and the GitHub Release. Brings this repository in line with the other ones.
 
 ### Fixed
 - **Dev and production no longer log differently** — the php-fpm log format was only set
@@ -241,7 +246,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   header strip, so the sections stand out from one another at a glance. Completed
   sections get a mint frame. The live per-section Turbo Stream updates still work.
 - **Public share page: clearer & printable** — added a quick legend (doublon to swap
-  vs. missing sticker) and a "Imprimer la liste" button. A print stylesheet drops the
+  vs. missing sticker) and a "Imprimer la liste" button. A print style sheet drops the
   navbar, footer, buttons and forms, keeps the colours, and avoids splitting a card
   across pages — handy for taking a paper want/swap list to a meet.
 
@@ -324,7 +329,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Replaced Google SSO with the self-hosted Authelia SSO** (OIDC, `auth.zebbox.net`).
   The login page now offers a "zebbox SSO" button instead of Google; accounts created
   through Authelia are **auto-approved** (identities are already curated in Authelia).
-  `form_login` (e-mail + password) and the moderated `/register` flow are unchanged.
+  `form_login` (email + password) and the moderated `/register` flow are unchanged.
   - App config: generic OIDC client (`OIDC_ISSUER`/`OIDC_CLIENT_ID`/`OIDC_CLIENT_SECRET`),
     `App\Security\AutheliaAuthenticator`, `/connect/authelia[/check]`.
   - DB: `user.google_id` → `user.authelia_id` (migration `Version20260611120000`).

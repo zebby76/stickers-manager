@@ -4,8 +4,8 @@
 
 .DEFAULT_GOAL := help
 .PHONY: help build-app build-image bake up down restart ps logs \
-        composer install console cc diff migrate fixtures db-reset db-shell shell test \
-        release-info release retag tag-restore notes build-version
+	composer install console cc diff migrate fixtures db-reset db-shell shell lint test \
+	release-info release retag tag-restore notes build-version
 
 # —— Config ———————————————————————————————————————————————————————————————————
 POSTGRES_USER ?= stickers
@@ -93,6 +93,9 @@ db-shell: ## psql shell into the database
 shell: ## Interactive shell in the cli-dev tooling container
 	$(DEV) bash
 
+lint: ## Lint the whole tree locally, with the CI's super-linter version and settings
+	@bash .github/lint-local.sh
+
 test: ## Run the test suite (APP_ENV=test)
 	APP_ENV=test $(DEV_DB) php bin/phpunit
 
@@ -149,8 +152,8 @@ retag: ## Move an existing tag and re-fire the build:  make retag VERSION=1.8.0 
 	@[ -n "$(VERSION)" ] || { echo "VERSION=x.y.z required" >&2; exit 1; }
 	@b=$$(git rev-parse --abbrev-ref HEAD); [ "$$b" = main ] || { echo "retag only from main (on $$b)" >&2; exit 1; }
 	@sha=$$(git rev-parse --short "$(REF)"); \
-	 echo "retag $(VERSION) -> $$sha on $(RELEASE_REMOTE) ($(REPO))"; \
-	 if [ -z "$(YES)" ]; then printf "Proceed (delete+recreate the tag, triggers a rebuild)? [y/N] "; read a; [ "$$a" = y ] || [ "$$a" = Y ] || { echo Aborted >&2; exit 1; }; fi
+		echo "retag $(VERSION) -> $$sha on $(RELEASE_REMOTE) ($(REPO))"; \
+		if [ -z "$(YES)" ]; then printf "Proceed (delete+recreate the tag, triggers a rebuild)? [y/N] "; read a; [ "$$a" = y ] || [ "$$a" = Y ] || { echo Aborted >&2; exit 1; }; fi
 	@if [ "$$(git rev-parse $(REF))" = "$$(git rev-parse HEAD)" ]; then git push $(RELEASE_REMOTE) main; fi
 	@git push $(RELEASE_REMOTE) :refs/tags/$(VERSION) 2>/dev/null || true
 	@git tag -d $(VERSION) 2>/dev/null || true
@@ -162,17 +165,17 @@ tag-restore: ## Force-push the LOCAL tag to the remote (repair a moved tag):  ma
 	@[ -n "$(VERSION)" ] || { echo "VERSION=x.y.z required" >&2; exit 1; }
 	@git rev-parse "$(VERSION)" >/dev/null 2>&1 || { echo "no local tag $(VERSION)" >&2; exit 1; }
 	@sha=$$(git rev-parse --short "$(VERSION)^{commit}"); \
-	 echo "force-push local tag $(VERSION) ($$sha) -> $(RELEASE_REMOTE) ($(REPO))"; \
-	 if [ -z "$(YES)" ]; then printf "Proceed? [y/N] "; read a; [ "$$a" = y ] || [ "$$a" = Y ] || { echo Aborted >&2; exit 1; }; fi
+		echo "force-push local tag $(VERSION) ($$sha) -> $(RELEASE_REMOTE) ($(REPO))"; \
+		if [ -z "$(YES)" ]; then printf "Proceed? [y/N] "; read a; [ "$$a" = y ] || [ "$$a" = Y ] || { echo Aborted >&2; exit 1; }; fi
 	@git push --force $(RELEASE_REMOTE) refs/tags/$(VERSION)
 	@echo "restored (a tag push may NOT rebuild an already-built commit -> use 'make build-version VERSION=$(VERSION)')"
 
 notes: ## Regenerate the GitHub release notes:  make notes VERSION=1.8.0 [SINCE=1.7.1]
 	@[ -n "$(VERSION)" ] || { echo "VERSION=x.y.z required" >&2; exit 1; }
 	@prev="$(SINCE)"; [ -n "$$prev" ] || prev=$$( $(PREV_TAG) ); \
-	 [ -n "$$prev" ] || { echo "no previous tag found; pass SINCE=x.y.z" >&2; exit 1; }; \
-	 gh api repos/$(REPO)/releases/generate-notes -f tag_name=$(VERSION) -f previous_tag_name=$$prev --jq .body \
-	   | gh release edit $(VERSION) --repo $(REPO) --notes-file - >/dev/null && echo "notes for $(VERSION) regenerated from $$prev"
+		[ -n "$$prev" ] || { echo "no previous tag found; pass SINCE=x.y.z" >&2; exit 1; }; \
+		gh api repos/$(REPO)/releases/generate-notes -f tag_name=$(VERSION) -f previous_tag_name=$$prev --jq .body \
+		| gh release edit $(VERSION) --repo $(REPO) --notes-file - >/dev/null && echo "notes for $(VERSION) regenerated from $$prev"
 
 build-version: ## Trigger a build without tagging:  make build-version VERSION=1.8.0
 	@[ -n "$(VERSION)" ] || { echo "VERSION=x.y.z required" >&2; exit 1; }

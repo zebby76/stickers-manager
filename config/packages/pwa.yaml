@@ -4,18 +4,18 @@ pwa:
     # (asset-map:compile) so they ship as static files — fits the read-only runtime.
     asset_compiler: true
     # Icons are generated (downscaled) from a single source PNG via GD at build.
-    image_processor: 'pwa.image_processor.gd'
+    image_processor: "pwa.image_processor.gd"
 
     # Favicons + Apple touch icons (for iOS home-screen install), generated from
     # the same source via GD.
     favicons:
         enabled: true
-        src: 'icons/logo.png'
-        background_color: '#2f9e44'
+        src: "icons/logo.png"
+        background_color: "#2f9e44"
 
     serviceworker:
         enabled: true
-        src: 'sw.js'
+        src: "sw.js"
         # Activate a new service worker immediately (and drop its now-stale caches),
         # so fixes ship without users having to close every tab.
         skip_waiting: true
@@ -31,27 +31,27 @@ pwa:
             # fall back to cache when offline. StaleWhileRevalidate served the stale (pre-login)
             # page, forcing an F5 after login / after a wrong password.
             resource_caches:
-                - match_callback: 'navigate'
-                  cache_name: 'pages'
-                  strategy: 'NetworkFirst'
+                - match_callback: "navigate"
+                  cache_name: "pages"
+                  strategy: "NetworkFirst"
                   network_timeout: 3
 
     manifest:
-        name: 'Stickers Manager'
-        short_name: 'Stickers'
-        description: 'Gère ta collection de vignettes de foot : albums, doublons et échanges.'
-        lang: 'fr'
-        dir: 'ltr'
-        display: 'standalone'
-        orientation: 'portrait-primary'
-        start_url: '/'
-        scope: '/'
-        background_color: '#f3f5f1'
-        theme_color: '#14182b'
+        name: "Stickers Manager"
+        short_name: "Stickers"
+        description: "Gère ta collection de vignettes de foot : albums, doublons et échanges."
+        lang: "fr"
+        dir: "ltr"
+        display: "standalone"
+        orientation: "portrait-primary"
+        start_url: "/"
+        scope: "/"
+        background_color: "#f3f5f1"
+        theme_color: "#14182b"
         icons:
             # No "format" → the source extension (png) is used for output + MIME type.
-            - src: 'icons/logo.png'
+            - src: "icons/logo.png"
               sizes: [48, 72, 96, 128, 192, 256, 384, 512]
-            - src: 'icons/logo.png'
+            - src: "icons/logo.png"
               sizes: [192, 512]
-              purpose: 'maskable'
+              purpose: "maskable"

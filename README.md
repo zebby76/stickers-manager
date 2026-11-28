@@ -62,7 +62,7 @@ The Symfony application lives at the **repository root**; packaging sits alongsi
 it (same model as `elasticms-admin` / `elasticms-web`). At runtime the app is
 served from `/app/src/stickers`.
 
-```
+```text
 stickers-manager/
 ├── src/ config/ public/ templates/ migrations/ assets/   # Symfony application
 ├── composer.json  importmap.php  bin/console

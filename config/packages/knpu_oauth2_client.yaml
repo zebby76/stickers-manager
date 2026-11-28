@@ -11,17 +11,17 @@ knpu_oauth2_client:
             # code_challenge on redirect and the code_verifier on token exchange
             # (stored in the session between the two requests).
             client_class: KnpU\OAuth2ClientBundle\Client\OAuth2PKCEClient
-            client_id: '%env(OIDC_CLIENT_ID)%'
-            client_secret: '%env(OIDC_CLIENT_SECRET)%'
+            client_id: "%env(OIDC_CLIENT_ID)%"
+            client_secret: "%env(OIDC_CLIENT_SECRET)%"
             # route name that Authelia redirects back to (see AutheliaController)
             redirect_route: connect_authelia_check
             redirect_params: {}
             provider_options:
-                urlAuthorize: '%env(OIDC_ISSUER)%/api/oidc/authorization'
-                urlAccessToken: '%env(OIDC_ISSUER)%/api/oidc/token'
-                urlResourceOwnerDetails: '%env(OIDC_ISSUER)%/api/oidc/userinfo'
+                urlAuthorize: "%env(OIDC_ISSUER)%/api/oidc/authorization"
+                urlAccessToken: "%env(OIDC_ISSUER)%/api/oidc/token"
+                urlResourceOwnerDetails: "%env(OIDC_ISSUER)%/api/oidc/userinfo"
                 responseResourceOwnerId: sub
-                scopeSeparator: ' '
+                scopeSeparator: " "
 
 # Tests talk to a fake Authelia (tests/Security/FakeAuthelia.php) wired in as the
 # Guzzle handler: the real client + Guzzle stack run, only the network is replaced.
@@ -30,10 +30,10 @@ when@test:
         App\Tests\Security\FakeAuthelia: ~
         app.test.authelia_handler_stack:
             class: GuzzleHttp\HandlerStack
-            factory: ['GuzzleHttp\HandlerStack', 'create']
+            factory: ['GuzzleHttp\HandlerStack', "create"]
             arguments: ['@App\Tests\Security\FakeAuthelia']
         app.test.authelia_http_client:
             class: GuzzleHttp\Client
-            arguments: [{ handler: '@app.test.authelia_handler_stack' }]
+            arguments: [{ handler: "@app.test.authelia_handler_stack" }]
     knpu_oauth2_client:
         http_client: app.test.authelia_http_client
